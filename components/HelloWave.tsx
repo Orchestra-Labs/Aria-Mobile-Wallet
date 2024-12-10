@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { StyleSheet } from 'react-native';
+
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -15,9 +17,16 @@ export function HelloWave() {
 
   useEffect(() => {
     rotationAnimation.value = withRepeat(
-      withSequence(withTiming(25, { duration: 150 }), withTiming(0, { duration: 150 })),
-      4 // Run the animation 4 times
+      withSequence(
+        withTiming(25, { duration: 150 }),
+
+        withTiming(0, { duration: 150 }),
+      ),
+
+      4, // Run the animation 4 times
     );
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -34,7 +43,9 @@ export function HelloWave() {
 const styles = StyleSheet.create({
   text: {
     fontSize: 28,
+
     lineHeight: 32,
+
     marginTop: -6,
   },
 });
