@@ -1,10 +1,12 @@
+'use dom';
+
+import '@tailwind';
 import { Image, StyleSheet, Platform } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { TempCryptoComponent } from '@/components/TempCryptoComponent';
 
 export default function HomeScreen() {
   return (
@@ -17,9 +19,8 @@ export default function HomeScreen() {
         />
       }
     >
-      <TempCryptoComponent />
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <div className="text-4xl text-[#11181C] font-bold">Welcome!</div>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
