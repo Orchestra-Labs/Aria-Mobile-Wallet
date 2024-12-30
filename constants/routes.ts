@@ -10,7 +10,7 @@ export const ROUTES = {
     EDIT_COIN_LIST: '/auth/new-wallet' as const,
   },
   AUTH: {
-    ROOT: '/auth/index' as const,
+    ROOT: '/auth' as const,
     NEW_WALLET: {
       ROOT: '/auth/new-wallet' as const,
       CREATE: '/auth/new-wallet' as const,
