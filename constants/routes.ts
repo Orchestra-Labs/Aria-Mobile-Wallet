@@ -1,7 +1,7 @@
 // TODO: organize and include sub-routing for open slidetrays and swipe indices
 export const ROUTES = {
   APP: {
-    ROOT: '/auth/new-wallet' as const,
+    ROOT: '/explore' as const,
     TRANSACTIONS_HISTORY: '/auth/new-wallet' as const,
     TRANSACTION: '/auth/new-wallet' as const,
     SEND: '/auth/new-wallet' as const,

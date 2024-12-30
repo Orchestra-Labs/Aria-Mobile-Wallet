@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-
 import { ROUTES } from '@/constants/routes';
 import { useAtomValue } from 'jotai';
 import { isLoggedInAtom } from '@/atoms';
