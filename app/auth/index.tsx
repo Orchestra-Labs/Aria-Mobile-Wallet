@@ -1,9 +1,14 @@
-import { Text, View } from 'react-native';
+'use dom';
+
+import '@tailwind';
+
+import { AuthLayout } from '@/layouts';
+import { Login } from '@/screens';
 
 export default function LoginScreen() {
   return (
-    <View>
-      <Text>Login</Text>
-    </View>
+    <AuthLayout>
+      <Login />
+    </AuthLayout>
   );
 }

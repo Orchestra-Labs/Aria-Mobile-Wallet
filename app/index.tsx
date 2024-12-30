@@ -10,14 +10,10 @@ import { ThemedView } from '@/components/ThemedView';
 import { Input } from '@/ui-kit';
 import { TempCryptoComponent } from '@/components/TempCryptoComponent';
 import { DialogContainer } from '@/components/DialogContainer';
-import { Fragment, useEffect } from 'react';
-import { router } from 'expo-router';
+import { Fragment } from 'react';
+import { Link } from 'expo-router';
 
 export default function HomeScreen() {
-  useEffect(() => {
-    router.replace('/auth/new-wallet');
-  }, []);
-
   return (
     <Fragment>
       <ParallaxScrollView
@@ -29,11 +25,13 @@ export default function HomeScreen() {
           />
         }
       >
-        {/* <OptionsDialog /> */}
         <ThemedView style={styles.titleContainer}>
           <div className="text-4xl text-[#11181C] font-bold">Welcome!</div>
           <HelloWave />
         </ThemedView>
+        <Link href="/auth/new-wallet" className="text-blue-500">
+          Go to New Wallet
+        </Link>
         <Input
           variant="primary"
           type="text"
