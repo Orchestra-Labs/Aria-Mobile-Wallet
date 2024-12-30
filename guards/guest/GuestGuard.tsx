@@ -17,5 +17,7 @@ export const GuestGuard = ({ children }: GuestGuardProps) => {
     router.replace(ROUTES.APP.ROOT);
   }, [isLoggedIn]);
 
+  if (isLoggedIn) return null;
+
   return children;
 };
