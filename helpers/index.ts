@@ -13,4 +13,4 @@ export * from './dataHelpers';
 // export * from './truncateString';
 export * from './utils';
 export * from './getDialogContainerElement';
-// export * from './uuid';
+export * from './uuid';
