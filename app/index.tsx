@@ -7,13 +7,19 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Input } from '@/ui-kit';
 import { TempCryptoComponent } from '@/components/TempCryptoComponent';
 import { DialogContainer } from '@/components/DialogContainer';
 import { Fragment } from 'react';
 import { Link } from 'expo-router';
+import { useAtom } from 'jotai';
+import { isLoggedInAtom } from '@/atoms';
+import { useLogout } from '@/hooks';
 
 export default function HomeScreen() {
+  const [isLoggedIn] = useAtom(isLoggedInAtom);
+
+  const logout = useLogout();
+
   return (
     <Fragment>
       <ParallaxScrollView
@@ -26,27 +32,15 @@ export default function HomeScreen() {
         }
       >
         <ThemedView style={styles.titleContainer}>
-          <div className="text-4xl text-[#11181C] font-bold">Welcome!</div>
+          <div className="text-4xl font-bold">
+            Welcome! (isLoggedIn: {JSON.stringify(isLoggedIn)})
+          </div>
           <HelloWave />
         </ThemedView>
         <Link href="/auth/new-wallet" className="text-blue-500">
           Go to New Wallet
         </Link>
-        <Input
-          variant="primary"
-          type="text"
-          placeholder={'123'}
-          value={''}
-          disabled
-          // icon={
-          //   updateAsset ? (
-          //     <AssetSelectDialog isReceiveDialog={variant === 'receive'} onClick={updateAsset} />
-          //   ) : null
-          // }
-          className={
-            'text-white border border-neutral-2 rounded-md w-full h-10'
-          }
-        />
+        {isLoggedIn && <div onClick={logout}>Logout</div>}
         <ThemedView style={styles.stepContainer}>
           <ThemedText type="subtitle">Step 1: Try it</ThemedText>
           <ThemedText>

@@ -1,6 +1,6 @@
 export * from './ArrowLeft';
 // export * from './Check';
-// export * from './Copy';
+export * from './Copy';
 export * from './Discord';
 export * from './DotsVertical';
 export * from './Edit';
@@ -22,5 +22,5 @@ export * from './LogoWhite';
 // export * from './Success';
 // export * from './Support';
 // export * from './Swap';
-// export * from './VerifySuccess';
+export * from './VerifySuccess';
 export * from './X';

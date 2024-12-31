@@ -16,6 +16,6 @@ export const storeNodeErrorCounts = (
 };
 
 // Reset error counts (e.g., on login)
-export const resetNodeErrorCounts = (): void => {
-  LocalStorage.removeItem(ERROR_COUNTS_KEY);
+export const resetNodeErrorCounts = async () => {
+  await LocalStorage.removeItem(ERROR_COUNTS_KEY);
 };
