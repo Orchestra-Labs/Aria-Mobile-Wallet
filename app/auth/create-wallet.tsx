@@ -3,14 +3,14 @@
 import '@tailwind';
 
 import { AuthLayout } from '@/layouts';
-import { Login } from '@/screens';
+import { CreateWallet } from '@/screens';
 import { GuestGuard } from '@/guards';
 
-export default function LoginScreen() {
+export default function CreateWalletScreen() {
   return (
     <GuestGuard>
       <AuthLayout>
-        <Login />
+        <CreateWallet />
       </AuthLayout>
     </GuestGuard>
   );

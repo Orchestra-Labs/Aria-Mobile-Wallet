@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const EyeOpen: React.FC<React.SVGProps<SVGSVGElement>> = props => (
+export const EyeOpen: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="24"
     height="24"

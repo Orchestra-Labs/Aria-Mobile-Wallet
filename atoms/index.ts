@@ -5,7 +5,7 @@
 export * from './isLoggedInAtom';
 // export * from './loadingAtom';
 export * from './mnemonicAtom';
-// export * from './passwordAtom';
+export * from './passwordAtom';
 // export * from './processCompletedAtom';
 // export * from './refreshAtom';
 // export * from './searchFilterAtom';

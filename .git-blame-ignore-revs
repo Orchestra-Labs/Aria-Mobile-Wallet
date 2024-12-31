@@ -1,0 +1,15 @@
+# This file specifies commit hashes to be ignored by `git blame`.
+# Use it to exclude changes that don't affect the actual content of the code,
+# such as formatting, indentation, or other non-functional updates.
+#
+# To use this file:
+# - Add it to your repository's root directory.
+# - Configure Git to use it by running:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# Example commit hash format:
+# Description of the change
+# 1234567890abcdef1234567890abcdef12345678  
+
+# chore: run eslint formatter
+958764fa0f196c15a41ac0225292c5e3dd457f47 

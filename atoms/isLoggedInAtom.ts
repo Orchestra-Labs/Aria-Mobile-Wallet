@@ -1,4 +1,6 @@
-import { userIsLoggedIn } from '@/helpers';
-import { atom } from 'jotai';
+import { atomWithAsyncStorage } from '@/helpers';
 
-export const isLoggedInAtom = atom<boolean>(userIsLoggedIn());
+export const isLoggedInAtom = atomWithAsyncStorage<boolean | null>(
+  'isLoggedInAtom',
+  null,
+);
