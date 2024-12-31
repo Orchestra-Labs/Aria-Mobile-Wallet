@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Logo: React.FC<React.SVGProps<SVGSVGElement>> = props => (
+export const Logo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="210"
     height="44"
@@ -12,7 +12,12 @@ export const Logo: React.FC<React.SVGProps<SVGSVGElement>> = props => (
   >
     <path fill="url(#logo)" d="M.5 0h209v44H.5z" />
     <defs>
-      <pattern id="logo" patternContentUnits="objectBoundingBox" width="1" height="1">
+      <pattern
+        id="logo"
+        patternContentUnits="objectBoundingBox"
+        width="1"
+        height="1"
+      >
         <use xlinkHref="#b" transform="matrix(.0009 0 0 .00427 -.086 -.318)" />
       </pattern>
       <image

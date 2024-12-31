@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const VerifySuccess: React.FC<React.SVGProps<SVGSVGElement>> = props => (
+export const VerifySuccess: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props,
+) => (
   <svg
     width="224"
     height="224"

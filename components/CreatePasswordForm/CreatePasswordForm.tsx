@@ -67,12 +67,12 @@ export const CreatePasswordForm = () => {
   useEffect(() => {
     checkPasswordStatus();
     checkConfirmPasswordStatus();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password]);
 
   useEffect(() => {
     checkConfirmPasswordStatus();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirmPassword]);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export const CreatePasswordForm = () => {
       confirmPasswordStatus === InputStatus.SUCCESS;
 
     setPasswordsVerified(passwordVerified && confirmPasswordVerified);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [passwordStatus, confirmPasswordStatus]);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
