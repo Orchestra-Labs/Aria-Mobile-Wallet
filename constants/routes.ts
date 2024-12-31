@@ -13,7 +13,7 @@ export const ROUTES = {
     ROOT: '/auth' as const,
     NEW_WALLET: {
       ROOT: '/auth/new-wallet' as const,
-      CREATE: '/auth/new-wallet' as const,
+      CREATE: '/auth/create-wallet' as const,
       IMPORT: '/auth/import-wallet' as const,
     },
   },
