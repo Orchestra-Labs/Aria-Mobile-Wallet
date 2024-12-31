@@ -82,9 +82,7 @@ export const RecoveryPhraseGrid: React.FC<RecoveryPhraseGridProps> = ({
   };
 
   // Copy local state to global state
-  const updateMnemonic = (mnemonic: string[]) => {
-    use24Words ? setMnemonic24(mnemonic) : setMnemonic12(mnemonic);
-  };
+  const updateMnemonic = use24Words ? setMnemonic24 : setMnemonic12;
 
   const validateFullMnemonic = () => {
     const correctMnemonic = getCurrentMnemonic();
@@ -125,7 +123,8 @@ export const RecoveryPhraseGrid: React.FC<RecoveryPhraseGridProps> = ({
           ),
         );
       }
-    } catch (error) {
+    } catch (e) {
+      console.log(e);
       // Case of invalid mnemonic
       setMnemonicVerified(false);
       setInputBorderColors(
@@ -172,6 +171,7 @@ export const RecoveryPhraseGrid: React.FC<RecoveryPhraseGridProps> = ({
         hiddenWordIndices.includes(index) ? '' : word,
       ),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVerifyMode, use24Words]);
 
   // Verify full mnemonic on change
@@ -180,6 +180,7 @@ export const RecoveryPhraseGrid: React.FC<RecoveryPhraseGridProps> = ({
       updateMnemonic(localMnemonic);
     }
     checkFullMnemonic();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localMnemonic]);
 
   // For each singular word update, check if verification is allowed and verify word
