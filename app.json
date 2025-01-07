@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Aria-Mobile-Wallet",
-    "slug": "Aria-Mobile-Wallet",
+    "slug": "aria-wallet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -37,6 +37,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "152c0b8c-86ef-4293-9329-65e8a507dece"
+      }
+    },
+    "owner": "orchestra-labs"
   }
 }
