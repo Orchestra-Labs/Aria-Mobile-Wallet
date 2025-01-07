@@ -34,7 +34,6 @@ const DialogContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
   const element = getDialogContainerElement();
-  console.log('🚀 ~ element:', element);
 
   return (
     <DialogPortal container={element}>
