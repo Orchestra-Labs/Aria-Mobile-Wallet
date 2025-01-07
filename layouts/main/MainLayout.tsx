@@ -31,7 +31,7 @@ const MainLayout: React.FC<PropsWithChildren<MainLayoutProps>> = ({
         className,
       )}
     >
-      <header className="bg-gradient-to-b from-[#202022] to-[#33334652] h-20 mt-20 p-4 flex items-center">
+      <header className="bg-gradient-to-b from-[#202022] to-[#33334652] h-20 mt-14 p-4 flex items-center">
         <Link className="flex max-h-12 mr-4" href={ROUTES.APP.ROOT}>
           <LogoIcon className="h-auto w-auto" />
         </Link>

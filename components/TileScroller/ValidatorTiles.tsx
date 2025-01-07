@@ -22,7 +22,11 @@ export const ValidatorTiles: React.FC<ValidatorTilesProps> = ({
   );
 
   if (filteredValidators.length === 0) {
-    return <p className="text-base text-neutral-1">No validators found</p>;
+    return (
+      <p className="text-base text-neutral-1 text-center">
+        No validators found
+      </p>
+    );
   }
 
   return (
