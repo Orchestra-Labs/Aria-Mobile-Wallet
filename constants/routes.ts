@@ -17,4 +17,7 @@ export const ROUTES = {
       IMPORT: '/auth/import-wallet' as const,
     },
   },
+  MENU: {
+    OPTIONS: '/menu-options' as const,
+  },
 };
