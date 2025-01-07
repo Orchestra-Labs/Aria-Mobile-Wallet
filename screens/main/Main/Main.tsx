@@ -49,14 +49,24 @@ export const Main = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex]);
 
-  const onNonZeroClick = () => {
+  const onNonZeroAssetsClick = () => {
     startTransition(() => {
       assetViewToggleChange(false);
     });
   };
-  const onAllClick = () => {
+  const onAllAssetsClick = () => {
     startTransition(() => {
       assetViewToggleChange(true);
+    });
+  };
+  const onCurrentValidatorsClick = () => {
+    startTransition(() => {
+      validatorViewToggleChange(true);
+    });
+  };
+  const onAllValidatorsClick = () => {
+    startTransition(() => {
+      validatorViewToggleChange(false);
     });
   };
 
@@ -115,7 +125,7 @@ export const Main = () => {
                   <Button
                     variant={!showAllAssets ? 'selected' : 'unselected'}
                     size="small"
-                    onClick={onNonZeroClick}
+                    onClick={onNonZeroAssetsClick}
                     className="px-2 rounded-md text-xs"
                   >
                     Non-Zero
@@ -123,7 +133,7 @@ export const Main = () => {
                   <Button
                     variant={showAllAssets ? 'selected' : 'unselected'}
                     size="small"
-                    onClick={onAllClick}
+                    onClick={onAllAssetsClick}
                     className="px-2 rounded-md text-xs"
                   >
                     All
@@ -140,7 +150,7 @@ export const Main = () => {
                   <Button
                     variant={showCurrentValidators ? 'selected' : 'unselected'}
                     size="small"
-                    onClick={() => validatorViewToggleChange(true)}
+                    onClick={onCurrentValidatorsClick}
                     className="px-2 rounded-md text-xs"
                   >
                     Current
@@ -148,7 +158,7 @@ export const Main = () => {
                   <Button
                     variant={!showCurrentValidators ? 'selected' : 'unselected'}
                     size="small"
-                    onClick={() => validatorViewToggleChange(false)}
+                    onClick={onAllValidatorsClick}
                     className="px-2 rounded-md text-xs"
                   >
                     All
