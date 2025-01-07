@@ -33,6 +33,7 @@ import { AssetInput } from '../AssetInput';
 import { Loader } from '../Loader';
 import { useRefreshData, useToast } from '@/hooks';
 import { TransactionResultsTile } from '../TransactionResultsTile';
+import { Link } from 'expo-router';
 
 // TODO: for the case where the user is unstaking all and the filtered validators would not include this tray, if this causes graphical errors, swipe away the tray and show toast
 interface ValidatorScrollTileProps {
@@ -527,50 +528,53 @@ export const ValidatorScrollTile = ({
             {/* Validator Information */}
             <div className="mb-4 min-h-[7.5rem] max-h-[7.5rem] overflow-hidden shadow-md bg-black p-2">
               <p>
-                <strong>Status:</strong>{' '}
+                <strong className="text-white">Status:</strong>{' '}
                 <span className={textColor}>{statusLabel}</span>
               </p>
               <p className="line-clamp-1">
                 {' '}
-                <strong>Amount Staked:</strong>{' '}
+                <strong className="text-white">Amount Staked:</strong>{' '}
                 <span className="text-blue">{dialogSubTitle}</span>
               </p>
               {userHasUnbonding && (
                 <Fragment>
                   <p className="line-clamp-1">
-                    <strong>Amount Unstaking:</strong>{' '}
+                    <strong className="text-white">Amount Unstaking:</strong>{' '}
                     <span className="text-warning">{value}</span>
                   </p>
                   <p className="line-clamp-1">
-                    <strong>Remaining Time to Unstake:</strong>{' '}
+                    <strong className="text-white">
+                      Remaining Time to Unstake:
+                    </strong>{' '}
                     <span className="text-warning">{unstakingTime}</span>
                   </p>
                   <p>
-                    <strong>Validator Commission:</strong>{' '}
+                    <strong className="text-white">
+                      Validator Commission:
+                    </strong>{' '}
                     <span>{commission}</span>
                   </p>
                 </Fragment>
               )}
               <p className="truncate">
-                <strong>Website:</strong>{' '}
+                <strong className="text-white">Website:</strong>{' '}
                 {isWebsiteValid ? (
-                  <a
+                  <Link
                     href={
                       website.startsWith('http')
-                        ? website
-                        : `https://${website}`
+                        ? (website as unknown as '/')
+                        : (`https://${website}` as unknown as 'https://google.com')
                     }
-                    target="_blank"
-                    rel="noopener noreferrer"
                   >
-                    {website}
-                  </a>
+                    <span className="text-[16px] text-blue">{website}</span>
+                  </Link>
                 ) : (
                   <span>{website}</span>
                 )}
               </p>
-              <p className="line-clamp-2 max-h-[3.5rem] overflow-hidden">
-                <strong>Details:</strong> {validator.description.details}
+              <p className="line-clamp-2 max-h-[3.5rem] overflow-hidden text-white">
+                <strong className="text-white">Details:</strong>{' '}
+                {validator.description.details}
               </p>
             </div>
 
@@ -689,7 +693,7 @@ export const ValidatorScrollTile = ({
               {!isLoading && selectedAction === 'claim' && (
                 <Fragment>
                   <div className="flex justify-between items-center text-sm font-bold w-full">
-                    <p className="text-sm pr-1">Claim:</p>
+                    <p className="text-sm pr-1 text-white">Claim:</p>
                     <div className="flex items-center">
                       <Button
                         variant={!isClaimToRestake ? 'selected' : 'unselected'}
