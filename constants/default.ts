@@ -17,8 +17,7 @@ export const GREATER_EXPONENT_DEFAULT = 6;
 export const MAX_NODES_PER_QUERY = 3;
 // Endpoints for different network operations
 
-// ! TODO: get from env
-const isDev = true;
+const USE_PROXY = false; // ! CHAIN_NODES copied from extension, we don't have a server in mobile app, use original URL
 
 const DEV_PROXY = 'http://localhost:5173';
 
@@ -77,10 +76,10 @@ export const DEFAULT_ASSET = LOCAL_ASSET_REGISTRY.note;
 export const CHAIN_NODES = {
   symphonytestnet: [
     {
-      rpc: isDev
+      rpc: USE_PROXY
         ? `${DEV_PROXY}/kleomedes-rpc`
         : 'https://symphony-rpc.kleomedes.network',
-      rest: isDev
+      rest: USE_PROXY
         ? `${DEV_PROXY}/kleomedes-rest`
         : 'https://symphony-api.kleomedes.network',
       provider: 'Kleomedes',
@@ -92,10 +91,10 @@ export const CHAIN_NODES = {
       provider: 'Nodes Hub',
     },*/
     {
-      rpc: isDev
+      rpc: USE_PROXY
         ? `${DEV_PROXY}/cogwheel-rpc`
         : 'https://symphony-testnet-rpc.cogwheel.zone',
-      rest: isDev
+      rest: USE_PROXY
         ? `${DEV_PROXY}/cogwheel-rest`
         : 'https://symphony-testnet-api.cogwheel.zone',
       provider: 'Cogwheel',

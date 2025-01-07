@@ -7,7 +7,7 @@ export const ROUTES = {
     SEND: '/auth/new-wallet' as const,
     RECEIVE: '/auth/new-wallet' as const,
     ADD_NETWORK: '/auth/new-wallet' as const,
-    EDIT_COIN_LIST: '/auth/new-wallet' as const,
+    EDIT_COIN_LIST: '/edit-coins-list' as const,
   },
   AUTH: {
     ROOT: '/auth' as const,
@@ -16,5 +16,8 @@ export const ROUTES = {
       CREATE: '/auth/create-wallet' as const,
       IMPORT: '/auth/import-wallet' as const,
     },
+  },
+  MENU: {
+    OPTIONS: '/menu-options' as const,
   },
 };
