@@ -45,8 +45,8 @@ export const Login: React.FC = () => {
     const authStatus = await tryAuthorizeAccess(password);
 
     if (authStatus === 'success') {
-      resetNodeErrorCounts();
-      setIsLoggedIn(true);
+      await resetNodeErrorCounts();
+      await setIsLoggedIn(true);
       router.replace(ROUTES.APP.ROOT);
     } else if (authStatus === 'no_wallet') {
       setPasswordStatus(InputStatus.ERROR);

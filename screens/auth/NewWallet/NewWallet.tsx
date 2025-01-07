@@ -52,9 +52,6 @@ const NewWallet: React.FC = () => {
         <Button className="w-full" variant="secondary" asChild>
           <Link href={ROUTES.AUTH.NEW_WALLET.IMPORT}>Import existing</Link>
         </Button>
-        <Button className="w-full" variant="secondary" asChild>
-          <Link href={ROUTES.APP.ROOT}>Home</Link>
-        </Button>
         <div className="mt-4">
           <span className="text-base text-white mr-1">
             Already have a wallet?
