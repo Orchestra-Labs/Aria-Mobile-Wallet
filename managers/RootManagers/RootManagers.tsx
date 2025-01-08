@@ -7,7 +7,7 @@ const RootManagers = ({ children }: PropsWithChildren) => {
   return (
     <RootLoader>
       {children}
-      <StatusBar style="auto" />
+      <StatusBar style="light" backgroundColor="black" translucent={false} />
     </RootLoader>
   );
 };

@@ -10,13 +10,13 @@ import { AuthGuard } from '@/guards';
 export default function EditCoinsList() {
   return (
     <StoreLoader>
-      <AuthGuard>
-        <MainManagers>
+      <MainManagers>
+        <AuthGuard>
           <MainLayout>
             <EditCoinListScreen isOnSendPage={false} />
           </MainLayout>
-        </MainManagers>
-      </AuthGuard>
+        </AuthGuard>
+      </MainManagers>
     </StoreLoader>
   );
 }
