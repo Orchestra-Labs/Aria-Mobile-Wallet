@@ -10,13 +10,13 @@ import { AuthGuard } from '@/guards';
 export default function MainScreen() {
   return (
     <StoreLoader>
-      <AuthGuard>
-        <MainManagers>
+      <MainManagers>
+        <AuthGuard>
           <MainLayout>
             <Main />
           </MainLayout>
-        </MainManagers>
-      </AuthGuard>
+        </AuthGuard>
+      </MainManagers>
     </StoreLoader>
   );
 }
