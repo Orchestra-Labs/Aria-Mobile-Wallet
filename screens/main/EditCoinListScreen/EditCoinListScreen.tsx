@@ -178,7 +178,7 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
   }, []);
 
   return (
-    <div className="h-screen flex flex-col bg-black text-white">
+    <div className="h-full flex flex-col bg-black text-white">
       {/* Top bar with back button and title */}
       <div className="flex justify-between items-center w-full p-5">
         <Link
