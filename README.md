@@ -4,16 +4,16 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 ## Get started
 
-1. Install dependencies
+1. Install dependencies with [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
 
    ```bash
-   npm install
+   yarn
    ```
 
 2. Start the app
 
    ```bash
-    npx expo start
+   yarn start
    ```
 
 In the output, you'll find options to open the app in a
