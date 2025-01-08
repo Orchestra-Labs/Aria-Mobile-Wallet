@@ -47,7 +47,7 @@ export const ReceiveDialog: React.FC<ReceiveDialogProps> = ({
     >
       <div className="flex flex-col items-center">
         <div className="mb-2">
-          <span>Aria Wallet Exclusive:</span>
+          <span className="text-white">Aria Wallet Exclusive:</span>
           <Button
             variant={!includeCoinPreference ? 'unselected' : 'selectedEnabled'}
             size="small"

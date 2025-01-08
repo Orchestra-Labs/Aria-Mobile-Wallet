@@ -4,19 +4,14 @@ import '@tailwind';
 
 import { Main } from '@/screens';
 import { MainLayout } from '@/layouts';
-import { MainManagers, StoreLoader } from '@/managers';
-import { AuthGuard } from '@/guards';
+import { AuthenticatedScreenWrapper } from '@/wrappers';
 
 export default function MainScreen() {
   return (
-    <StoreLoader>
-      <MainManagers>
-        <AuthGuard>
-          <MainLayout>
-            <Main />
-          </MainLayout>
-        </AuthGuard>
-      </MainManagers>
-    </StoreLoader>
+    <AuthenticatedScreenWrapper>
+      <MainLayout>
+        <Main />
+      </MainLayout>
+    </AuthenticatedScreenWrapper>
   );
 }

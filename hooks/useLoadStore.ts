@@ -1,10 +1,12 @@
 import {
+  dialogSearchTermAtom,
   exchangeAssetsAtom,
   filteredAssetsAtom,
   isFetchingValidatorDataAtom,
   isFetchingWalletDataAtom,
   isInitialDataLoadAtom,
   isLoggedInAtom,
+  searchTermAtom,
   sendStateAtom,
   userAccountAtom,
   userWalletAtom,
@@ -45,6 +47,10 @@ export const useLoadStore = () => {
   const { state: isInitialDataLoadState } = useAtomValue(
     loadable(isInitialDataLoadAtom),
   );
+  const { state: dialogSearchTermState } = useAtomValue(
+    loadable(dialogSearchTermAtom),
+  );
+  const { state: searchTermState } = useAtomValue(loadable(searchTermAtom));
 
   const atomStates = [
     walletAssetsState,
@@ -60,6 +66,8 @@ export const useLoadStore = () => {
     filteredAssetsState,
     walletStateState,
     isInitialDataLoadState,
+    dialogSearchTermState,
+    searchTermState,
   ];
 
   const loaded = !atomStates.find((state) => state === 'loading');

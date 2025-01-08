@@ -4,6 +4,8 @@ import { Link } from 'expo-router';
 import { Button } from '@/ui-kit';
 import { LogOut } from 'lucide-react';
 import { useLogout } from '@/hooks';
+import { LocalStorage } from '@/helpers/localStorage';
+import { SETTINGS } from '@/constants';
 
 const OPTIONS = [
   {
@@ -23,6 +25,7 @@ const OPTIONS = [
 // TODO: add animation slide down on open, animation slide up on close
 export const MenuOptions = () => {
   const logout = useLogout();
+  const clearStorage = () => LocalStorage.clearStorage();
   return (
     <div className="p-5">
       <h3 className="text-h5 font-bold text-white">Options</h3>
@@ -53,6 +56,17 @@ export const MenuOptions = () => {
           <div className="flex-1" />
           <ArrowLeft className="rotate-180 h-3 w-3" />
         </Button>
+        {SETTINGS.isDev && (
+          <Button
+            variant="transparent"
+            className="flex items-center text-sm text-white font-normal py-3 px-0 h-auto rounded-none hover:text-white"
+            onClick={clearStorage}
+          >
+            Clear Storage (Dev)
+            <div className="flex-1" />
+            <ArrowLeft className="rotate-180 h-3 w-3" />
+          </Button>
+        )}
       </div>
     </div>
   );

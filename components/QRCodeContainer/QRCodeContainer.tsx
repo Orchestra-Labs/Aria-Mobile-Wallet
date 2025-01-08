@@ -1,6 +1,7 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import logo from '@/assets/images/logo_with_title_rounded.svg';
+import { NativeImage } from '@/types';
+const logo: NativeImage = require('@/assets/images/logo_with_title_rounded.svg');
 
 interface QRCodeContainerProps {
   qrCodeValue: string;
@@ -29,7 +30,7 @@ export const QRCodeContainer: React.FC<QRCodeContainerProps> = ({
         fgColor="#000000"
         level="Q"
         imageSettings={{
-          src: logo,
+          src: logo.uri,
           height: 70,
           width: 70,
           excavate: true,

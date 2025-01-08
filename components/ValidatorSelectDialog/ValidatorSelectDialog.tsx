@@ -349,7 +349,7 @@ export const ValidatorSelectDialog: React.FC<ValidatorSelectDialogProps> = ({
         {isClaimDialog ? (
           <div className="flex justify-center text-center">
             <div className="flex items-center">
-              <p className="text-sm pr-1">Claim:</p>
+              <p className="text-sm pr-1 text-white">Claim:</p>
               <Button
                 variant={!isClaimToRestake ? 'selected' : 'unselected'}
                 size="xsmall"
@@ -359,7 +359,7 @@ export const ValidatorSelectDialog: React.FC<ValidatorSelectDialogProps> = ({
               >
                 To Wallet
               </Button>
-              <p className="text-sm px-1">/</p>
+              <p className="text-sm px-1 text-white">/</p>
               <Button
                 variant={isClaimToRestake ? 'selected' : 'unselected'}
                 size="xsmall"
@@ -381,7 +381,7 @@ export const ValidatorSelectDialog: React.FC<ValidatorSelectDialogProps> = ({
         )}
 
         <div className="flex justify-between items-center px-2">
-          <div className="flex-1 text-sm">Tap to select</div>
+          <div className="flex-1 text-sm text-white">Tap to select</div>
           <div className="flex items-center">
             <Button
               variant={allValidatorsSelected ? 'selected' : 'unselected'}
@@ -392,7 +392,7 @@ export const ValidatorSelectDialog: React.FC<ValidatorSelectDialogProps> = ({
             >
               All
             </Button>
-            <p className="text-sm px-1">/</p>
+            <p className="text-sm px-1 text-white">/</p>
             <Button
               variant={noValidatorsSelected ? 'selected' : 'unselected'}
               size="xsmall"
