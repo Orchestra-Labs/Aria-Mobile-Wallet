@@ -4,17 +4,14 @@ import '@tailwind';
 
 import { AuthLayout } from '@/layouts';
 import { CreateWallet } from '@/screens';
-import { GuestGuard } from '@/guards';
-import { StoreLoader } from '@/managers';
+import { NonAuthenticatedScreenWrapper } from '@/wrappers';
 
 export default function CreateWalletScreen() {
   return (
-    <StoreLoader>
-      <GuestGuard>
-        <AuthLayout>
-          <CreateWallet />
-        </AuthLayout>
-      </GuestGuard>
-    </StoreLoader>
+    <NonAuthenticatedScreenWrapper>
+      <AuthLayout>
+        <CreateWallet />
+      </AuthLayout>
+    </NonAuthenticatedScreenWrapper>
   );
 }

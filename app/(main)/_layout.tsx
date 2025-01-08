@@ -1,8 +1,14 @@
+import { COLORS } from '@/constants';
 import { Stack } from 'expo-router';
 
 export default function MainLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: COLORS.background.app },
+      }}
+    >
       <Stack.Screen name="index" />
       <Stack.Screen name="edit-coins-list" />
       <Stack.Screen
@@ -10,6 +16,7 @@ export default function MainLayout() {
         options={{
           presentation: 'containedTransparentModal',
           animation: 'fade',
+          contentStyle: { backgroundColor: undefined },
         }}
       />
     </Stack>
