@@ -285,3 +285,9 @@ export interface TransactionState {
   chainName: string;
   networkLevel: NetworkLevel;
 }
+
+export type NativeImage = {
+  uri: string;
+  width: string;
+  height: string;
+};
