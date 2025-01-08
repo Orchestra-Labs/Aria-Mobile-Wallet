@@ -1,22 +1,18 @@
 import { isLoggedInAtom, userAccountAtom, walletAddressAtom } from '@/atoms';
 import { getAccountByID, getAddress, getSessionToken } from '@/helpers';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useRefreshData } from './useRefreshData';
 import { useEffect, useState } from 'react';
-import { loadable } from 'jotai/utils';
 
 export const useInitializeWallet = () => {
   const { refreshData } = useRefreshData();
 
-  const isLoggedInAtomState = useAtomValue(loadable(isLoggedInAtom));
-
-  const isLoggedIn =
-    'data' in isLoggedInAtomState ? isLoggedInAtomState.data : false;
+  const isLoggedIn = useAtomValue(isLoggedInAtom);
 
   const [loading, setLoading] = useState(true);
 
-  const setWalletAddress = useSetAtom(walletAddressAtom);
-  const setUserAccount = useSetAtom(userAccountAtom);
+  const [walletAddress, setWalletAddress] = useAtom(walletAddressAtom);
+  const [userAccount, setUserAccount] = useAtom(userAccountAtom);
 
   const initializeWallet = async () => {
     if (!isLoggedIn) return;
@@ -29,8 +25,9 @@ export const useInitializeWallet = () => {
 
     try {
       const address = await getAddress(sessionToken.mnemonic);
-      setWalletAddress(address);
       refreshData({ address });
+      if (walletAddress === address) return;
+      setWalletAddress(address);
 
       const accountData = await getAccountByID(sessionToken.accountID);
       setUserAccount(accountData);
@@ -47,7 +44,7 @@ export const useInitializeWallet = () => {
       setLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);
+  }, [isLoggedIn, userAccount, walletAddress]);
 
   return { loading };
 };
