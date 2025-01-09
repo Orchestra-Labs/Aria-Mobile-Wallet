@@ -5,7 +5,7 @@ export const VerifySuccess: React.FC<React.SVGProps<SVGSVGElement>> = (
 ) => (
   <svg
     width="224"
-    height="224"
+    height={props.height ?? props.width ?? 224}
     viewBox="0 0 224 224"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
