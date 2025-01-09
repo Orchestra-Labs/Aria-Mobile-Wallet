@@ -132,12 +132,12 @@ export const AssetScrollTile = ({
           {/* Asset Information */}
           <div className="mb-4 min-h-[7.5rem] max-h-[7.5rem] overflow-hidden shadow-md bg-black p-2">
             <p>
-              <strong>Ticker: </strong>
-              {asset.symbol}
+              <strong className="text-white">Ticker: </strong>
+              <span className="text-white">{asset.symbol}</span>
             </p>
             <p>
-              <strong>Sub-unit: </strong>
-              {asset.denom}
+              <strong className="text-white">Sub-unit: </strong>
+              <span className="text-white">{asset.denom}</span>
             </p>
             {/* 
               TODO: include information such as...
