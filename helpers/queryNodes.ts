@@ -16,6 +16,7 @@ import {
   getSessionToken,
   storeNodeErrorCounts,
 } from './dataHelpers';
+import axios from 'axios';
 
 //indexer specific error - i.e tx submitted, but indexer disabled so returned incorrect
 
@@ -46,7 +47,7 @@ export const incrementErrorCount = async (
 ): Promise<void> => {
   const errorCounts = await getNodeErrorCounts();
   errorCounts[nodeProvider] = (errorCounts[nodeProvider] || 0) + 1;
-  storeNodeErrorCounts(errorCounts);
+  await storeNodeErrorCounts(errorCounts);
 };
 
 // Helper: Perform a REST API query to a selected node
@@ -55,17 +56,45 @@ const performRestQuery = async (
   queryMethod: string,
   queryType: 'POST' | 'GET',
 ) => {
-  const response = await fetch(`${queryMethod}${endpoint}`, {
-    method: queryType,
-    body: null,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  const url = `${queryMethod}${endpoint}`;
 
-  if (!response.ok) {
-    throw new Error('Node query failed');
+  if (queryType === 'POST') {
+    const res = axios.post(url, {
+      headers: { 'Content-Type': 'application/json' },
+      params: null,
+    });
+
+    // const response = await fetch(`${queryMethod}${endpoint}`, {
+    //   method: queryType,
+    //   body: null,
+    //   headers: { 'Content-Type': 'application/json' },
+    // });
+
+    return (await res).data;
   }
 
-  return await response.json();
+  const res = axios.get(url, {
+    headers: { 'Content-Type': 'application/json' },
+    params: null,
+  });
+
+  return (await res).data;
+
+  // const response = await fetch(`${queryMethod}${endpoint}`, {
+  //   method: queryType,
+  //   body: null,
+  //   headers: { 'Content-Type': 'application/json' },
+  // });
+
+  // // return (await res).data;
+
+  // if (!response.ok) {
+  //   throw new Error('Node query failed');
+  // }
+
+  // // return response;
+
+  // return await response.json();
 };
 
 // TODO: modify to support multi-send
@@ -132,6 +161,7 @@ export const performRpcQuery = async (
 
     throw new Error(`Transaction failed with ${result.code}`);
   } catch (error: any) {
+    console.error('end ~ error:', error);
     // TODO: find another way to verify transaction success.
     // TODO: log indexer errors, changeover to backups (can be original endpoints).  no single points of failure
     if (isIndexerError(error)) {
@@ -181,14 +211,22 @@ const queryWithRetry = async ({
           }
           const mnemonic = sessionToken.mnemonic;
           const address = await getAddress(mnemonic);
+
           const offlineSigner = await createOfflineSignerFromMnemonic(mnemonic);
-          const client = await SigningStargateClient.connectWithSigner(
-            queryMethod,
-            offlineSigner,
-          );
+
+          let client: SigningStargateClient;
+          try {
+            console.log('🚀 ~ queryMethod:', queryMethod);
+            client = await SigningStargateClient.connectWithSigner(
+              'https://symphony-rpc.kleomedes.network', //?? queryMethod,
+              offlineSigner,
+            );
+          } catch (error) {
+            console.error('🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 ~ error:', error);
+          }
 
           const result = await performRpcQuery(
-            client,
+            client!,
             address,
             messages,
             feeDenom,
@@ -206,10 +244,11 @@ const queryWithRetry = async ({
         }
       } catch (error) {
         lastError = error;
+        console.log('🚀 ~ lastError:', lastError);
         console.error('Error querying node:', error);
 
         if (!isIndexerError(error)) {
-          incrementErrorCount(provider.rpc);
+          await incrementErrorCount(provider.rpc);
         }
       }
 
@@ -241,7 +280,7 @@ export const queryRestNode = async ({
   queryType?: 'GET' | 'POST';
   feeDenom?: string;
 }) =>
-  queryWithRetry({
+  await queryWithRetry({
     endpoint,
     useRPC: false,
     queryType,
@@ -264,7 +303,7 @@ export const queryRpcNode = async ({
     gas: string;
   };
 }) =>
-  queryWithRetry({
+  await queryWithRetry({
     endpoint,
     useRPC: true,
     messages,

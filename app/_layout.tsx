@@ -2,8 +2,11 @@ import '../globals';
 import { Stack } from 'expo-router';
 import { COLORS } from '@/constants';
 import { AppWrapper } from '@/wrappers';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 export default function RootLayout() {
+  
   return (
     <AppWrapper>
       <Stack

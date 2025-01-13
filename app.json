@@ -13,6 +13,7 @@
     },
     "android": {
       "package": "aria.mobile.wallet",
+      "permissions": ["INTERNET"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -20,11 +21,16 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
+      "output": "server",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
+      ["expo-router",{
+        "origin": "https://evanbacon.dev/"
+        }
+    ],
+      
+      
       [
         "expo-splash-screen",
         {

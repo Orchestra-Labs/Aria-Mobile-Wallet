@@ -16,6 +16,7 @@ export function useWalletAssetsRefresh() {
 
   const refreshWalletAssets = async (address?: string) => {
     const targetAddress = address || walletAddress;
+
     const subscriptions =
       userAccount?.settings.subscribedTo &&
       Object.keys(userAccount.settings.subscribedTo).length > 0
@@ -42,7 +43,6 @@ export function useWalletAssetsRefresh() {
         setIsFetchingData(false);
       }
     } else {
-      console.warn('No wallet address provided for refreshing wallet assets');
     }
   };
 

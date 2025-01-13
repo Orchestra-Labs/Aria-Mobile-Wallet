@@ -1,6 +1,10 @@
-import { TextFieldStatus } from '@/constants';
+import { NetworkLevel, TextFieldStatus } from '@/constants';
+import { TransactionState } from '@/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { isIBC } from './ibcTransactions';
+import { isValidSwap } from './swapTransactions';
+import { isValidSend } from './sendTransactions';
 export { cva, type VariantProps } from 'class-variance-authority';
 
 export const cn = (...inputs: ClassValue[]) => {
@@ -46,6 +50,40 @@ export const isValidUrl = (url: string): boolean => {
 // Validate numeric input and restrict to selectedAsset.exponent decimal places
 export const getRegexForDecimals = (exponent: number) => {
   return new RegExp(`^\\d*\\.?\\d{0,${exponent}}$`);
+};
+
+export const isValidTransaction = async ({
+  sendAddress,
+  recipientAddress,
+  sendState,
+  receiveState,
+  network,
+}: {
+  sendAddress: string;
+  recipientAddress: string;
+  sendState: TransactionState;
+  receiveState: TransactionState;
+  network: NetworkLevel;
+}) => {
+  if (sendState.networkLevel !== receiveState.networkLevel) {
+    return false;
+  }
+
+  if (sendAddress && recipientAddress) {
+    const isValidIBC = await isIBC({ sendAddress, recipientAddress, network });
+    if (!isValidIBC) {
+      return false;
+    }
+  }
+
+  const sendAsset = sendState.asset;
+  const receiveAsset = receiveState.asset;
+
+  const isSwap = isValidSwap({ sendAsset, receiveAsset });
+  const isSend = isValidSend({ sendAsset, receiveAsset });
+  const result = isSend || isSwap;
+
+  return result;
 };
 
 export const calculateRemainingTime = (completionTime: string): string => {

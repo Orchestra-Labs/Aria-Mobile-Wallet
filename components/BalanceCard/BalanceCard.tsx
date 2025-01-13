@@ -26,6 +26,7 @@ interface BalanceCardProps {
 export const BalanceCard = ({ currentStep, totalSteps }: BalanceCardProps) => {
   const isInitialDataLoad = useAtomValue(isInitialDataLoadAtom);
 
+
   const walletAssets = useAtomValue(walletAssetsAtom);
 
   const validatorData = useAtomValue(validatorDataAtom);

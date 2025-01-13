@@ -14,7 +14,7 @@ export const IBC_PREFIX = 'ibc/';
 export const LESSER_EXPONENT_DEFAULT = 0;
 export const GREATER_EXPONENT_DEFAULT = 6;
 
-export const MAX_NODES_PER_QUERY = 3;
+export const MAX_NODES_PER_QUERY = 10;
 // Endpoints for different network operations
 
 const USE_PROXY = false; // ! CHAIN_NODES copied from extension, we don't have a server in mobile app, use original URL
