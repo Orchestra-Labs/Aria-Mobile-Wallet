@@ -26,7 +26,7 @@
     },
     "plugins": [
       ["expo-router",{
-        "origin": "https://evanbacon.dev/"
+        "origin": "https://t7v8q56t-8081.euw.devtunnels.ms"
         }
     ],
       
