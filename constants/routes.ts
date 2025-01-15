@@ -2,11 +2,11 @@
 export const ROUTES = {
   APP: {
     ROOT: '/' as const,
-    TRANSACTIONS_HISTORY: '/auth/new-wallet' as const,
-    TRANSACTION: '/auth/new-wallet' as const,
-    SEND: '/auth/new-wallet' as const,
-    RECEIVE: '/auth/new-wallet' as const,
-    ADD_NETWORK: '/auth/new-wallet' as const,
+    TRANSACTIONS_HISTORY: '/auth/new-wallet' as const, // NOT IMPLEMENTED
+    TRANSACTION: '/auth/new-wallet' as const, // NOT IMPLEMENTED
+    SEND: '/send' as const,
+    RECEIVE: '/auth/new-wallet' as const, // NOT IMPLEMENTED
+    ADD_NETWORK: '/auth/new-wallet' as const, // NOT IMPLEMENTED
     EDIT_COIN_LIST: '/edit-coins-list' as const,
   },
   AUTH: {
