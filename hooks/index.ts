@@ -9,3 +9,5 @@ export * from './useInitializeWallet';
 export * from './useExchangeAssets';
 export * from './useLoadStore';
 export * from './useLoadFonts';
+export * from './useExchangeRate';
+export * from './useReloadSessionStorage';
