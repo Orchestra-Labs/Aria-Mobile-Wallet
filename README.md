@@ -9,8 +9,12 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```bash
    yarn
    ```
+2. Add environment configuration
 
-2. Start the app
+   Create `.env.development.local` file from `.env.development.example` and fill the settings with your own
+
+
+3. Start the app
 
    ```bash
    yarn start
