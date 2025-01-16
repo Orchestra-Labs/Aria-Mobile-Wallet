@@ -46,7 +46,7 @@ export const incrementErrorCount = async (
 ): Promise<void> => {
   const errorCounts = await getNodeErrorCounts();
   errorCounts[nodeProvider] = (errorCounts[nodeProvider] || 0) + 1;
-  storeNodeErrorCounts(errorCounts);
+  await storeNodeErrorCounts(errorCounts);
 };
 
 // Helper: Perform a REST API query to a selected node
@@ -209,7 +209,7 @@ const queryWithRetry = async ({
         console.error('Error querying node:', error);
 
         if (!isIndexerError(error)) {
-          incrementErrorCount(provider.rpc);
+          await incrementErrorCount(provider.rpc);
         }
       }
 
@@ -241,7 +241,7 @@ export const queryRestNode = async ({
   queryType?: 'GET' | 'POST';
   feeDenom?: string;
 }) =>
-  queryWithRetry({
+  await queryWithRetry({
     endpoint,
     useRPC: false,
     queryType,
@@ -264,7 +264,7 @@ export const queryRpcNode = async ({
     gas: string;
   };
 }) =>
-  queryWithRetry({
+  await queryWithRetry({
     endpoint,
     useRPC: true,
     messages,

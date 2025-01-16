@@ -9,13 +9,13 @@ export const getNodeErrorCounts = async (): Promise<Record<string, number>> => {
 };
 
 // Store error counts in localStorage
-export const storeNodeErrorCounts = (
+export const storeNodeErrorCounts = async (
   errorCounts: Record<string, number>,
-): void => {
-  LocalStorage.setItem(ERROR_COUNTS_KEY, JSON.stringify(errorCounts));
+): Promise<void> => {
+  await LocalStorage.setItem(ERROR_COUNTS_KEY, JSON.stringify(errorCounts));
 };
 
 // Reset error counts (e.g., on login)
-export const resetNodeErrorCounts = async () => {
+export const resetNodeErrorCounts = async (): Promise<void> => {
   await LocalStorage.removeItem(ERROR_COUNTS_KEY);
 };

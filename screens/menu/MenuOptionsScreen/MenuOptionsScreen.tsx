@@ -3,7 +3,7 @@ import { LINKS, ROUTES } from '@/constants';
 import { Button } from '@/ui-kit';
 import { LogOut } from 'lucide-react';
 import { useLogout } from '@/hooks';
-import { LocalStorage } from '@/helpers/localStorage';
+import { LocalStorage } from '@/helpers';
 import { SETTINGS } from '@/constants';
 import { ExternalLink } from '@/components';
 import { Link } from 'expo-router';

@@ -26,11 +26,14 @@ export const useInitializeWallet = () => {
     try {
       const address = await getAddress(sessionToken.mnemonic);
       refreshData({ address });
-      if (walletAddress === address) return;
-      setWalletAddress(address);
-
+      if (walletAddress !== address) {
+        setWalletAddress(address);
+      }
       const accountData = await getAccountByID(sessionToken.accountID);
-      setUserAccount(accountData);
+      if (userAccount?.id !== accountData?.id) {
+        setUserAccount(accountData);
+      }
+
     } catch (error) {
       console.error('Error initializing wallet address:', error);
     } finally {

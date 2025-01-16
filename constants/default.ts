@@ -1,5 +1,6 @@
 import { Asset } from '@/types';
 import { NetworkLevel } from './enums';
+import { ENV } from './env';
 
 // Network-related constants
 export const NETWORK = 'symphony';
@@ -17,9 +18,10 @@ export const GREATER_EXPONENT_DEFAULT = 6;
 export const MAX_NODES_PER_QUERY = 3;
 // Endpoints for different network operations
 
-const USE_PROXY = false; // ! CHAIN_NODES copied from extension, we don't have a server in mobile app, use original URL
+// ! webview has strict CORS requirements, always use proxy server with CORS headers
+const USE_PROXY = true;
 
-const DEV_PROXY = 'http://localhost:5173';
+const PROXY_SERVER_URL = ENV.PROXY_SERVER_URL;
 
 // Define the shape of the local asset registry
 type AssetRegistry = {
@@ -77,10 +79,10 @@ export const CHAIN_NODES = {
   symphonytestnet: [
     {
       rpc: USE_PROXY
-        ? `${DEV_PROXY}/kleomedes-rpc`
+        ? `${PROXY_SERVER_URL}/symphony-rpc.kleomedes.network`
         : 'https://symphony-rpc.kleomedes.network',
       rest: USE_PROXY
-        ? `${DEV_PROXY}/kleomedes-rest`
+        ? `${PROXY_SERVER_URL}/symphony-api.kleomedes.network`
         : 'https://symphony-api.kleomedes.network',
       provider: 'Kleomedes',
     },
@@ -92,10 +94,10 @@ export const CHAIN_NODES = {
     },*/
     {
       rpc: USE_PROXY
-        ? `${DEV_PROXY}/cogwheel-rpc`
+        ? `${PROXY_SERVER_URL}/symphony-testnet-rpc.cogwheel.zone`
         : 'https://symphony-testnet-rpc.cogwheel.zone',
       rest: USE_PROXY
-        ? `${DEV_PROXY}/cogwheel-rest`
+        ? `${PROXY_SERVER_URL}/symphony-testnet-api.cogwheel.zone`
         : 'https://symphony-testnet-api.cogwheel.zone',
       provider: 'Cogwheel',
     },

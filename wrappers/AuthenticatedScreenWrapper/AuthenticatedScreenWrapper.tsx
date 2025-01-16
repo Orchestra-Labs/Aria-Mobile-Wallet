@@ -12,6 +12,7 @@ import {
   ScreenSuspense,
   StoreLoader,
 } from '@/managers';
+import { ReactQueryProvider } from '@/providers';
 import { FC, PropsWithChildren } from 'react';
 
 export const AuthenticatedScreenWrapper: FC<PropsWithChildren> = ({
@@ -19,12 +20,14 @@ export const AuthenticatedScreenWrapper: FC<PropsWithChildren> = ({
 }) => {
   return (
     <StoreLoader>
-      <ScreenSuspense>
-        <InitWalletManager>
-          <AuthGuard>{children}</AuthGuard>
-          <DataManager />
-        </InitWalletManager>
-      </ScreenSuspense>
+      <ReactQueryProvider>
+        <ScreenSuspense>
+          <InitWalletManager>
+            <AuthGuard>{children}</AuthGuard>
+            <DataManager />
+          </InitWalletManager>
+        </ScreenSuspense>
+      </ReactQueryProvider>
     </StoreLoader>
   );
 };

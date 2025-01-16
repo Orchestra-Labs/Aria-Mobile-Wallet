@@ -1,6 +1,8 @@
 import { useLoadFonts, useLoadStore } from '@/hooks';
 import * as SplashScreen from 'expo-splash-screen';
-import { PropsWithChildren, useEffect } from 'react';
+import { Fragment, PropsWithChildren, useEffect } from 'react';
+import { View } from 'react-native';
+import { SessionStorageLoader } from '../SessionStorageLoader';
 
 export const RootLoader = ({ children }: PropsWithChildren) => {
   const { loaded: storeLoaded } = useLoadStore();
@@ -15,5 +17,12 @@ export const RootLoader = ({ children }: PropsWithChildren) => {
 
   if (!storeLoaded) return null;
   if (!fontsLoaded) return null;
-  return children;
+  return (
+    <Fragment>
+      <View style={{ position: 'absolute', height: 0, width: 0 }}>
+        <SessionStorageLoader />
+      </View>
+      {children}
+    </Fragment>
+  );
 };
