@@ -33,7 +33,6 @@ export const useInitializeWallet = () => {
       if (userAccount?.id !== accountData?.id) {
         setUserAccount(accountData);
       }
-
     } catch (error) {
       console.error('Error initializing wallet address:', error);
     } finally {
