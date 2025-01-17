@@ -28,6 +28,7 @@ const OPTIONS = [
 export const MenuOptions = () => {
   const logout = useLogout();
   const clearStorage = () => LocalStorage.clearStorage();
+  const showClearStorageButton = SETTINGS.isDev || SETTINGS.isPreview;
   return (
     <div className="p-5">
       <h3 className="text-h5 font-bold text-white">Options</h3>
@@ -61,7 +62,7 @@ export const MenuOptions = () => {
           <div className="flex-1" />
           <ArrowLeft className="rotate-180 h-3 w-3" />
         </Button>
-        {SETTINGS.isDev && (
+        {showClearStorageButton && (
           <Button
             variant="transparent"
             className="flex items-center text-sm text-white font-normal py-3 px-0 h-auto rounded-none hover:text-white"
