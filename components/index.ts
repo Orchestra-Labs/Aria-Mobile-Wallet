@@ -13,6 +13,7 @@ export * from './RecoveryPhraseGrid';
 export * from './ScrollTile';
 export * from './SearchBar';
 export * from './SortDialog';
+export * from './StakingGuide';
 export * from './TileScroller';
 export * from './Toast';
 export * from './Tooltip';

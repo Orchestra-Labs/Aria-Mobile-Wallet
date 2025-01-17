@@ -17,6 +17,7 @@ import { Link } from 'expo-router';
 import { ReceiveDialog } from '../ReceiveDialog';
 import { ValidatorSelectDialog } from '../ValidatorSelectDialog';
 import { Fragment } from 'react';
+import PointingHand from '../StakingGuide/StakingGuide';
 
 interface BalanceCardProps {
   currentStep: number;
@@ -89,6 +90,7 @@ export const BalanceCard = ({ currentStep, totalSteps }: BalanceCardProps) => {
             <h1 className="text-h2 text-white font-bold line-clamp-1">
               {primaryText}
             </h1>
+            <PointingHand />
             <p className="text-sm text-neutral-1 line-clamp-1">
               {secondaryText ? (
                 `Balance: ${secondaryText}`
