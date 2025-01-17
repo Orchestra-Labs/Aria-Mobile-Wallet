@@ -13,7 +13,7 @@ export * from './RecoveryPhraseGrid';
 export * from './ScrollTile';
 export * from './SearchBar';
 export * from './SortDialog';
-export * from './StakingGuide';
+export * from './TutorialDisplay';
 export * from './TileScroller';
 export * from './Toast';
 export * from './Tooltip';
@@ -21,6 +21,7 @@ export * from './TransactionResultsTile';
 export * from './ValidatorScrollTile';
 export * from './ValidatorSelectDialog';
 export * from './WalletSuccessScreen';
+export * from './Header';
 
 export * from './DialogContainer';
 export * from './ScreenLoader';

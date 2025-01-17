@@ -123,20 +123,48 @@ export const CreateWallet = () => {
 
   /* ******************************************************************************************* */
   /* David Current TODOs */
-  // TODO: only show those in receive that can be accessed from the send
-  // TODO: ensure swap updates when swappable asset is selected
-  // TODO: change unit on fee when send denom is changed
-  // TODO: ensure fees are taken on send in send denom
-  // TODO: on press of switch button, ensure placeholder values update
-  // TODO: on press of switch button, ensure input values update
+  // TODO: add validation for minimum send amount
+  // TODO: ensure maximum sendable amount encorporates fee estimate
+  // TODO: add error message to send page to show why button is disabled
+  // TODO: add tutorial pages for first load so users know how to swap, how to receive specific assets, and how to stake
+  // TODO: add saved addresses (name and address)
 
-  // TODO: for when viewing all validators, enable selectable option for viewing unbonded validators
+  // TODO: in fetchWalletAssets, use exchange assets for base denom information then clear TODO
+  // TODO: make "clear" and "max" button send screen inputs.  make placement and appearance for these uniform (send and unstake sections)
+  // TODO: add feeLoading state so user knows fees are updating
+  // TODO: add search icon to search field, add onclick
+
+  // TODO: modify default asset selection so when MLD isn't selected, default send and receive are changed
+  // TODO: add tutorial pages to show how to swap and stake
+
+  // TODO: fix edit coin list to show symbol, chain, and name
+  // TODO: Add first level of routing (swap to IBC send or IBC to swap)
+  // TODO: fix copytextfield issue of enlarged border on click
   // TODO: Add remember me
   // TODO: make toast animate in, animate out, and swipe-away
   // TODO: Add first level of routing (swap to IBC send or IBC to swap)
   // TODO: Add additional chain views to verify above
   // TODO: abstract wallet prefix and mnemonic decryption
   // TODO: add auth support for dApps
+
+  // TODO: show donut chart with assets rather than singular value (requires connections to exchanges)
+
+  // TODO: handleCreateWallet should create/add depending on source of origin
+  // TODO: creation of wallet with old password should overwrite old wallet
+  // TODO: access alternate wallets through MainLayout.tsx, then remove TODO
+  // TODO: add option screen filter for regional display for numbers
+
+  // TODO: support multiple accounts by modifying createAccount on account.ts, then remove TODO
+
+  // TODO: add security options in account to handle saveSessionData TODO, then remove TODO
+
+  // TODO: create add/edit/remove wallet screen to allow management of multiple accounts
+  // TODO: add save wallet screen for saving preferred received assets per wallet and wallet name/identifier (for those user sends to)
+  // TODO: security tab enables/disables need to confirm transactions/re-entry of password on transactions (3 levels of security)
+  // TODO: add toggle option for single-click transactions and another for force accepting/declining transactions
+  // TODO: add toggle option for ultra-secure mode, using password auth for on every transaction like with hardware wallets.  in that mode, no session storage is used.
+
+  // TODO: check browser compatibility (is edge the coloring issue?)
   /* ******************************************************************************************* */
 
   /* Current TODOs */
