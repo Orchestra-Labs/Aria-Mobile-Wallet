@@ -26,6 +26,7 @@ import {
   AssetInput,
   WalletSuccessScreen,
   TransactionResultsTile,
+  Header,
 } from '@/components';
 import {
   formatBalanceDisplay,
@@ -642,25 +643,14 @@ export const SendScreen = () => {
 
   return (
     <div className="h-screen flex flex-col bg-black text-white">
-      {/* Top bar with back button and title */}
-      <div className="flex justify-between items-center w-full p-5">
-        <Link
-          href={ROUTES.APP.ROOT}
-          className="flex items-center justify-center max-w-5 max-h-5 p-0.5"
-          onPress={handleBackClick}
-        >
-          <ArrowLeft className="w-full h-full text-white" />
-        </Link>
-
-        <Tooltip
-          tooltipText={'To swap, click the receive field icon'}
-          position={Position.RIGHT}
-        >
-          <h1 className="text-h5 text-white font-bold">Send</h1>
-        </Tooltip>
-
-        <div className="max-w-5 w-full max-h-5" />
-      </div>
+      <Header
+        title={'Send'}
+        onClose={handleBackClick}
+        useArrow={true}
+        showTooltip={true}
+        tooltipText={'To swap, click the receive field icon'}
+        tooltipPosition={Position.RIGHT}
+      />
 
       {/* Content container */}
       <div className="flex flex-col justify-between flex-grow p-4 border border-neutral-2 rounded-lg overflow-y-auto">

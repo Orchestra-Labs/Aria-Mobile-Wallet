@@ -1,9 +1,16 @@
 import { AccountRecord, SubscriptionRecord, WalletRecord } from '@/types';
 import { LocalStorage } from '../localStorage';
-import { getPasswordRecords, hashPassword, savePasswordHash } from './password';
+import {
+  getPasswordRecords,
+  hashPassword,
+  savePasswordHash,
+  updatePassword,
+} from './password';
 import { generateUUID } from '../uuid';
 import { createWallet } from './wallet';
 import { saveSessionData } from './session';
+import { decryptMnemonic, encryptMnemonic } from './crypto';
+import { SettingsOptions } from '@/constants';
 
 const ACCOUNTS_KEY = 'accountsToken';
 
@@ -100,11 +107,15 @@ export const createAccount = async (
   const newAccount: AccountRecord = {
     id: accountID,
     settings: {
-      hasSetCoinList: false,
       defaultNetworkID,
       defaultCoinDenom,
       subscribedTo: subscriptions,
       activeWalletID: walletRecord.id,
+      [SettingsOptions.STABLECOIN_FEE]: false,
+      [SettingsOptions.VALIDATOR_STATUS]: false,
+      // initialization settings:
+      hasSetCoinList: false,
+      hasViewedTutorial: false,
     },
     wallets: [walletRecord],
   };
@@ -206,5 +217,74 @@ export const removeWalletFromAccount = async (
 
   saveAccountByID(account);
   console.log('Account updated successfully after wallet removal.');
+  return true;
+};
+
+export const updateWallet = async (
+  accountID: string,
+  walletID: string,
+  updatedFields: Partial<WalletRecord>,
+): Promise<boolean> => {
+  const account = await getAccountByID(accountID);
+  if (!account) {
+    console.warn(`Account with ID ${accountID} not found.`);
+    return false;
+  }
+
+  const walletIndex = account.wallets.findIndex(
+    (wallet) => wallet.id === walletID,
+  );
+  if (walletIndex === -1) {
+    console.warn(`Wallet with ID ${walletID} not found in account.`);
+    return false;
+  }
+
+  account.wallets[walletIndex] = {
+    ...account.wallets[walletIndex],
+    ...updatedFields,
+  };
+
+  saveAccountByID(account);
+  return true;
+};
+
+export const updateAccountPassword = async ({
+  accountID,
+  newPassword,
+  oldPassword,
+}: {
+  accountID: string;
+  newPassword: string;
+  oldPassword: string;
+}): Promise<boolean> => {
+  const account = await getAccountByID(accountID);
+  if (!account) {
+    console.warn(`Account with ID ${accountID} not found.`);
+    return false;
+  }
+
+  // Validate the old password
+  const newHash = updatePassword(accountID, oldPassword, newPassword);
+  if (!newHash) {
+    console.warn('Old password does not match.');
+    return false;
+  }
+
+  // Re-encrypt mnemonics for all wallets in the account
+  const updatedWallets = account.wallets.map((wallet) => {
+    const decryptedMnemonic = decryptMnemonic(
+      wallet.encryptedMnemonic,
+      oldPassword,
+    );
+    const reEncryptedMnemonic = encryptMnemonic(decryptedMnemonic, newPassword);
+    return {
+      ...wallet,
+      encryptedMnemonic: reEncryptedMnemonic,
+    };
+  });
+
+  // Save updated wallet records to the account
+  account.wallets = updatedWallets;
+  saveAccountByID(account);
   return true;
 };

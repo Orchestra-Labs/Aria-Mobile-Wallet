@@ -1,5 +1,11 @@
 import React, { startTransition, useEffect } from 'react';
-import { Loader, SearchBar, SortDialog, TileScroller } from '@/components';
+import {
+  Header,
+  Loader,
+  SearchBar,
+  SortDialog,
+  TileScroller,
+} from '@/components';
 import {
   assetDialogSortOrderAtom,
   assetDialogSortTypeAtom,
@@ -47,6 +53,7 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
 
   // Store initial settings to revert to them on cancel
   const initialSettings = {
+    hasSetCoinList: true,
     subscribedTo:
       userAccount?.settings.subscribedTo &&
       Object.keys(userAccount.settings.subscribedTo).length > 0
@@ -125,6 +132,7 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
         ...userAccount,
         settings: {
           ...userAccount.settings,
+          hasSetCoinList: true,
           subscribedTo: updatedSubscriptions,
         },
       };
@@ -142,6 +150,7 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
   const cancel = () => {
     if (userAccount) {
       // Restore the initial settings
+      userAccount.settings.hasSetCoinList = initialSettings.hasSetCoinList;
       userAccount.settings.subscribedTo = initialSettings.subscribedTo;
       saveAccountByID(userAccount);
     }
@@ -179,21 +188,7 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
 
   return (
     <div className="h-full flex flex-col bg-black text-white">
-      {/* Top bar with back button and title */}
-      <div className="flex justify-between items-center w-full p-5">
-        <Link
-          href={ROUTES.APP.ROOT}
-          className="flex items-center justify-center max-w-5 max-h-5 p-0.5"
-        >
-          <X className="w-full h-full text-white" onClick={cancel} />
-        </Link>
-        <div>
-          <h1 className="text-h5 text-white font-bold">{PAGE_TITLE}</h1>
-        </div>
-        <div className="max-w-5 w-full max-h-5" />
-      </div>
-
-      <Separator />
+      <Header title={PAGE_TITLE} onClose={cancel} />
 
       {/* TODO: extract the below items from here and assetselectdialog to external component */}
       <div className="flex pt-2 px-4 justify-between items-center px-2">
