@@ -47,8 +47,6 @@ export const useInitializeWallet = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log("🚀 ~ file: useInitializeWallet.ts:51 ~ useInitializeWal ~ isLoggedIn, userAccount?.id, walletAddress:", isLoggedIn, userAccount?.id, walletAddress);
 
-  console.log("🚀 ~ file: useInitializeWallet.ts:53 ~ useInitializeWal ~ loading:", loading);
   return { loading };
 };

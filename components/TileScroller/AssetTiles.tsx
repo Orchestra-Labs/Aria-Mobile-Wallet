@@ -2,6 +2,7 @@ import React from 'react';
 import { AssetScrollTile } from '../AssetScrollTile';
 import { useAtomValue } from 'jotai';
 import {
+  coinListAssetsAtom,
   filteredAssetsAtom,
   filteredDialogAssetsAtom,
   filteredExchangeAssetsAtom,
@@ -14,6 +15,7 @@ interface AssetTilesProps {
   isDialog?: boolean;
   isReceiveDialog?: boolean;
   multiSelectEnabled?: boolean;
+  isEditPage?: boolean;
   isOnSendPage: boolean;
 }
 
@@ -23,15 +25,22 @@ export const AssetTiles: React.FC<AssetTilesProps> = ({
   isDialog = false,
   isReceiveDialog = false,
   multiSelectEnabled = false,
+  isEditPage = false,
   isOnSendPage,
 }) => {
-  const filteredAssets = useAtomValue(
-    isDialog
-      ? isReceiveDialog
-        ? filteredExchangeAssetsAtom
-        : filteredDialogAssetsAtom
-      : filteredAssetsAtom,
-  );
+  const currentAtom = (() => {
+    if (isEditPage) return coinListAssetsAtom;
+    if (!isDialog) {
+      return filteredAssetsAtom;
+    }
+    if (isReceiveDialog) {
+      return filteredExchangeAssetsAtom;
+    } else {
+      return filteredDialogAssetsAtom;
+    }
+  })();
+
+  const filteredAssets = useAtomValue(currentAtom);
 
   return (
     <>

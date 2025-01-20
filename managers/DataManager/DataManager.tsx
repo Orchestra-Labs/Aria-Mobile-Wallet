@@ -39,6 +39,7 @@ export const DataManager: React.FC = () => {
       const initialLoadHasCompleted =
         !isFetchingWalletData &&
         !isFetchingValidatorData &&
+        !loadingExchangeAssets &&
         (walletAssets.length > 0 || validatorState.length > 0);
 
       if (initialLoadHasCompleted) {
@@ -52,6 +53,7 @@ export const DataManager: React.FC = () => {
     isFetchingValidatorData,
     walletAssets,
     validatorState,
+    loadingExchangeAssets,
   ]);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ export const DataManager: React.FC = () => {
   }, [userAccount]);
 
   useEffect(() => {
-    if (!loadingExchangeAssets && !errorExchangeAssets) return;
+    if (loadingExchangeAssets || errorExchangeAssets) return;
     setExchangeAssets(availableAssets ?? []);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [availableAssets, loadingExchangeAssets]);

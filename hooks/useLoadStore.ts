@@ -1,6 +1,6 @@
 import {
   dialogSearchTermAtom,
-  exchangeAssetsAtom,
+  symphonyAssetsAtom,
   filteredAssetsAtom,
   isFetchingValidatorDataAtom,
   isFetchingWalletDataAtom,
@@ -8,12 +8,15 @@ import {
   isLoggedInAtom,
   searchTermAtom,
   sendStateAtom,
+  showAllAssetsAtom,
   userAccountAtom,
   userWalletAtom,
   validatorDataAtom,
   walletAddressAtom,
   walletAssetsAtom,
   walletStateAtom,
+  subscribedAssetsAtom,
+  coinListAssetsAtom,
 } from '@/atoms';
 import { useAtomValue } from 'jotai';
 import { loadable } from 'jotai/utils';
@@ -29,7 +32,7 @@ export const useLoadStore = () => {
   const { state: userAccountState } = useAtomValue(loadable(userAccountAtom));
   const { state: userWalletState } = useAtomValue(loadable(userWalletAtom));
   const { state: exchangeAssetsState } = useAtomValue(
-    loadable(exchangeAssetsAtom),
+    loadable(symphonyAssetsAtom),
   );
   const { state: sendStateState } = useAtomValue(loadable(sendStateAtom));
   const { state: isLoggedInState } = useAtomValue(loadable(isLoggedInAtom));
@@ -51,6 +54,15 @@ export const useLoadStore = () => {
     loadable(dialogSearchTermAtom),
   );
   const { state: searchTermState } = useAtomValue(loadable(searchTermAtom));
+  const { state: showAllAssetsState } = useAtomValue(
+    loadable(showAllAssetsAtom),
+  );
+  const { state: subscribedAssetsState } = useAtomValue(
+    loadable(subscribedAssetsAtom),
+  );
+  const { state: coinListAssetsState } = useAtomValue(
+    loadable(coinListAssetsAtom),
+  );
 
   const atomStates = [
     walletAssetsState,
@@ -68,6 +80,9 @@ export const useLoadStore = () => {
     isInitialDataLoadState,
     dialogSearchTermState,
     searchTermState,
+    showAllAssetsState,
+    subscribedAssetsState,
+    coinListAssetsState,
   ];
 
   const loaded = !atomStates.find((state) => state === 'loading');

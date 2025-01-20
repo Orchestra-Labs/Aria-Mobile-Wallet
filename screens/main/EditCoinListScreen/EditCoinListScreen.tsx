@@ -2,6 +2,7 @@ import React, { startTransition, useEffect } from 'react';
 import {
   Header,
   Loader,
+  ScreenLoader,
   SearchBar,
   SortDialog,
   TileScroller,
@@ -13,19 +14,16 @@ import {
   filteredExchangeAssetsAtom,
   isInitialDataLoadAtom,
   selectedCoinListAtom,
+  subscribedAssetsAtom,
+  symphonyAssetsAtom,
 } from '@/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import {
-  DEFAULT_SUBSCRIPTION,
-  LOCAL_CHAIN_REGISTRY,
-  ROUTES,
-} from '@/constants';
-import { X } from '@/assets/icons';
+import { DEFAULT_CHAIN_ID, DEFAULT_SUBSCRIPTION, ROUTES } from '@/constants';
 import { Button, Separator } from '@/ui-kit';
 import { Asset, SubscriptionRecord } from '@/types';
 import { saveAccountByID } from '@/helpers/dataHelpers/account';
 import { userAccountAtom } from '@/atoms/accountAtom';
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 
 const PAGE_TITLE = 'Select Visible Coins';
 
@@ -42,13 +40,14 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
   const isInitialDataLoad = useAtomValue(isInitialDataLoadAtom);
   const [selectedCoins, setSelectedCoins] = useAtom(selectedCoinListAtom);
   const filteredExchangeCoins = useAtomValue(filteredExchangeAssetsAtom);
+  const subscribedAssets = useAtomValue(subscribedAssetsAtom);
+  const unfilteredAssets = useAtomValue(symphonyAssetsAtom);
   const setSearchTerm = useSetAtom(dialogSearchTermAtom);
   const setSortOrder = useSetAtom(assetDialogSortOrderAtom);
   const setSortType = useSetAtom(assetDialogSortTypeAtom);
   const [userAccount, setUserAccount] = useAtom(userAccountAtom);
 
-  const allCoinsSelected =
-    selectedCoins.length === filteredExchangeCoins.length;
+  const allCoinsSelected = selectedCoins.length === unfilteredAssets.length;
   const noCoinsSelected = selectedCoins.length === 0;
 
   // Store initial settings to revert to them on cancel
@@ -68,15 +67,11 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
   };
 
   const handleSelectAll = () => {
-    startTransition(() => {
-      setSelectedCoins(filteredExchangeCoins);
-    });
+    setSelectedCoins(filteredExchangeCoins);
   };
 
   const handleSelectNone = () => {
-    startTransition(() => {
-      setSelectedCoins([]);
-    });
+    setSelectedCoins([]);
   };
 
   const closeAndReturn = () => {
@@ -85,20 +80,18 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
   };
 
   const handleSelectCoin = (coin: Asset) => {
-    startTransition(() => {
-      setSelectedCoins((prevSelectedCoins) => {
-        const isAlreadySelected = (prevSelectedCoins as Asset[]).some(
-          (selectedCoin) => selectedCoin.denom === coin.denom,
-        );
+    setSelectedCoins((prevSelectedCoins) => {
+      const isAlreadySelected = prevSelectedCoins.some(
+        (selectedCoin) => selectedCoin.denom === coin.denom,
+      );
 
-        const updatedCoins = isAlreadySelected
-          ? (prevSelectedCoins as Asset[]).filter(
-              (selectedCoin) => selectedCoin.denom !== coin.denom,
-            )
-          : [...(prevSelectedCoins as Asset[]), coin];
+      const updatedCoins = isAlreadySelected
+        ? prevSelectedCoins.filter(
+            (selectedCoin) => selectedCoin.denom !== coin.denom,
+          )
+        : [...prevSelectedCoins, coin];
 
-        return updatedCoins;
-      });
+      return updatedCoins;
     });
   };
 
@@ -109,24 +102,18 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
         {};
 
       // TODO: change page's save structure to reflect subscription/registry structure to prevent excess looping here
-      Object.keys(LOCAL_CHAIN_REGISTRY).forEach((networkID) => {
-        const networkAssets = LOCAL_CHAIN_REGISTRY[networkID]?.assets || {};
-        const networkCoinDenoms = Object.keys(networkAssets);
+      const networkID = DEFAULT_CHAIN_ID;
+      const networkCoinDenoms = unfilteredAssets.map((asset) => asset.denom);
+      const selectedNetworkCoins = selectedCoins.map((coin) => coin.denom);
 
-        const selectedNetworkCoins = selectedCoins
-          .filter((coin) => coin.networkID === networkID)
-          .map((coin) => coin.denom);
-
-        if (selectedNetworkCoins.length === networkCoinDenoms.length) {
-          // All coins in the network are selected, so save as an empty array
-          updatedSubscriptions[networkID] = { coinDenoms: [] };
-        } else if (selectedNetworkCoins.length > 0) {
-          // Partial selection, save the selected denoms
-          updatedSubscriptions[networkID] = {
-            coinDenoms: selectedNetworkCoins,
-          };
-        }
-      });
+      console.log('saving selected coins', selectedNetworkCoins);
+      if (selectedNetworkCoins.length === networkCoinDenoms.length) {
+        // All coins in the network are selected, so save as an empty array
+        updatedSubscriptions[networkID] = { coinDenoms: [] };
+      } else if (selectedNetworkCoins.length > 0) {
+        // Partial selection, save the selected denoms
+        updatedSubscriptions[networkID] = { coinDenoms: selectedNetworkCoins };
+      }
 
       const updatedUserAccount = {
         ...userAccount,
@@ -137,11 +124,13 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
         },
       };
 
+      console.log('updated user account', updatedUserAccount);
+
       // Update state and save to local storage
-      startTransition(() => {
-        setUserAccount(updatedUserAccount);
-        saveAccountByID(updatedUserAccount);
-      });
+      setUserAccount(updatedUserAccount);
+      saveAccountByID(updatedUserAccount);
+    } else {
+      console.warn('userAccount is undefined');
     }
 
     closeAndReturn();
@@ -150,9 +139,15 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
   const cancel = () => {
     if (userAccount) {
       // Restore the initial settings
-      userAccount.settings.hasSetCoinList = initialSettings.hasSetCoinList;
-      userAccount.settings.subscribedTo = initialSettings.subscribedTo;
-      saveAccountByID(userAccount);
+      const updatedUserAccount = {
+        ...userAccount,
+        settings: {
+          ...userAccount.settings,
+          hasSetCoinList: initialSettings.hasSetCoinList,
+          subscribedTo: initialSettings.subscribedTo,
+        },
+      };
+      saveAccountByID(updatedUserAccount);
     }
 
     closeAndReturn();
@@ -160,31 +155,17 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
 
   useEffect(() => {
     if (userAccount) {
-      const initialCoins: Asset[] = [];
-
-      Object.entries(userAccount.settings.subscribedTo).forEach(
-        ([networkID, subscription]) => {
-          const networkAssets = LOCAL_CHAIN_REGISTRY[networkID]?.assets;
-
-          if (!networkAssets) return;
-
-          if (subscription.coinDenoms.length === 0) {
-            initialCoins.push(...Object.values(networkAssets));
-          } else {
-            subscription.coinDenoms.forEach((denom) => {
-              const asset = networkAssets[denom];
-              if (asset) {
-                initialCoins.push(asset);
-              }
-            });
-          }
-        },
-      );
-
-      setSelectedCoins(initialCoins);
+      console.log('subscribed assets', subscribedAssets);
+      startTransition(() => {
+        // setSelectedCoins(subscribedAssets);
+      });
+    } else {
+      console.warn('userAccount is undefined');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (isInitialDataLoad) return <ScreenLoader />;
 
   return (
     <div className="h-full flex flex-col bg-black text-white">
@@ -228,10 +209,9 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
             activeIndex={0}
             onSelectAsset={handleSelectCoin}
             isSelectable
-            isDialog
-            isReceiveDialog
             multiSelectEnabled
             isOnSendPage={isOnSendPage}
+            isEditPage
           />
         )}
         <SearchBar />

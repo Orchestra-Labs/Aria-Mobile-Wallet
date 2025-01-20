@@ -1,7 +1,7 @@
-import React, { startTransition } from 'react';
+import React from 'react';
 import { Button, SlideTray } from '@/ui-kit';
 import { Sort } from '@/assets/icons';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import {
   assetSortOrderAtom,
   assetSortTypeAtom,
@@ -11,8 +11,10 @@ import {
   assetDialogSortTypeAtom,
   validatorDialogSortOrderAtom,
   validatorDialogSortTypeAtom,
+  validatorStatusFilterAtom,
+  userAccountAtom,
 } from '@/atoms';
-import { ValidatorSortType } from '@/constants';
+import { ValidatorSortType, ValidatorStatusFilter } from '@/constants';
 
 interface SortDialogProps {
   isValidatorSort?: boolean;
@@ -23,6 +25,11 @@ export const SortDialog: React.FC<SortDialogProps> = ({
   isValidatorSort = false,
   isDialog = false,
 }) => {
+  const userAccount = useAtomValue(userAccountAtom);
+  const [validatorStatusFilter, setValidatorStatusFilter] = useAtom(
+    validatorStatusFilterAtom,
+  );
+
   const [assetSortOrder, setAssetSortOrder] = useAtom(
     isDialog ? assetDialogSortOrderAtom : assetSortOrderAtom,
   );
@@ -40,54 +47,34 @@ export const SortDialog: React.FC<SortDialogProps> = ({
     ? Object.values(ValidatorSortType)
     : ['name', 'amount'];
 
-  const setSortOrder = (sortOrder: 'Asc' | 'Desc') => {
+  const setSortOrder = isValidatorSort
+    ? setValidatorSortOrder
+    : setAssetSortOrder;
+
+  const setSortType = (value: string) => {
     if (isValidatorSort) {
-      setValidatorSortOrder(sortOrder);
-    } else if (!isValidatorSort) {
-      setAssetSortOrder(sortOrder);
+      setValidatorSortType(value as any);
+    } else {
+      setAssetSortType(value as any);
     }
   };
 
-  const setSortType = (sortType: string) => {
+  const resetDefaults = () => {
     if (isValidatorSort) {
-      setValidatorSortType(sortType as any);
-    } else if (!isValidatorSort) {
-      setAssetSortType(sortType as any);
+      setValidatorSortOrder('Desc');
+      setValidatorSortType(ValidatorSortType.NAME);
+    } else {
+      setAssetSortOrder('Desc');
+      setAssetSortType('name');
     }
-  };
-
-  const onResetDefaultsClick = () => {
-    startTransition(() => {
-      if (isValidatorSort) {
-        setValidatorSortOrder('Desc');
-        setValidatorSortType(ValidatorSortType.NAME);
-      } else if (!isValidatorSort) {
-        setAssetSortOrder('Desc');
-
-        setAssetSortType('name');
-      }
-    });
-  };
-
-  const onAscClick = () => {
-    startTransition(() => {
-      setSortOrder('Asc');
-    });
-  };
-  const onDescClick = () => {
-    startTransition(() => {
-      setSortOrder('Desc');
-    });
-  };
-
-  const onSetSortClick = (option: string) => {
-    startTransition(() => {
-      setSortType(option);
-    });
+    setValidatorStatusFilter(ValidatorStatusFilter.STATUS_ACTIVE);
   };
 
   const sortOrder = isValidatorSort ? validatorSortOrder : assetSortOrder;
   const sortType = isValidatorSort ? validatorSortType : assetSortType;
+
+  const viewValidatorsByStatus = userAccount?.settings.viewValidatorsByStatus;
+  const trayHeight = isValidatorSort && viewValidatorsByStatus ? '50%' : '45%';
 
   return (
     <SlideTray
@@ -101,7 +88,7 @@ export const SortDialog: React.FC<SortDialogProps> = ({
       }
       title={'Sort Options'}
       showBottomBorder
-      height="45%"
+      height={trayHeight}
     >
       <div className="flex flex-col items-center space-y-2">
         <div className="relative w-full">
@@ -113,7 +100,7 @@ export const SortDialog: React.FC<SortDialogProps> = ({
                 variant={sortOrder === 'Asc' ? 'selected' : 'unselected'}
                 size="xsmall"
                 className="px-1 rounded-md text-xs"
-                onClick={onAscClick}
+                onClick={() => setSortOrder('Asc')}
               >
                 Asc
               </Button>
@@ -122,7 +109,7 @@ export const SortDialog: React.FC<SortDialogProps> = ({
                 variant={sortOrder === 'Desc' ? 'selected' : 'unselected'}
                 size="xsmall"
                 className="px-1 rounded-md text-xs"
-                onClick={onDescClick}
+                onClick={() => setSortOrder('Desc')}
               >
                 Desc
               </Button>
@@ -139,7 +126,7 @@ export const SortDialog: React.FC<SortDialogProps> = ({
                     variant={sortType === option ? 'selected' : 'unselected'}
                     size="xsmall"
                     className="px-1 rounded-md text-xs"
-                    onClick={() => onSetSortClick(option)}
+                    onClick={() => setSortType(option)}
                   >
                     {option.charAt(0).toUpperCase() + option.slice(1)}
                   </Button>
@@ -151,12 +138,48 @@ export const SortDialog: React.FC<SortDialogProps> = ({
             </div>
           </div>
 
+          {/* Status Filter */}
+          {isValidatorSort && viewValidatorsByStatus && (
+            <div className="flex justify-between items-center p-2">
+              <div className="flex-1 text-sm">Filter by Status:</div>
+              <div className="flex items-center">
+                {[
+                  ValidatorStatusFilter.STATUS_ACTIVE,
+                  ValidatorStatusFilter.STATUS_NON_JAILED,
+                  ValidatorStatusFilter.STATUS_ALL,
+                ].map((status) => (
+                  <React.Fragment key={status}>
+                    <Button
+                      variant={
+                        validatorStatusFilter === status
+                          ? 'selected'
+                          : 'unselected'
+                      }
+                      size="xsmall"
+                      className="px-1 rounded-md text-xs"
+                      onClick={() => setValidatorStatusFilter(status)}
+                    >
+                      {status === ValidatorStatusFilter.STATUS_ACTIVE
+                        ? 'Active'
+                        : status === ValidatorStatusFilter.STATUS_NON_JAILED
+                          ? 'Non-Jailed'
+                          : 'All'}
+                    </Button>
+                    {status !== ValidatorStatusFilter.STATUS_ALL && (
+                      <p className="text-sm px-1">/</p>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="flex justify-center items-center p-2">
             <Button
               variant="unselected"
               size="small"
               className="px-1 rounded-md text-xs"
-              onClick={onResetDefaultsClick}
+              onClick={resetDefaults}
             >
               Reset Defaults
             </Button>
