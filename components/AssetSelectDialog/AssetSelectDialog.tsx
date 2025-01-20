@@ -75,8 +75,8 @@ export const AssetSelectDialog: React.FC<AssetSelectDialogProps> = ({
     >
       <div className="flex flex-col h-full">
         <div className="flex justify-between items-center w-full px-2">
-          <div className="text-sm flex w-[5rem]">Tap to select</div>
-          <div className="text-sm flex-1 text-center">
+          <div className="text-sm flex w-[5rem] text-white">Tap to select</div>
+          <div className="text-sm flex-1 text-center text-white">
             Selected:{' '}
             <span className="text-blue">
               {dialogSelectedAsset.symbol || 'None'}
