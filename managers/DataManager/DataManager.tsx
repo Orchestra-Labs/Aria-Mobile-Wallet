@@ -1,5 +1,5 @@
 import {
-  exchangeAssetsAtom,
+  symphonyAssetsAtom,
   isFetchingWalletDataAtom,
   isInitialDataLoadAtom,
   sendStateAtom,
@@ -9,7 +9,7 @@ import {
 } from '@/atoms';
 import { userAccountAtom } from '@/atoms/accountAtom';
 import { getWalletByID } from '@/helpers/dataHelpers/account';
-import { useExchangeAssets } from '@/hooks';
+import { useExchangeAssetsQuery } from '@/hooks';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 
@@ -24,10 +24,15 @@ export const DataManager: React.FC = () => {
   const userAccount = useAtomValue(userAccountAtom);
   const setUserWallet = useSetAtom(userWalletAtom);
 
-  const { availableAssets, refetch } = useExchangeAssets();
-  const setExchangeAssets = useSetAtom(exchangeAssetsAtom);
+  const {
+    data: availableAssets,
+    isLoading: loadingExchangeAssets,
+    refetch: refetchExchangeAssets,
+    error: errorExchangeAssets,
+  } = useExchangeAssetsQuery();
 
   const sendState = useAtomValue(sendStateAtom);
+  const setExchangeAssets = useSetAtom(symphonyAssetsAtom);
 
   useEffect(() => {
     if (isInitialDataLoad) {
@@ -61,22 +66,23 @@ export const DataManager: React.FC = () => {
   }, [userAccount]);
 
   useEffect(() => {
-    setExchangeAssets(availableAssets);
+    if (!loadingExchangeAssets && !errorExchangeAssets) return;
+    setExchangeAssets(availableAssets ?? []);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [availableAssets]);
+  }, [availableAssets, loadingExchangeAssets]);
 
   useEffect(() => {
-    const fetchExchangeAssets = async () => {
-      try {
-        await refetch(); // Ensure refetch is awaited
-      } catch (error) {
-        console.error('Error fetching exchange assets:', error);
-      }
-    };
+    if (errorExchangeAssets) {
+      console.error('Error fetching exchange assets:', errorExchangeAssets);
+    }
 
-    fetchExchangeAssets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAccount, sendState, walletAssets]);
+  }, [errorExchangeAssets]);
+
+  useEffect(() => {
+    refetchExchangeAssets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userAccount?.id, sendState.asset, walletAssets]);
 
   return null;
 };
