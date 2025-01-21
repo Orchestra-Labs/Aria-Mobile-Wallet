@@ -25,10 +25,10 @@ export const useInitializeWallet = () => {
 
     try {
       const address = await getAddress(sessionToken.mnemonic);
-      refreshData({ address });
       if (walletAddress !== address) {
         setWalletAddress(address);
       }
+      refreshData({ address });
       const accountData = await getAccountByID(sessionToken.accountID);
       if (userAccount?.id !== accountData?.id) {
         setUserAccount(accountData);
@@ -46,7 +46,7 @@ export const useInitializeWallet = () => {
       setLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn, userAccount, walletAddress]);
+  }, [isLoggedIn]);
 
   return { loading };
 };

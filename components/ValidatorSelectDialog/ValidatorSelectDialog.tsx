@@ -332,6 +332,8 @@ export const ValidatorSelectDialog: React.FC<ValidatorSelectDialogProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transactionSuccess.success]);
 
+  const trayHeight = '500px';
+
   return (
     <SlideTray
       ref={slideTrayRef}
@@ -344,6 +346,7 @@ export const ValidatorSelectDialog: React.FC<ValidatorSelectDialogProps> = ({
       onClose={resetDefaults}
       showBottomBorder
       reducedTopMargin={true}
+      height={trayHeight}
     >
       <div className="flex flex-col h-full">
         {isClaimDialog ? (

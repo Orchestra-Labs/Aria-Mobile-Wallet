@@ -28,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
         <Link
           href={ROUTES.APP.ROOT}
           className="flex items-center justify-center max-w-5 max-h-5 p-0.5"
-          onClick={onClose}
+          onPress={onClose}
         >
           {useArrow ? (
             <ArrowLeft className="w-full h-full text-white" />

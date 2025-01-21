@@ -92,6 +92,8 @@ export const AssetScrollTile = ({
       ? asset.denom === currentState.asset.denom
       : asset.denom === dialogSelectedAsset.denom;
 
+  const trayHeight = '400px';
+
   return (
     <Fragment>
       {isSelectable ? (
@@ -117,6 +119,7 @@ export const AssetScrollTile = ({
           }
           title={title}
           showBottomBorder
+          height={trayHeight}
         >
           <Fragment>
             <div className="text-center mb-2">

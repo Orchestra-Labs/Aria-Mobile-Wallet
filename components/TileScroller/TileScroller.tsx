@@ -19,6 +19,7 @@ interface TileScrollerProps {
   isReceiveDialog?: boolean;
   multiSelectEnabled?: boolean;
   isOnSendPage: boolean;
+  isEditPage?: boolean;
 }
 
 export const TileScroller: React.FC<TileScrollerProps> = ({
@@ -30,6 +31,7 @@ export const TileScroller: React.FC<TileScrollerProps> = ({
   isReceiveDialog = false,
   multiSelectEnabled = false,
   isOnSendPage = false,
+  isEditPage = false,
 }) => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const { refreshData } = useRefreshData();
@@ -206,6 +208,7 @@ export const TileScroller: React.FC<TileScrollerProps> = ({
             isOnSendPage={isOnSendPage}
             isReceiveDialog={isReceiveDialog}
             multiSelectEnabled={multiSelectEnabled}
+            isEditPage={isEditPage}
           />
         ) : (
           <ValidatorTiles

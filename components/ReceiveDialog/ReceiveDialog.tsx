@@ -34,6 +34,8 @@ export const ReceiveDialog: React.FC<ReceiveDialogProps> = ({
   });
   const qrData = includeCoinPreference ? qrDataWithAddress : walletAddress;
 
+  const trayHeight = '470px';
+
   return (
     <SlideTray
       triggerComponent={
@@ -44,6 +46,7 @@ export const ReceiveDialog: React.FC<ReceiveDialogProps> = ({
       title="Copy Address"
       showBottomBorder
       reducedTopMargin
+      height={trayHeight}
     >
       <div className="flex flex-col items-center">
         <div className="mb-2">
