@@ -5,7 +5,7 @@
  * in root layout, wrapping all the screens
  */
 
-import { InitWalletManager, RootLoader, ScreenSuspense } from '@/managers';
+import { RootLoader, ScreenSuspense } from '@/managers';
 import { JotaiProvider } from '@/providers';
 import { FC, PropsWithChildren } from 'react';
 import { StatusBar } from 'expo-status-bar';
@@ -15,9 +15,7 @@ export const AppWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <JotaiProvider>
       <RootLoader>
-        <InitWalletManager>
-          <ScreenSuspense>{children}</ScreenSuspense>
-        </InitWalletManager>
+        <ScreenSuspense>{children}</ScreenSuspense>
         <StatusBar
           style="light"
           backgroundColor={COLORS.background.app}
