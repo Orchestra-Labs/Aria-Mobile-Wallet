@@ -475,6 +475,8 @@ export const ValidatorScrollTile = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transactionSuccess.success]);
 
+  const trayHeight = '450px';
+
   return (
     <Fragment>
       {isSelectable ? (
@@ -509,6 +511,7 @@ export const ValidatorScrollTile = ({
           onClose={resetDefaults}
           showBottomBorder
           status={statusColor}
+          height={trayHeight}
         >
           <div className="flex flex-col h-full">
             {rewards && (

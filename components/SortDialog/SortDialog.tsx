@@ -74,7 +74,8 @@ export const SortDialog: React.FC<SortDialogProps> = ({
   const sortType = isValidatorSort ? validatorSortType : assetSortType;
 
   const viewValidatorsByStatus = userAccount?.settings.viewValidatorsByStatus;
-  const trayHeight = isValidatorSort && viewValidatorsByStatus ? '50%' : '45%';
+  const trayHeight =
+    isValidatorSort && viewValidatorsByStatus ? '310px' : '270px';
 
   return (
     <SlideTray
