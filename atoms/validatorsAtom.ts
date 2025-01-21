@@ -1,6 +1,6 @@
 import { CombinedStakingInfo } from '@/types';
 import { atom } from 'jotai';
-import { filterAndSortValidators } from '@/helpers';
+import { atomWithAsyncStorage, filterAndSortValidators } from '@/helpers';
 import { ValidatorStatusFilter } from '@/constants';
 import {
   dialogSearchTermAtom,
@@ -12,14 +12,17 @@ import {
 } from './searchFilterAtom';
 
 export const showCurrentValidatorsAtom = atom<boolean>(true);
-export const validatorDataAtom = atom<CombinedStakingInfo[]>([]);
+export const validatorDataAtom = atomWithAsyncStorage<CombinedStakingInfo[]>(
+  'validatorDataAtom',
+  [],
+);
 export const selectedValidatorsAtom = atom<CombinedStakingInfo[]>([]);
 export const validatorStatusFilterAtom = atom<ValidatorStatusFilter>(
   ValidatorStatusFilter.STATUS_ACTIVE,
 );
 
 export const filteredValidatorsAtom = atom(async (get) => {
-  const validatorData = get(validatorDataAtom);
+  const validatorData = await get(validatorDataAtom);
   const searchTerm = await get(searchTermAtom);
   const sortOrder = get(validatorSortOrderAtom);
   const sortType = get(validatorSortTypeAtom);
@@ -37,7 +40,7 @@ export const filteredValidatorsAtom = atom(async (get) => {
 });
 
 export const filteredDialogValidatorsAtom = atom(async (get) => {
-  const validatorData = get(validatorDataAtom);
+  const validatorData = await get(validatorDataAtom);
   const searchTerm = await get(dialogSearchTermAtom);
   const sortOrder = get(validatorDialogSortOrderAtom);
   const sortType = get(validatorDialogSortTypeAtom);

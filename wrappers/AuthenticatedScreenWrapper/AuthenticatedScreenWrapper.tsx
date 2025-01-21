@@ -6,12 +6,7 @@
  */
 
 import { AuthGuard } from '@/guards';
-import {
-  DataManager,
-  InitWalletManager,
-  ScreenSuspense,
-  StoreLoader,
-} from '@/managers';
+import { DataManager, ScreenSuspense, StoreLoader } from '@/managers';
 import { ReactQueryProvider } from '@/providers';
 import { FC, PropsWithChildren } from 'react';
 
@@ -22,10 +17,8 @@ export const AuthenticatedScreenWrapper: FC<PropsWithChildren> = ({
     <StoreLoader>
       <ReactQueryProvider>
         <ScreenSuspense>
-          <InitWalletManager>
-            <AuthGuard>{children}</AuthGuard>
-            <DataManager />
-          </InitWalletManager>
+          <AuthGuard>{children}</AuthGuard>
+          <DataManager />
         </ScreenSuspense>
       </ReactQueryProvider>
     </StoreLoader>
