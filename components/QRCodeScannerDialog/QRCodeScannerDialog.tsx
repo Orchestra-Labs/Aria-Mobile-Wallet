@@ -120,6 +120,8 @@ export const QRCodeScannerDialog: React.FC<QRCodeScannerDialogProps> = ({
       ? 'border-blue'
       : 'border-neutral-3';
 
+  const trayHeight = '500px';
+
   return (
     <SlideTray
       ref={slideTrayRef}
@@ -131,6 +133,7 @@ export const QRCodeScannerDialog: React.FC<QRCodeScannerDialogProps> = ({
       }
       title="Scan Address"
       showBottomBorder
+      height={trayHeight}
     >
       <div className="flex flex-col items-center space-yt-4 yb-2">
         {/* Camera View & Drag/Drop Area */}
@@ -172,7 +175,7 @@ export const QRCodeScannerDialog: React.FC<QRCodeScannerDialogProps> = ({
               className="w-[96.8%] h-[100%]"
             />
           ) : (
-            <p className="text-gray-dark text-center">
+            <p className="text-gray-dark text-center text-white">
               Enable camera or add file
             </p>
           )}

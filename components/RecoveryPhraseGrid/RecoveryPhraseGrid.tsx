@@ -227,6 +227,12 @@ export const RecoveryPhraseGrid: React.FC<RecoveryPhraseGridProps> = ({
   const onChangeInput = (index: number, value: string) => {
     const trimmedValue = value.trim();
 
+    const pasting = trimmedValue.includes(' ') && value.slice(-1) !== ' ';
+    if (pasting) {
+      handlePaste(index, trimmedValue);
+      return;
+    }
+
     setLocalMnemonic((prev) => {
       const updated = [...prev];
       updated[index] = trimmedValue;
