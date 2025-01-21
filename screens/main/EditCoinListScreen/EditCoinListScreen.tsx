@@ -196,7 +196,7 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
           </Button>
         </div>
         <div className="justify-end">
-          <SortDialog isValidatorSort isDialog />
+          <SortDialog isDialog />
         </div>
       </div>
 
