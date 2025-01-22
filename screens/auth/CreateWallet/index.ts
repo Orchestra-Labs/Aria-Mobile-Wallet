@@ -1,1 +1,1 @@
-export * from './CreateWallet';
+export { default as CreateWalletScreen } from './CreateWallet';

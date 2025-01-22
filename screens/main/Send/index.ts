@@ -1,1 +1,1 @@
-export * from './Send';
+export { default as SendScreen } from './Send';

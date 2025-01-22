@@ -15,6 +15,13 @@ import {
   use24WordsState,
 } from '@/atoms';
 import { Link } from 'expo-router';
+import { AuthLayout } from '@/layouts';
+import { DOMProps } from 'expo/dom';
+import { NonAuthenticatedScreenWrapper } from '@/wrappers';
+
+type NewWalletProps = {
+  dom?: DOMProps;
+};
 
 const NewWallet: React.FC = () => {
   const setMnemonic12 = useSetAtom(mnemonic12State);
@@ -65,4 +72,14 @@ const NewWallet: React.FC = () => {
   );
 };
 
-export default NewWallet;
+const NewWalletScreen = (_: NewWalletProps) => {
+  return (
+    <NonAuthenticatedScreenWrapper>
+      <AuthLayout>
+        <NewWallet />
+      </AuthLayout>
+    </NonAuthenticatedScreenWrapper>
+  );
+};
+
+export default NewWalletScreen;

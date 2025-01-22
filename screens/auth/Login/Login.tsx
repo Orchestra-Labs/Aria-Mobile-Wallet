@@ -1,3 +1,7 @@
+'use dom';
+
+import '@tailwind';
+
 import React, { useState } from 'react';
 import { EyeOpen, EyeClose } from '@/assets/icons';
 import { InputStatus, ROUTES } from '@/constants';
@@ -6,8 +10,15 @@ import { resetNodeErrorCounts, tryAuthorizeAccess } from '@/helpers';
 import { useSetAtom } from 'jotai';
 import { isLoggedInAtom } from '@/atoms';
 import { Link, router } from 'expo-router';
+import { AuthLayout } from '@/layouts';
+import { DOMProps } from 'expo/dom';
+import { NonAuthenticatedScreenWrapper } from '@/wrappers';
 
-export const Login: React.FC = () => {
+type LoginProps = {
+  dom?: DOMProps;
+};
+
+const Login: React.FC = () => {
   const setIsLoggedIn = useSetAtom(isLoggedInAtom);
 
   const [password, setPassword] = useState('');
@@ -117,3 +128,15 @@ export const Login: React.FC = () => {
     </div>
   );
 };
+
+const LoginScreen = (_: LoginProps) => {
+  return (
+    <NonAuthenticatedScreenWrapper>
+      <AuthLayout>
+        <Login />
+      </AuthLayout>
+    </NonAuthenticatedScreenWrapper>
+  );
+};
+
+export default LoginScreen;

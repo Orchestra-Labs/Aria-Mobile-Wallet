@@ -1,1 +1,1 @@
-export * from './SwapTutorial';
+export { default as SwapTutorialScreen } from './SwapTutorial';
