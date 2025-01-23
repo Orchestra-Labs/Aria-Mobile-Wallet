@@ -1,4 +1,3 @@
-
 import React, { PropsWithChildren, ReactElement } from 'react';
 
 import { LogoIcon } from '@/assets/icons';

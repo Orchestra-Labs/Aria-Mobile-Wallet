@@ -27,7 +27,6 @@ const DEFAULT_CONFIG = {
 const PAGE_TITLE = 'Change Settings';
 
 const Settings: React.FC<SettingsScreenProps> = () => {
-
   const isInitialDataLoad = useAtomValue(isInitialDataLoadAtom);
   const [userAccount, setUserAccount] = useAtom(userAccountAtom);
 
