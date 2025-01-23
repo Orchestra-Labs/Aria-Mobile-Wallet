@@ -1,3 +1,7 @@
+'use dom';
+
+import '@tailwind';
+
 import { useState } from 'react';
 import { Header, TutorialDisplay } from '@/components';
 import { Button, Separator, Stepper } from '@/ui-kit';
@@ -9,6 +13,9 @@ import { userAccountAtom } from '@/atoms/accountAtom';
 import { saveAccountByID } from '@/helpers';
 import { router } from 'expo-router';
 import { NativeImage } from '@/types';
+import { AuthenticatedScreenWrapper } from '@/wrappers';
+import { MainLayout } from '@/layouts';
+import { DOMProps } from 'expo/dom';
 
 const sendPageImage: NativeImage = require('@/assets/images/send_page.png');
 const selectPageImage: NativeImage = require('@/assets/images/receive_asset_tile.png');
@@ -43,7 +50,11 @@ const STEPS = [
   },
 ];
 
-export const SwapTutorial = () => {
+type SwapTutorialScreenProps = {
+  dom?: DOMProps;
+};
+
+const SwapTutorial = () => {
   const [activeScreen, setActiveScreen] = useState(0);
 
   const isInitialDataLoad = useAtomValue(isInitialDataLoadAtom);
@@ -144,3 +155,20 @@ export const SwapTutorial = () => {
     </div>
   );
 };
+
+const SwapTutorialScreen = ({
+  withWrappers,
+}: SwapTutorialScreenProps & { withWrappers?: boolean }) => {
+  if (withWrappers) {
+    return (
+      <AuthenticatedScreenWrapper>
+        <MainLayout>
+          <SwapTutorial />
+        </MainLayout>
+      </AuthenticatedScreenWrapper>
+    );
+  }
+  return <SwapTutorial />;
+};
+
+export default SwapTutorialScreen;

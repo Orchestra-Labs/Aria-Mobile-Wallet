@@ -1,1 +1,1 @@
-export * from './ImportWallet';
+export { default as ImportWalletScreen } from './ImportWallet';

@@ -1,6 +1,3 @@
-'use dom';
-
-import '@tailwind';
 
 import React, { PropsWithChildren, ReactElement } from 'react';
 

@@ -1,1 +1,1 @@
-export * from './MenuOptionsScreen';
+export { default as MenuOptionsScreen } from './MenuOptionsScreen';

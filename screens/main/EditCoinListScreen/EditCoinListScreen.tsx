@@ -1,3 +1,5 @@
+'use dom';
+
 import React, { startTransition, useEffect } from 'react';
 import {
   Header,
@@ -24,19 +26,21 @@ import { Asset, SubscriptionRecord } from '@/types';
 import { saveAccountByID } from '@/helpers/dataHelpers/account';
 import { userAccountAtom } from '@/atoms/accountAtom';
 import { router } from 'expo-router';
+import { MainLayout } from '@/layouts';
+import { DOMProps } from 'expo/dom';
+import { AuthenticatedScreenWrapper } from '@/wrappers';
 
 const PAGE_TITLE = 'Select Visible Coins';
 
 type EditCoinListScreenProps = {
   isOnSendPage: boolean;
+  dom?: DOMProps;
 };
 
 // TODO: make registry, add github action to auto-update entries based on items in pull request. then sort?
 // TODO: save registry info into localStorage, set default data expiration to one day
 // TODO: pull registry info whenever data is empty or data expires
-export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
-  isOnSendPage,
-}) => {
+const EditCoinList: React.FC<EditCoinListScreenProps> = ({ isOnSendPage }) => {
   const isInitialDataLoad = useAtomValue(isInitialDataLoadAtom);
   const [selectedCoins, setSelectedCoins] = useAtom(selectedCoinListAtom);
   const filteredExchangeCoins = useAtomValue(filteredExchangeAssetsAtom);
@@ -230,3 +234,20 @@ export const EditCoinListScreen: React.FC<EditCoinListScreenProps> = ({
     </div>
   );
 };
+
+const EditCoinListScreen = (
+  props: EditCoinListScreenProps & { withWrappers?: boolean },
+) => {
+  if (props?.withWrappers) {
+    return (
+      <AuthenticatedScreenWrapper>
+        <MainLayout>
+          <EditCoinList isOnSendPage={false} />
+        </MainLayout>
+      </AuthenticatedScreenWrapper>
+    );
+  }
+  return <EditCoinList {...props} />;
+};
+
+export default EditCoinListScreen;

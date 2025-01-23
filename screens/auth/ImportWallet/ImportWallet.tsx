@@ -1,3 +1,7 @@
+'use dom';
+
+import '@tailwind';
+
 import { useEffect, useState } from 'react';
 import {
   CreatePasswordForm,
@@ -21,10 +25,17 @@ import { createAccount } from '@/helpers/dataHelpers/account';
 import { createWallet, saveSessionData } from '@/helpers';
 import { AccountRecord } from '@/types';
 import { Link, router } from 'expo-router';
+import { NonAuthenticatedScreenWrapper } from '@/wrappers';
+import { AuthLayout } from '@/layouts';
+import { DOMProps } from 'expo/dom';
 
 const STEPS_LABELS = ['Enter Passphrase', 'Create password'];
 
-export const ImportWallet = () => {
+type ImportWalletScreenProps = {
+  dom?: DOMProps;
+};
+
+const ImportWallet = () => {
   const [mnemonic12, setMnemonic12] = useAtom(mnemonic12State);
   const [mnemonic24, setMnemonic24] = useAtom(mnemonic24State);
   const [use24Words, setUse24Words] = useAtom(use24WordsState);
@@ -179,3 +190,15 @@ export const ImportWallet = () => {
     </div>
   );
 };
+
+const ImportWalletScreen = (_: ImportWalletScreenProps) => {
+  return (
+    <NonAuthenticatedScreenWrapper>
+      <AuthLayout>
+        <ImportWallet />
+      </AuthLayout>
+    </NonAuthenticatedScreenWrapper>
+  );
+};
+
+export default ImportWalletScreen;

@@ -1,1 +1,1 @@
-export { default as NewWallet } from './NewWallet';
+export { default as NewWalletScreen } from './NewWallet';

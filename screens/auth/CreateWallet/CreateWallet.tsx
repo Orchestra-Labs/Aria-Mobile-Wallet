@@ -1,3 +1,7 @@
+'use dom';
+
+import '@tailwind';
+
 import { useState, useEffect } from 'react';
 import { Secp256k1HdWallet } from '@cosmjs/amino';
 import {
@@ -22,10 +26,17 @@ import { createAccount } from '@/helpers/dataHelpers/account';
 import { createWallet, saveSessionData } from '@/helpers';
 import { AccountRecord } from '@/types';
 import { Link } from 'expo-router';
+import { AuthLayout } from '@/layouts';
+import { DOMProps } from 'expo/dom';
+import { NonAuthenticatedScreenWrapper } from '@/wrappers';
 
 const STEPS_LABELS = ['Create password', 'Recovery phrase', 'Verify phrase'];
 
-export const CreateWallet = () => {
+type CreateWalletProps = {
+  dom?: DOMProps;
+};
+
+const CreateWallet = () => {
   const [mnemonic12, setMnemonic12] = useAtom(mnemonic12State);
   const [mnemonic24, setMnemonic24] = useAtom(mnemonic24State);
   const [use24Words, setUse24Words] = useAtom(use24WordsState);
@@ -365,3 +376,15 @@ export const CreateWallet = () => {
     </div>
   );
 };
+
+const CreateWalletScreen = (_: CreateWalletProps) => {
+  return (
+    <NonAuthenticatedScreenWrapper>
+      <AuthLayout>
+        <CreateWallet />
+      </AuthLayout>
+    </NonAuthenticatedScreenWrapper>
+  );
+};
+
+export default CreateWalletScreen;

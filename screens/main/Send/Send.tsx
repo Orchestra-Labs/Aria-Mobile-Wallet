@@ -1,5 +1,9 @@
+'use dom';
+
+import '@tailwind';
+
 import { Fragment, useEffect, useState } from 'react';
-import { ArrowLeft, Spinner, Swap } from '@/assets/icons';
+import { Spinner, Swap } from '@/assets/icons';
 import {
   DEFAULT_ASSET,
   defaultReceiveState,
@@ -42,8 +46,9 @@ import {
 } from '@/helpers';
 import { useExchangeRate, useRefreshData, useToast } from '@/hooks/';
 import { AddressInput } from './AddressInput';
-import { Tooltip } from '@/components';
-import { Link } from 'expo-router';
+import { AuthenticatedScreenWrapper } from '@/wrappers';
+import { MainLayout } from '@/layouts';
+import { DOMProps } from 'expo/dom';
 
 const pageMountedKey = 'userIsOnPage';
 const setUserIsOnPage = async (isOnPage: boolean) => {
@@ -65,8 +70,12 @@ const userIsOnPage = async () => {
   return result;
 };
 
+type SendScreenProps = {
+  dom?: DOMProps;
+};
+
 // TODO: fix issue where navigation away is not clearing asset selection
-export const SendScreen = () => {
+const Send = () => {
   const { refreshData } = useRefreshData();
   const { exchangeRate } = useExchangeRate();
   const { toast } = useToast();
@@ -742,3 +751,15 @@ export const SendScreen = () => {
     </div>
   );
 };
+
+const SendScreen = (_: SendScreenProps) => {
+  return (
+    <AuthenticatedScreenWrapper>
+      <MainLayout>
+        <Send />
+      </MainLayout>
+    </AuthenticatedScreenWrapper>
+  );
+};
+
+export default SendScreen;

@@ -1,3 +1,7 @@
+'use dom';
+
+import '@tailwind';
+
 import { ArrowLeft, Discord, Edit } from '@/assets/icons';
 import { LINKS, ROUTES } from '@/constants';
 import { Button } from '@/ui-kit';
@@ -7,6 +11,8 @@ import { LocalStorage } from '@/helpers';
 import { SETTINGS } from '@/constants';
 import { ExternalLink } from '@/components';
 import { Link } from 'expo-router';
+import { MenuLayout } from '@/layouts';
+import { DOMProps } from 'expo/dom';
 
 const OPTIONS = [
   {
@@ -31,8 +37,12 @@ const OPTIONS = [
   },
 ];
 
+type MenuOptionsScreenProps = {
+  dom?: DOMProps;
+};
+
 // TODO: add animation slide down on open, animation slide up on close
-export const MenuOptions = () => {
+const MenuOptions = () => {
   const logout = useLogout();
   const clearStorage = () => LocalStorage.clearStorage();
   const showClearStorageButton = SETTINGS.isDev || SETTINGS.isPreview;
@@ -84,3 +94,13 @@ export const MenuOptions = () => {
     </div>
   );
 };
+
+const MenuOptionsScreen = (_: MenuOptionsScreenProps) => {
+  return (
+    <MenuLayout>
+      <MenuOptions />
+    </MenuLayout>
+  );
+};
+
+export default MenuOptionsScreen;

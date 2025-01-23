@@ -1,1 +1,1 @@
-export * from './EditCoinListScreen';
+export { default as EditCoinListScreen } from './EditCoinListScreen';

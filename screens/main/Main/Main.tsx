@@ -1,3 +1,7 @@
+'use dom';
+
+import '@tailwind';
+
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/swiper-react';
 import 'swiper/swiper-bundle.css';
 import { BalanceCard, SearchBar, SortDialog, TileScroller } from '@/components';
@@ -12,9 +16,16 @@ import { Fragment, startTransition, useEffect, useRef } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { Button } from '@/ui-kit';
 import { EditCoinListScreen } from '../EditCoinListScreen';
-import { SwapTutorial } from '../SwapTutorial';
+import { SwapTutorialScreen } from '../SwapTutorial';
+import { DOMProps } from 'expo/dom';
+import { MainLayout } from '@/layouts';
+import { AuthenticatedScreenWrapper } from '@/wrappers';
 
-export const Main = () => {
+type MainProps = {
+  dom?: DOMProps;
+};
+
+const Main = (_: MainProps) => {
   const swiperRef = useRef<SwiperClass | null>(null);
   const totalSlides = 2;
 
@@ -86,7 +97,7 @@ export const Main = () => {
   }
 
   if (routeToTutorial) {
-    return <SwapTutorial />;
+    return <SwapTutorialScreen />;
   }
 
   return (
@@ -198,3 +209,15 @@ export const Main = () => {
     </div>
   );
 };
+
+const MainScreen = (_: MainProps) => {
+  return (
+    <AuthenticatedScreenWrapper>
+      <MainLayout>
+        <Main />
+      </MainLayout>
+    </AuthenticatedScreenWrapper>
+  );
+};
+
+export default MainScreen;
