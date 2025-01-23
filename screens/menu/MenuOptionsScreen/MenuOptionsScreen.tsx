@@ -5,7 +5,7 @@ import '@tailwind';
 import { ArrowLeft, Discord, Edit } from '@/assets/icons';
 import { LINKS, ROUTES } from '@/constants';
 import { Button } from '@/ui-kit';
-import { GraduationCap, LogOut } from 'lucide-react';
+import { GraduationCap, LogOut, Settings } from 'lucide-react';
 import { useLogout } from '@/hooks';
 import { LocalStorage } from '@/helpers';
 import { SETTINGS } from '@/constants';
@@ -17,19 +17,26 @@ import { DOMProps } from 'expo/dom';
 const OPTIONS = [
   {
     id: 1,
+    name: 'Settings',
+    icon: <Settings width={16} height={16} />,
+    target: '',
+    to: ROUTES.APP.SETTINGS,
+  },
+  {
+    id: 2,
     name: 'Edit Coin List',
     icon: <Edit width={16} height={16} />,
     to: ROUTES.APP.EDIT_COIN_LIST,
   },
   {
-    id: 2,
+    id: 3,
     name: 'Contact Us',
     icon: <Discord />,
     target: '_blank',
     to: LINKS.DISCORD_SERVER,
   },
   {
-    id: 3,
+    id: 4,
     name: 'View Tutorial',
     icon: <GraduationCap width={16} height={16} />,
     target: '',

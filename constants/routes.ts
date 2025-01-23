@@ -9,6 +9,7 @@ export const ROUTES = {
     ADD_NETWORK: '/auth/new-wallet' as const, // NOT IMPLEMENTED
     EDIT_COIN_LIST: '/edit-coins-list' as const,
     SWAP_TUTORIAL: '/swap-tutorial' as const,
+    SETTINGS: '/settings' as const,
   },
   AUTH: {
     ROOT: '/auth' as const,
