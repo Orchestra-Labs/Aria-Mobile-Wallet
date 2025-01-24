@@ -5,7 +5,13 @@ import '@tailwind';
 import { ArrowLeft, Discord, Edit } from '@/assets/icons';
 import { LINKS, ROUTES } from '@/constants';
 import { Button } from '@/ui-kit';
-import { GraduationCap, LogOut } from 'lucide-react';
+import {
+  GraduationCap,
+  LogOut,
+  NotebookPenIcon,
+  NotebookTextIcon,
+  Settings,
+} from 'lucide-react';
 import { useLogout } from '@/hooks';
 import { LocalStorage } from '@/helpers';
 import { SETTINGS } from '@/constants';
@@ -17,23 +23,45 @@ import { DOMProps } from 'expo/dom';
 const OPTIONS = [
   {
     id: 1,
+    name: 'Settings',
+    icon: <Settings width={16} height={16} />,
+    target: '',
+    to: ROUTES.APP.SETTINGS,
+  },
+  {
+    id: 2,
+    name: 'Change Password',
+    icon: <NotebookPenIcon width={16} height={16} />,
+    target: '',
+    to: ROUTES.APP.CHANGE_PASSWORD,
+  },
+  {
+    id: 3,
+    name: 'View Passphrase',
+    icon: <NotebookTextIcon width={16} height={16} />,
+    target: '',
+    to: ROUTES.APP.VIEW_PASSPHRASE,
+  },
+  {
+    id: 4,
     name: 'Edit Coin List',
     icon: <Edit width={16} height={16} />,
     to: ROUTES.APP.EDIT_COIN_LIST,
   },
+
   {
-    id: 2,
-    name: 'Contact Us',
-    icon: <Discord />,
-    target: '_blank',
-    to: LINKS.DISCORD_SERVER,
-  },
-  {
-    id: 3,
+    id: 5,
     name: 'View Tutorial',
     icon: <GraduationCap width={16} height={16} />,
     target: '',
     to: ROUTES.APP.SWAP_TUTORIAL,
+  },
+  {
+    id: 6,
+    name: 'Contact Us',
+    icon: <Discord />,
+    target: '_blank',
+    to: LINKS.DISCORD_SERVER,
   },
 ];
 

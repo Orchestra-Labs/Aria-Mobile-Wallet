@@ -5,3 +5,6 @@ export * from './Send';
 // export * from './Transaction';
 // export * from './TransactionsHistory';
 export * from './SwapTutorial';
+export * from './SettingsScreen';
+export * from './ViewPassphrase';
+export * from './ChangePassword';
