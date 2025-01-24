@@ -11,6 +11,7 @@ export const ROUTES = {
     SWAP_TUTORIAL: '/swap-tutorial' as const,
     SETTINGS: '/settings' as const,
     VIEW_PASSPHRASE: '/view-passphrase' as const,
+    CHANGE_PASSWORD: '/change-password' as const,
   },
   AUTH: {
     ROOT: '/auth' as const,

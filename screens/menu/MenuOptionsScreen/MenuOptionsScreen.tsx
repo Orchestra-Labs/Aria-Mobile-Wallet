@@ -8,6 +8,7 @@ import { Button } from '@/ui-kit';
 import {
   GraduationCap,
   LogOut,
+  NotebookPenIcon,
   NotebookTextIcon,
   Settings,
 } from 'lucide-react';
@@ -29,27 +30,34 @@ const OPTIONS = [
   },
   {
     id: 2,
+    name: 'Change Password',
+    icon: <NotebookPenIcon width={16} height={16} />,
+    target: '',
+    to: ROUTES.APP.CHANGE_PASSWORD,
+  },
+  {
+    id: 3,
     name: 'View Passphrase',
     icon: <NotebookTextIcon width={16} height={16} />,
     target: '',
     to: ROUTES.APP.VIEW_PASSPHRASE,
   },
   {
-    id: 3,
+    id: 4,
     name: 'Edit Coin List',
     icon: <Edit width={16} height={16} />,
     to: ROUTES.APP.EDIT_COIN_LIST,
   },
 
   {
-    id: 4,
+    id: 5,
     name: 'View Tutorial',
     icon: <GraduationCap width={16} height={16} />,
     target: '',
     to: ROUTES.APP.SWAP_TUTORIAL,
   },
   {
-    id: 5,
+    id: 6,
     name: 'Contact Us',
     icon: <Discord />,
     target: '_blank',
