@@ -47,6 +47,15 @@ const Main = (_: MainProps) => {
     setShowCurrentValidators(shouldShowCurrent);
   };
 
+  const swipeTo = (index: number) => {
+    startTransition(() => {
+      setActiveIndex(index);
+      if (swiperRef.current) {
+        swiperRef.current.slideTo(index);
+      }
+    })
+  };
+
   useEffect(() => {
     if (swiperRef.current) {
       swiperRef.current.slideTo(activeIndex);
@@ -115,12 +124,12 @@ const Main = (_: MainProps) => {
         >
           <SwiperSlide>
             <div className="w-full px-4 mt-4 flex-shrink-0">
-              <BalanceCard currentStep={activeIndex} totalSteps={totalSlides} />
+              <BalanceCard currentStep={activeIndex} totalSteps={totalSlides} swipeTo={swipeTo} />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="w-full px-4 mt-4 flex-shrink-0">
-              <BalanceCard currentStep={activeIndex} totalSteps={totalSlides} />
+              <BalanceCard currentStep={activeIndex} totalSteps={totalSlides} swipeTo={swipeTo} />
             </div>
           </SwiperSlide>
         </Swiper>
