@@ -5,6 +5,7 @@
  * wrapping all the components
  */
 
+import { Toaster } from '@/components';
 import { GuestGuard } from '@/guards';
 import { StoreLoader } from '@/managers';
 import { FC, PropsWithChildren } from 'react';
@@ -14,6 +15,7 @@ export const NonAuthenticatedScreenWrapper: FC<PropsWithChildren> = ({
 }) => {
   return (
     <StoreLoader>
+      <Toaster />
       <GuestGuard>{children}</GuestGuard>
     </StoreLoader>
   );

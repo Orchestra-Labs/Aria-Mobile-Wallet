@@ -5,6 +5,7 @@
  * wrapping all the components
  */
 
+import { Toaster } from '@/components';
 import { AuthGuard } from '@/guards';
 import {
   DataManager,
@@ -23,6 +24,7 @@ export const AuthenticatedScreenWrapper: FC<PropsWithChildren> = ({
       <ReactQueryProvider>
         <ScreenSuspense>
           <InitWalletManager>
+            <Toaster />
             <AuthGuard>{children}</AuthGuard>
             <DataManager />
           </InitWalletManager>

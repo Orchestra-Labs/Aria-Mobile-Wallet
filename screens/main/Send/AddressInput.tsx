@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 import { InputStatus } from '@/constants';
 import { cn, fetchBech32Prefixes } from '@/helpers';
-import { QRCodeScannerDialog } from '@/components';
+import { QRCodeScannerButton } from '@/components';
 import { Asset, ChainData } from '@/types';
 import { bech32 } from 'bech32';
 
@@ -171,7 +171,7 @@ export const AddressInput: React.FC<AddressInputProps> = ({
           showMessageText={true}
           messageText={messageText}
           placeholder={walletState.address || 'Wallet Address or ICNS'}
-          icon={<QRCodeScannerDialog updateSendAsset={updateSendAsset} />}
+          icon={<QRCodeScannerButton updateSendAsset={updateSendAsset} />}
           value={address}
           onChange={handleAddressChange}
           onBlur={handleAddressBlur}
