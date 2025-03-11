@@ -1,5 +1,7 @@
 import { CreateWalletScreen } from '@/screens';
+import { usePrepareDOMComponentProps } from '@/hooks/usePrepareDOMComponentProps';
 
 export default function Screen() {
-  return <CreateWalletScreen dom={{ overScrollMode: 'never' }} />;
+  const props = usePrepareDOMComponentProps();
+  return <CreateWalletScreen {...props} />;
 }

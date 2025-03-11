@@ -26,3 +26,6 @@ export * from './Header';
 export * from './DialogContainer';
 export * from './ScreenLoader';
 export * from './ExternalLink';
+
+export * from './WCProposalMetadata';
+export * from './WCProposalButtons';

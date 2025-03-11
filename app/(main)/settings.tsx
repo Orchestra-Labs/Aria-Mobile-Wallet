@@ -1,5 +1,7 @@
 import { SettingsScreen } from '@/screens';
+import { usePrepareDOMComponentProps } from '@/hooks/usePrepareDOMComponentProps';
 
 export default function Screen() {
-  return <SettingsScreen dom={{ overScrollMode: 'never' }} />;
+  const props = usePrepareDOMComponentProps();
+  return <SettingsScreen {...props} />;
 }

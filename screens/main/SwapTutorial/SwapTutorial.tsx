@@ -12,10 +12,9 @@ import { isInitialDataLoadAtom } from '@/atoms';
 import { userAccountAtom } from '@/atoms/accountAtom';
 import { saveAccountByID } from '@/helpers';
 import { router } from 'expo-router';
-import { NativeImage } from '@/types';
+import { DOMComponentProps, NativeImage } from '@/types';
 import { AuthenticatedScreenWrapper } from '@/wrappers';
 import { MainLayout } from '@/layouts';
-import { DOMProps } from 'expo/dom';
 
 const sendPageImage: NativeImage = require('@/assets/images/send_page.png');
 const selectPageImage: NativeImage = require('@/assets/images/receive_asset_tile.png');
@@ -50,9 +49,7 @@ const STEPS = [
   },
 ];
 
-type SwapTutorialScreenProps = {
-  dom?: DOMProps;
-};
+type SwapTutorialScreenProps = DOMComponentProps;
 
 const SwapTutorial = () => {
   const [activeScreen, setActiveScreen] = useState(0);
@@ -158,10 +155,11 @@ const SwapTutorial = () => {
 
 const SwapTutorialScreen = ({
   withWrappers,
+  ...props
 }: SwapTutorialScreenProps & { withWrappers?: boolean }) => {
   if (withWrappers) {
     return (
-      <AuthenticatedScreenWrapper>
+      <AuthenticatedScreenWrapper {...props}>
         <MainLayout>
           <SwapTutorial />
         </MainLayout>

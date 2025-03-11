@@ -1,4 +1,5 @@
 import { NetworkLevel, SettingsOptions } from '@/constants';
+import { DOMProps } from 'expo/dom';
 
 export interface SessionToken {
   mnemonic: string;
@@ -294,4 +295,13 @@ export type NativeImage = {
   uri: string;
   width: string;
   height: string;
+};
+
+export type RouteStore = {
+  pathname: string;
+};
+
+export type DOMComponentProps = {
+  dom?: DOMProps;
+  route: RouteStore;
 };

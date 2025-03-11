@@ -2,6 +2,7 @@
 export const ROUTES = {
   APP: {
     ROOT: '/' as const,
+    REFRESH: '/refresh' as const,
     TRANSACTIONS_HISTORY: '/auth/new-wallet' as const, // NOT IMPLEMENTED
     TRANSACTION: '/auth/new-wallet' as const, // NOT IMPLEMENTED
     SEND: '/send' as const,
@@ -12,6 +13,13 @@ export const ROUTES = {
     SETTINGS: '/settings' as const,
     VIEW_PASSPHRASE: '/view-passphrase' as const,
     CHANGE_PASSWORD: '/change-password' as const,
+    QR_SCANNER: '/qr-scanner' as const,
+    WALLET_CONNECT: {
+      INIT_SESSION: '/wallet-connect/init-session' as const,
+      APPROVE_SESSION: '/wallet-connect/approve-session' as const,
+      SIGN_TRANSACTION: '/wallet-connect/sign-transaction' as const,
+      SESSIONS_LIST: '/' as const,
+    },
   },
   AUTH: {
     ROOT: '/auth' as const,

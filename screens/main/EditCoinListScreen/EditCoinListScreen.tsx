@@ -22,19 +22,24 @@ import {
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { DEFAULT_CHAIN_ID, DEFAULT_SUBSCRIPTION, ROUTES } from '@/constants';
 import { Button, Separator } from '@/ui-kit';
-import { Asset, SubscriptionRecord } from '@/types';
+import { Asset, DOMComponentProps, SubscriptionRecord } from '@/types';
 import { saveAccountByID } from '@/helpers/dataHelpers/account';
 import { userAccountAtom } from '@/atoms/accountAtom';
 import { router } from 'expo-router';
 import { MainLayout } from '@/layouts';
-import { DOMProps } from 'expo/dom';
 import { AuthenticatedScreenWrapper } from '@/wrappers';
 
 const PAGE_TITLE = 'Select Visible Coins';
 
-type EditCoinListScreenProps = {
+type EditCoinListScreenProps = (
+  | ({
+      withWrappers?: true;
+    } & DOMComponentProps)
+  | ({
+      withWrappers?: false;
+    } & Partial<DOMComponentProps>)
+) & {
   isOnSendPage: boolean;
-  dom?: DOMProps;
 };
 
 // TODO: make registry, add github action to auto-update entries based on items in pull request. then sort?
@@ -161,7 +166,7 @@ const EditCoinList: React.FC<EditCoinListScreenProps> = ({ isOnSendPage }) => {
     if (userAccount) {
       console.log('subscribed assets', subscribedAssets);
       startTransition(() => {
-        // setSelectedCoins(subscribedAssets);
+        setSelectedCoins(subscribedAssets);
       });
     } else {
       console.warn('userAccount is undefined');
@@ -235,14 +240,12 @@ const EditCoinList: React.FC<EditCoinListScreenProps> = ({ isOnSendPage }) => {
   );
 };
 
-const EditCoinListScreen = (
-  props: EditCoinListScreenProps & { withWrappers?: boolean },
-) => {
+const EditCoinListScreen = (props: EditCoinListScreenProps) => {
   if (props?.withWrappers) {
     return (
-      <AuthenticatedScreenWrapper>
+      <AuthenticatedScreenWrapper {...props}>
         <MainLayout>
-          <EditCoinList isOnSendPage={false} />
+          <EditCoinList {...props} isOnSendPage={false} />
         </MainLayout>
       </AuthenticatedScreenWrapper>
     );

@@ -13,11 +13,9 @@ import { Header } from '@/components';
 import { AuthenticatedScreenWrapper } from '@/wrappers';
 import { AuthLayout } from '@/layouts';
 import { router } from 'expo-router';
-import { DOMProps } from 'expo/dom';
+import { DOMComponentProps } from '@/types';
 
-interface SettingsScreenProps {
-  dom?: DOMProps;
-}
+type SettingsScreenProps = DOMComponentProps;
 
 const DEFAULT_CONFIG = {
   // [SettingsOptions.STABLECOIN_FEE]: false,
@@ -121,11 +119,11 @@ const Settings: React.FC<SettingsScreenProps> = () => {
   );
 };
 
-const SettingsScreen = (_: SettingsScreenProps) => {
+const SettingsScreen = (props: SettingsScreenProps) => {
   return (
-    <AuthenticatedScreenWrapper>
+    <AuthenticatedScreenWrapper {...props}>
       <AuthLayout>
-        <Settings />
+        <Settings {...props} />
       </AuthLayout>
     </AuthenticatedScreenWrapper>
   );

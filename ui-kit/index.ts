@@ -7,3 +7,4 @@ export * from './Select';
 export * from './Separator';
 export * from './SlideTray';
 export * from './Stepper';
+export * from './Accordion';

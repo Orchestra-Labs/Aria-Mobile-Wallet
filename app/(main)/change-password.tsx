@@ -1,5 +1,7 @@
+import { usePrepareDOMComponentProps } from '@/hooks/usePrepareDOMComponentProps';
 import { ChangePasswordScreen } from '@/screens';
 
 export default function Screen() {
-  return <ChangePasswordScreen dom={{ overScrollMode: 'never' }} />;
+  const props = usePrepareDOMComponentProps();
+  return <ChangePasswordScreen {...props} />;
 }

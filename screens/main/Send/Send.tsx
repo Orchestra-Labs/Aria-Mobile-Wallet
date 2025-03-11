@@ -25,7 +25,12 @@ import {
   selectedAssetAtom,
   addressVerifiedAtom,
 } from '@/atoms';
-import { Asset, TransactionResult, TransactionSuccess } from '@/types';
+import {
+  Asset,
+  DOMComponentProps,
+  TransactionResult,
+  TransactionSuccess,
+} from '@/types';
 import {
   AssetInput,
   WalletSuccessScreen,
@@ -48,7 +53,6 @@ import { useExchangeRate, useRefreshData, useToast } from '@/hooks/';
 import { AddressInput } from './AddressInput';
 import { AuthenticatedScreenWrapper } from '@/wrappers';
 import { MainLayout } from '@/layouts';
-import { DOMProps } from 'expo/dom';
 
 const pageMountedKey = 'userIsOnPage';
 const setUserIsOnPage = async (isOnPage: boolean) => {
@@ -70,9 +74,7 @@ const userIsOnPage = async () => {
   return result;
 };
 
-type SendScreenProps = {
-  dom?: DOMProps;
-};
+type SendScreenProps = DOMComponentProps;
 
 // TODO: fix issue where navigation away is not clearing asset selection
 const Send = () => {
@@ -752,9 +754,9 @@ const Send = () => {
   );
 };
 
-const SendScreen = (_: SendScreenProps) => {
+const SendScreen = (props: SendScreenProps) => {
   return (
-    <AuthenticatedScreenWrapper>
+    <AuthenticatedScreenWrapper {...props}>
       <MainLayout>
         <Send />
       </MainLayout>

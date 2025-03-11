@@ -1,10 +1,11 @@
-// export * from './AddNewNetwork';
 export * from './EditCoinListScreen';
 export * from './Main';
 export * from './Send';
-// export * from './Transaction';
-// export * from './TransactionsHistory';
 export * from './SwapTutorial';
 export * from './SettingsScreen';
 export * from './ViewPassphrase';
 export * from './ChangePassword';
+export * from './QRScanner';
+export * from './WalletConnectInitSession';
+export * from './WalletConnectSessionProposal';
+export * from './WalletConnectSignTransaction';
