@@ -1,3 +1,4 @@
+import { ENV } from '@/constants';
 import { WalletKit, IWalletKit } from '@reown/walletkit';
 import { Core } from '@walletconnect/core';
 
@@ -6,7 +7,7 @@ export let walletkit: IWalletKit;
 export async function createWalletKit() {
   if (walletkit) return;
   const core = new Core({
-    projectId: process.env.EXPO_PUBLIC_REOWN_PROJECT_ID,
+    projectId: ENV.WALLETCONNECT_PROJECT_ID,
     logger: 'trace',
   });
   walletkit = await WalletKit.init({
