@@ -17,7 +17,7 @@ interface WalletConnectScannerProps extends DOMComponentProps {
 const WalletConnectInitSession: React.FC<WalletConnectScannerProps> = ({
   uri,
 }) => {
-  const { mutateAsync: initWCSession } = useInitWCSessionMutation();
+  const { mutate: initWCSession } = useInitWCSessionMutation();
 
   const { toast } = useToast();
 
