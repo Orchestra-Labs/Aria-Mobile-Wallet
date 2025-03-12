@@ -12,7 +12,6 @@ import { COSMOS_CHAINS } from '@/constants/wc';
 import { DOMComponentProps } from '@/types';
 import { WCProposalMetadata } from '@/components';
 import { ROUTES } from '@/constants';
-import { sleep } from '@/helpers';
 
 const PAGE_TITLE = 'Requesting Connection';
 
@@ -62,7 +61,8 @@ const WalletConnectApproveSession: React.FC<
         onError: async (e) => {
           toast({
             title: 'Error Approving Session',
-            description: (e as Error)?.message,
+            description: (e as Error)?.message ?? 'Something went wrong.',
+            duration: 5000,
           });
         },
         onSuccess: async () => {
@@ -84,8 +84,6 @@ const WalletConnectApproveSession: React.FC<
             title: 'Error Rejecting Session',
             description: (e as Error)?.message,
           });
-          await sleep(5000);
-          closeScreen();
         },
         onSuccess: () => {
           closeScreen();

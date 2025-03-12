@@ -21,6 +21,7 @@ import { DOMComponentProps } from '@/types';
 import { Header, WCProposalButtons } from '@/components';
 import { WCProposalMetadata } from '@/components';
 import { ROUTES } from '@/constants';
+import { sleep } from '@/helpers';
 
 const PAGE_TITLE = 'Approve Transaction';
 
@@ -73,14 +74,9 @@ const WalletConnectSignTransaction: React.FC<
       },
       {
         onError: (error) => {
-          console.log(
-            '🚀 ~ file: WalletConnectSignTransaction.tsx:76 ~ error:',
-            error,
-          );
-          // alert(JSON.stringify(error, null, 2));
           toast({
             title: 'Error approving',
-            description: 'Something went wrong.',
+            description: error.message ?? 'Something went wrong.',
             duration: 5000,
           });
         },
@@ -95,12 +91,14 @@ const WalletConnectSignTransaction: React.FC<
     rejectWCTransaction(
       { requestEvent },
       {
-        onError: () => {
+        onError: async (error) => {
           toast({
             title: 'Error rejecting',
-            description: 'Something went wrong.',
+            description: error.message ?? 'Something went wrong.',
             duration: 5000,
           });
+          await sleep(5000);
+          closeScreen();
         },
         onSuccess: () => {
           closeScreen();
@@ -114,8 +112,8 @@ const WalletConnectSignTransaction: React.FC<
   const disabled = approvingTransaction || rejectingTransaction;
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-black text-white">
-      <Header title={PAGE_TITLE} onClose={onReject} />
+    <div className="h-full flex flex-col overflow-hidden bg-black text-white">
+      <Header title={PAGE_TITLE} onClose={closeScreen} />
 
       <div className="p-8 mt-4 h-full flex flex-grow flex-col justify-center">
         <WCProposalMetadata metadata={metadata} verifyContext={verifyContext}>
@@ -129,7 +127,7 @@ const WalletConnectSignTransaction: React.FC<
               <AccordionItem value="item-1">
                 <AccordionTrigger>Data</AccordionTrigger>
                 <AccordionContent>
-                  <pre className="max-w-full overflow-auto">
+                  <pre className="max-w-full overflow-auto select-none">
                     {JSON.stringify(signDoc, null, 2)}
                   </pre>
                 </AccordionContent>
