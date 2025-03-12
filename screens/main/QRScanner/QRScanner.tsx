@@ -5,34 +5,31 @@ import {
 } from 'expo-camera';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Scan, X } from 'lucide-react-native';
-import { router } from 'expo-router';
-import { ROUTES } from '@/constants';
+import { RelativePathString, router } from 'expo-router';
 
-export default function QRScanner() {
+type Props = {
+  nextPathname: RelativePathString;
+  nextParam: string;
+};
+
+export default function QRScanner({ nextPathname, nextParam }: Props) {
   const [permission, requestPermission] = useCameraPermissions();
   const goBack = () => router.back();
 
   const redirectOnSuccessScan = (string: string) => {
     router.replace({
-      pathname: ROUTES.APP.WALLET_CONNECT.INIT_SESSION,
-      params: { string: encodeURIComponent(string) },
+      pathname: nextPathname,
+      params: { [nextParam]: encodeURIComponent(string) },
     });
   };
 
   const onBarcodeScanned = (scanningResult: BarcodeScanningResult) => {
     const result = scanningResult.data;
     if (!result) return;
-    try {
-      if (result.startsWith('wc:')) {
-        return redirectOnSuccessScan(result);
-      }
-      const parsedResult = JSON.parse(result);
-      if (parsedResult.address && parsedResult.denomPreference) {
-        return redirectOnSuccessScan(result);
-      }
-    } catch (err) {
-      console.log(err);
+    if (result.startsWith('wc:')) {
+      return redirectOnSuccessScan(result);
     }
+    if (typeof result === 'string') return redirectOnSuccessScan(result);
   };
 
   if (!permission) {

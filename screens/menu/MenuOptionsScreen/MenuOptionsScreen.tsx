@@ -68,7 +68,7 @@ const OPTIONS = [
     id: 7,
     name: 'Connect dApp',
     icon: <Scan />,
-    to: ROUTES.APP.QR_SCANNER,
+    to: `${ROUTES.APP.QR_SCANNER}?nextPathname=${ROUTES.APP.WALLET_CONNECT.INIT_SESSION}` as const,
   },
 ];
 
