@@ -49,7 +49,13 @@ const STEPS = [
   },
 ];
 
-type SwapTutorialScreenProps = DOMComponentProps;
+type SwapTutorialScreenProps =
+  | ({
+      withWrappers?: true;
+    } & DOMComponentProps)
+  | ({
+      withWrappers?: false;
+    } & Partial<DOMComponentProps>);
 
 const SwapTutorial = () => {
   const [activeScreen, setActiveScreen] = useState(0);
@@ -153,11 +159,10 @@ const SwapTutorial = () => {
   );
 };
 
-const SwapTutorialScreen = ({
-  withWrappers,
-  ...props
-}: SwapTutorialScreenProps & { withWrappers?: boolean }) => {
-  if (withWrappers) {
+const SwapTutorialScreen = (
+  props: SwapTutorialScreenProps & { withWrappers?: boolean },
+) => {
+  if (props.withWrappers) {
     return (
       <AuthenticatedScreenWrapper {...props}>
         <MainLayout>
