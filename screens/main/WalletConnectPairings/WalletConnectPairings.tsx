@@ -24,7 +24,7 @@ const WalletConnectPairings: React.FC<WalletConnectPairingsProps> = () => {
     <div className="h-full flex flex-col overflow-hidden text-white">
       <Header title={PAGE_TITLE} onClose={closeScreen} />
 
-      <div className="p-8 mt-4 h-full flex flex-grow flex-col gap-2">
+      <div className="p-4 mt-4 h-full flex flex-grow flex-col gap-2">
         {!pairings?.length && (
           <p className="font-bold text-center text-xl flex-grow h-full flex items-center justify-center">
             No connected websites yet
