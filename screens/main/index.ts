@@ -7,5 +7,5 @@ export * from './ViewPassphrase';
 export * from './ChangePassword';
 export * from './QRScanner';
 export * from './WalletConnectInitSession';
-export * from './WalletConnectSessionProposal';
 export * from './WalletConnectSignTransaction';
+export * from './WalletConnectApproveSession';

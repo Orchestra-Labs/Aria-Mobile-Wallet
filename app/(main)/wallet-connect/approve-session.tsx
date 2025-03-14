@@ -1,5 +1,5 @@
 import { usePrepareDOMComponentProps } from '@/hooks/usePrepareDOMComponentProps';
-import { WalletConnectApproveSessionScreen } from '@/screens/main/WalletConnectSessionProposal';
+import { WalletConnectApproveSessionScreen } from '@/screens/main';
 import { useLocalSearchParams } from 'expo-router';
 import { SignClientTypes } from '@walletconnect/types';
 
