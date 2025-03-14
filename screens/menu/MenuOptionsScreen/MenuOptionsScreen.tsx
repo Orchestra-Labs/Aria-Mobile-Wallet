@@ -6,11 +6,12 @@ import { ArrowLeft, Discord, Edit } from '@/assets/icons';
 import { LINKS, ROUTES } from '@/constants';
 import { Button } from '@/ui-kit';
 import {
+  Globe,
   GraduationCap,
   LogOut,
   NotebookPenIcon,
   NotebookTextIcon,
-  Scan,
+  ScanQrCode,
   Settings,
 } from 'lucide-react';
 import { useLogout } from '@/hooks';
@@ -67,8 +68,14 @@ const OPTIONS = [
   {
     id: 7,
     name: 'Connect dApp',
-    icon: <Scan />,
+    icon: <ScanQrCode width={16} height={16} />,
     to: `${ROUTES.APP.QR_SCANNER}?nextPathname=${ROUTES.APP.WALLET_CONNECT.INIT_SESSION}` as const,
+  },
+  {
+    id: 7,
+    name: 'Connected dApps',
+    icon: <Globe width={16} height={16} />,
+    to: ROUTES.APP.WALLET_CONNECT.PAIRINGS,
   },
 ];
 

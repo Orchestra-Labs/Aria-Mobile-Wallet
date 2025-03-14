@@ -3,3 +3,5 @@ export * from './useApproveWCTransaction.mutation';
 export * from './useRejectWCSession.mutation';
 export * from './useApproveWCSession.mutation';
 export * from './useInitWCSession.mutation';
+export * from './useGetWCPairings.query';
+export * from './useDeleteWCPairing.mutation';

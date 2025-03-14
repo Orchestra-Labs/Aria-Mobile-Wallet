@@ -29,3 +29,4 @@ export * from './ExternalLink';
 
 export * from './WCProposalMetadata';
 export * from './WCProposalButtons';
+export * from './PairingTile';
