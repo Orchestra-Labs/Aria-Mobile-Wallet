@@ -1,6 +1,7 @@
 import { ROUTES } from '@/constants';
 import { COSMOS_SIGNING_METHODS } from '@/constants/wc';
 import { walletkit } from '@/helpers/walletConnect';
+import { useApproveWCTransactionMutation } from '@/queries';
 import { SignClientTypes } from '@walletconnect/types';
 import { router } from 'expo-router';
 import { useCallback, useEffect } from 'react';
@@ -11,6 +12,10 @@ export const useWalletConnectEventsManager = ({
   initialized,
   pathname,
 }: Params) => {
+  const { mutate: approveWCTransaction } = useApproveWCTransactionMutation({
+    retry: 3,
+  });
+
   /******************************************************************************
    * 1. Open session proposal modal
    *****************************************************************************/
@@ -36,10 +41,13 @@ export const useWalletConnectEventsManager = ({
       switch (request.method) {
         case COSMOS_SIGNING_METHODS.COSMOS_SIGN_DIRECT:
         case COSMOS_SIGNING_METHODS.COSMOS_SIGN_AMINO:
-        case COSMOS_SIGNING_METHODS.COSMOS_GET_ACCOUNTS:
           return router.replace({
             pathname: ROUTES.APP.WALLET_CONNECT.SIGN_TRANSACTION,
             params: { requestEvent: JSON.stringify(requestEvent) },
+          });
+        case COSMOS_SIGNING_METHODS.COSMOS_GET_ACCOUNTS:
+          return approveWCTransaction({
+            requestEvent,
           });
         default:
           alert('Unsupported method');
