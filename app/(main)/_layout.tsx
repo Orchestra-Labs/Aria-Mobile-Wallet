@@ -14,19 +14,19 @@ export default function MainLayout() {
       <Stack.Screen
         name="wallet-connect/init-session"
         options={{
-          presentation: 'modal',
+          presentation: 'fullScreenModal',
         }}
       />
       <Stack.Screen
         name="wallet-connect/approve-session"
         options={{
-          presentation: 'modal',
+          presentation: 'fullScreenModal',
         }}
       />
       <Stack.Screen
         name="wallet-connect/sign-transaction"
         options={{
-          presentation: 'modal',
+          presentation: 'fullScreenModal',
         }}
       />
       <Stack.Screen name="qr-scanner" />
