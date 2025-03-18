@@ -5,6 +5,10 @@ import { useApproveWCTransactionMutation } from '@/queries';
 import { SignClientTypes } from '@walletconnect/types';
 import { router } from 'expo-router';
 import { useCallback, useEffect } from 'react';
+import { useSupportedWCNamespaces } from './useSupportedWCNamespaces';
+import { buildApprovedNamespaces } from '@walletconnect/utils';
+import { useToast } from './useToast';
+import { sleep } from '@/helpers';
 
 type Params = { initialized: boolean; pathname: string };
 
@@ -15,18 +19,35 @@ export const useWalletConnectEventsManager = ({
   const { mutate: approveWCTransaction } = useApproveWCTransactionMutation({
     retry: 3,
   });
+  const { supportedNamespaces } = useSupportedWCNamespaces();
+  const { toast } = useToast();
 
   /******************************************************************************
    * 1. Open session proposal modal
    *****************************************************************************/
   const onSessionProposal = useCallback(
-    (proposal: SignClientTypes.EventArguments['session_proposal']) => {
-      router.replace({
-        pathname: ROUTES.APP.WALLET_CONNECT.APPROVE_SESSION,
-        params: { proposal: JSON.stringify(proposal) },
-      });
+    async (proposal: SignClientTypes.EventArguments['session_proposal']) => {
+      try {
+        // if succeeds, we can approve session
+        buildApprovedNamespaces({
+          proposal: proposal.params,
+          supportedNamespaces,
+        });
+        router.replace({
+          pathname: ROUTES.APP.WALLET_CONNECT.APPROVE_SESSION,
+          params: { proposal: JSON.stringify(proposal) },
+        });
+      } catch (e) {
+        toast({
+          title: 'Requested connection is not supported',
+          duration: 5000,
+        });
+        await sleep(5000);
+        router.dismissTo(ROUTES.APP.REFRESH);
+      }
     },
-    [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [supportedNamespaces],
   );
 
   /******************************************************************************
@@ -50,7 +71,14 @@ export const useWalletConnectEventsManager = ({
             requestEvent,
           });
         default:
-          alert('Unsupported method');
+          toast({
+            title: 'Cannot process request',
+            description: `Method ${request.method} is not supported`,
+            duration: 5000,
+          });
+          await sleep(5000);
+          router.dismissTo(ROUTES.APP.REFRESH);
+          return;
       }
     },
     [pathname],
