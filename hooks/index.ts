@@ -12,3 +12,7 @@ export * from './useLoadFonts';
 export * from './useExchangeRate';
 export * from './useReloadSessionStorage';
 export * from './useSessionToken';
+export * from './useInitializeWalletConnect';
+export * from './useSupportedWCNamespaces';
+export * from './useWCAddress';
+export * from './usePrepareDOMComponentProps';

@@ -17,13 +17,11 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { Button } from '@/ui-kit';
 import { EditCoinListScreen } from '../EditCoinListScreen';
 import { SwapTutorialScreen } from '../SwapTutorial';
-import { DOMProps } from 'expo/dom';
 import { MainLayout } from '@/layouts';
 import { AuthenticatedScreenWrapper } from '@/wrappers';
+import { DOMComponentProps } from '@/types';
 
-type MainProps = {
-  dom?: DOMProps;
-};
+type MainProps = DOMComponentProps;
 
 const Main = (_: MainProps) => {
   const swiperRef = useRef<SwiperClass | null>(null);
@@ -53,7 +51,7 @@ const Main = (_: MainProps) => {
       if (swiperRef.current) {
         swiperRef.current.slideTo(index);
       }
-    })
+    });
   };
 
   useEffect(() => {
@@ -124,12 +122,20 @@ const Main = (_: MainProps) => {
         >
           <SwiperSlide>
             <div className="w-full px-4 mt-4 flex-shrink-0">
-              <BalanceCard currentStep={activeIndex} totalSteps={totalSlides} swipeTo={swipeTo} />
+              <BalanceCard
+                currentStep={activeIndex}
+                totalSteps={totalSlides}
+                swipeTo={swipeTo}
+              />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="w-full px-4 mt-4 flex-shrink-0">
-              <BalanceCard currentStep={activeIndex} totalSteps={totalSlides} swipeTo={swipeTo} />
+              <BalanceCard
+                currentStep={activeIndex}
+                totalSteps={totalSlides}
+                swipeTo={swipeTo}
+              />
             </div>
           </SwiperSlide>
         </Swiper>
@@ -219,11 +225,11 @@ const Main = (_: MainProps) => {
   );
 };
 
-const MainScreen = (_: MainProps) => {
+const MainScreen = (props: MainProps) => {
   return (
-    <AuthenticatedScreenWrapper>
+    <AuthenticatedScreenWrapper {...props}>
       <MainLayout>
-        <Main />
+        <Main {...props} />
       </MainLayout>
     </AuthenticatedScreenWrapper>
   );

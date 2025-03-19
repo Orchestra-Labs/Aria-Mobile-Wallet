@@ -18,3 +18,5 @@ export * from './copyToClipboard';
 export * from './atomWithAsyncStorage';
 export * from './localStorage';
 export * from './sessionStorage';
+export * from './walletConnect';
+export * from './sleep';

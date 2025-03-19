@@ -24,8 +24,14 @@ import {
   walletStateAtom,
   selectedAssetAtom,
   addressVerifiedAtom,
+  filteredAssetsAtom,
 } from '@/atoms';
-import { Asset, TransactionResult, TransactionSuccess } from '@/types';
+import {
+  Asset,
+  DOMComponentProps,
+  TransactionResult,
+  TransactionSuccess,
+} from '@/types';
 import {
   AssetInput,
   WalletSuccessScreen,
@@ -48,7 +54,6 @@ import { useExchangeRate, useRefreshData, useToast } from '@/hooks/';
 import { AddressInput } from './AddressInput';
 import { AuthenticatedScreenWrapper } from '@/wrappers';
 import { MainLayout } from '@/layouts';
-import { DOMProps } from 'expo/dom';
 
 const pageMountedKey = 'userIsOnPage';
 const setUserIsOnPage = async (isOnPage: boolean) => {
@@ -70,12 +75,12 @@ const userIsOnPage = async () => {
   return result;
 };
 
-type SendScreenProps = {
-  dom?: DOMProps;
+type SendScreenProps = DOMComponentProps & {
+  address?: string;
 };
 
 // TODO: fix issue where navigation away is not clearing asset selection
-const Send = () => {
+const Send = ({ address: initialAddress }: SendScreenProps) => {
   const { refreshData } = useRefreshData();
   const { exchangeRate } = useExchangeRate();
   const { toast } = useToast();
@@ -91,6 +96,26 @@ const Send = () => {
   const [selectedAsset, setSelectedAsset] = useAtom(selectedAssetAtom);
   const walletState = useAtomValue(walletStateAtom);
   const walletAssets = walletState?.assets || [];
+  const filteredAssets = useAtomValue(filteredAssetsAtom);
+
+  useEffect(() => {
+    if (!initialAddress) return;
+    try {
+      const parsedResult = JSON.parse(initialAddress);
+      if (parsedResult.address && parsedResult.denomPreference) {
+        const preferredAsset = filteredAssets.find(
+          (asset) => asset.denom === parsedResult.denomPreference,
+        );
+        setRecipientAddress(parsedResult.address);
+        updateSendAsset(preferredAsset as Asset, true);
+      } else {
+        setRecipientAddress(initialAddress);
+      }
+    } catch (_) {
+      setRecipientAddress(initialAddress);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialAddress]);
 
   // TODO: handle bridges to non-cosmos chains (Axelar to Ethereum and others)
   const [transactionType, setTransactionType] = useState({
@@ -666,11 +691,7 @@ const Send = () => {
         <Fragment>
           {/* TODO: add chain selection if self */}
           {/* Address Input */}
-          <AddressInput
-            addBottomMargin={false}
-            updateSendAsset={updateSendAsset}
-            labelWidth="w-14"
-          />
+          <AddressInput addBottomMargin={false} labelWidth="w-14" />
 
           {/* Separator */}
           <Separator variant="top" />
@@ -752,11 +773,11 @@ const Send = () => {
   );
 };
 
-const SendScreen = (_: SendScreenProps) => {
+const SendScreen = (props: SendScreenProps) => {
   return (
-    <AuthenticatedScreenWrapper>
+    <AuthenticatedScreenWrapper {...props}>
       <MainLayout>
-        <Send />
+        <Send {...props} />
       </MainLayout>
     </AuthenticatedScreenWrapper>
   );

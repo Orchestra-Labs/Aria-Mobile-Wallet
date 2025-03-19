@@ -10,19 +10,17 @@ import { useEffect, useState } from 'react';
 import { InputStatus } from '@/constants';
 import { cn, fetchBech32Prefixes } from '@/helpers';
 import { QRCodeScannerButton } from '@/components';
-import { Asset, ChainData } from '@/types';
+import { ChainData } from '@/types';
 import { bech32 } from 'bech32';
 
 interface AddressInputProps {
   addBottomMargin?: boolean;
   labelWidth?: string;
-  updateSendAsset: (asset: Asset, propagateChanges: boolean) => void;
 }
 
 export const AddressInput: React.FC<AddressInputProps> = ({
   addBottomMargin = true,
   labelWidth,
-  updateSendAsset,
 }) => {
   const [address, setAddress] = useAtom(recipientAddressAtom);
   const setAddressVerified = useSetAtom(addressVerifiedAtom);
@@ -171,7 +169,7 @@ export const AddressInput: React.FC<AddressInputProps> = ({
           showMessageText={true}
           messageText={messageText}
           placeholder={walletState.address || 'Wallet Address or ICNS'}
-          icon={<QRCodeScannerButton updateSendAsset={updateSendAsset} />}
+          icon={<QRCodeScannerButton />}
           value={address}
           onChange={handleAddressChange}
           onBlur={handleAddressBlur}

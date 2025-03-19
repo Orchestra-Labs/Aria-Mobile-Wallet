@@ -15,12 +15,10 @@ import { Button, Input, Separator } from '@/ui-kit';
 import { EyeClose, EyeOpen } from '@/assets/icons';
 import { AuthenticatedScreenWrapper } from '@/wrappers';
 import { MainLayout } from '@/layouts';
-import { DOMProps } from 'expo/dom';
+import { DOMComponentProps } from '@/types';
 import { router } from 'expo-router';
 
-interface ViewPassphraseProps {
-  dom?: DOMProps;
-}
+type ViewPassphraseProps = DOMComponentProps;
 
 const ChangePassword: React.FC<ViewPassphraseProps> = () => {
   const [oldPassword, setOldPassword] = useState<string>('');
@@ -193,11 +191,11 @@ const ChangePassword: React.FC<ViewPassphraseProps> = () => {
   );
 };
 
-const ChangePasswordScreen = (_: ViewPassphraseProps) => {
+const ChangePasswordScreen = (props: ViewPassphraseProps) => {
   return (
-    <AuthenticatedScreenWrapper>
+    <AuthenticatedScreenWrapper {...props}>
       <MainLayout>
-        <ChangePassword />
+        <ChangePassword {...props} />
       </MainLayout>
     </AuthenticatedScreenWrapper>
   );

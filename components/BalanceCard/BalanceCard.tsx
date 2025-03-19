@@ -15,6 +15,7 @@ import {
 } from '@/constants';
 import { Triangle } from 'lucide-react';
 import { Link } from 'expo-router';
+import { Fragment } from 'react';
 
 interface BalanceCardProps {
   currentStep: number;
@@ -111,7 +112,7 @@ export const BalanceCard = ({
           {isInitialDataLoad ? (
             <Loader scaledHeight />
           ) : (
-            <>
+            <Fragment>
               <h1 className="text-h2 text-white font-bold line-clamp-1">
                 {primaryText}
               </h1>
@@ -122,27 +123,27 @@ export const BalanceCard = ({
                   <span>&nbsp;</span>
                 )}
               </p>
-            </>
+            </Fragment>
           )}
         </div>
 
         {/* Buttons Section */}
         <div className="flex flex-grow grid grid-cols-2 w-full gap-x-4 px-2">
           {currentStep === 0 ? (
-            <>
+            <Fragment>
               <Button className="w-full" asChild>
                 <Link href={ROUTES.APP.SEND}>Send</Link>
               </Button>
               <ReceiveDialog asset={DEFAULT_ASSET} />
-            </>
+            </Fragment>
           ) : (
-            <>
+            <Fragment>
               <ValidatorSelectDialog
                 buttonText="Unstake"
                 buttonVariant="secondary"
               />
               <ValidatorSelectDialog buttonText="Claim" isClaimDialog />
-            </>
+            </Fragment>
           )}
         </div>
 

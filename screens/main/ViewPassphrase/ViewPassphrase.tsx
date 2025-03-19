@@ -11,11 +11,9 @@ import { router } from 'expo-router';
 import { useSessionToken } from '@/hooks';
 import { AuthenticatedScreenWrapper } from '@/wrappers';
 import { MainLayout } from '@/layouts';
-import { DOMProps } from 'expo/dom';
+import { DOMComponentProps } from '@/types';
 
-type ViewPassphraseScreenProps = {
-  dom?: DOMProps;
-};
+type ViewPassphraseScreenProps = DOMComponentProps;
 
 const ViewPassphrase: React.FC = () => {
   const setMnemonic12 = useSetAtom(mnemonic12State);
@@ -59,9 +57,9 @@ const ViewPassphrase: React.FC = () => {
   );
 };
 
-const ViewPassphraseScreen = (_: ViewPassphraseScreenProps) => {
+const ViewPassphraseScreen = (props: ViewPassphraseScreenProps) => {
   return (
-    <AuthenticatedScreenWrapper>
+    <AuthenticatedScreenWrapper {...props}>
       <MainLayout>
         <ViewPassphrase />
       </MainLayout>

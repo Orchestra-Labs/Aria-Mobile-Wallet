@@ -13,20 +13,24 @@ import {
   ScreenSuspense,
   StoreLoader,
 } from '@/managers';
+import { InitWalletConnectManager } from '@/managers/InitWalletConnectManager/InitWalletConnectManager';
 import { ReactQueryProvider } from '@/providers';
+import { DOMComponentProps } from '@/types';
 import { FC, PropsWithChildren } from 'react';
 
-export const AuthenticatedScreenWrapper: FC<PropsWithChildren> = ({
-  children,
-}) => {
+export const AuthenticatedScreenWrapper: FC<
+  PropsWithChildren<DOMComponentProps>
+> = ({ children, route }) => {
   return (
     <StoreLoader>
       <ReactQueryProvider>
         <ScreenSuspense>
           <InitWalletManager>
-            <Toaster />
-            <AuthGuard>{children}</AuthGuard>
-            <DataManager />
+            <InitWalletConnectManager {...route}>
+              <Toaster />
+              <AuthGuard>{children}</AuthGuard>
+              <DataManager />
+            </InitWalletConnectManager>
           </InitWalletManager>
         </ScreenSuspense>
       </ReactQueryProvider>

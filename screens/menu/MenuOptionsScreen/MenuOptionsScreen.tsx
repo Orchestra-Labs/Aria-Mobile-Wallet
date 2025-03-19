@@ -6,10 +6,12 @@ import { ArrowLeft, Discord, Edit } from '@/assets/icons';
 import { LINKS, ROUTES } from '@/constants';
 import { Button } from '@/ui-kit';
 import {
+  Globe,
   GraduationCap,
   LogOut,
   NotebookPenIcon,
   NotebookTextIcon,
+  ScanQrCode,
   Settings,
 } from 'lucide-react';
 import { useLogout } from '@/hooks';
@@ -63,6 +65,18 @@ const OPTIONS = [
     target: '_blank',
     to: LINKS.DISCORD_SERVER,
   },
+  {
+    id: 7,
+    name: 'Connect dApp',
+    icon: <ScanQrCode width={16} height={16} />,
+    to: `${ROUTES.APP.QR_SCANNER}?nextPathname=${ROUTES.APP.WALLET_CONNECT.INIT_SESSION}` as const,
+  },
+  {
+    id: 7,
+    name: 'Connected dApps',
+    icon: <Globe width={16} height={16} />,
+    to: ROUTES.APP.WALLET_CONNECT.PAIRINGS,
+  },
 ];
 
 type MenuOptionsScreenProps = {
@@ -84,6 +98,7 @@ const MenuOptions = () => {
             <Component
               key={option.id}
               href={option.to}
+              replace
               className="flex items-center text-sm text-white font-normal py-3 not-last:border-b not-last:border-neutral-4 hover:text-white"
             >
               <div className="h-8 w-8 bg-blue rounded-full flex items-center justify-center p-1.5 mr-2.5 text-black">

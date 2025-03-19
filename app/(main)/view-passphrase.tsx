@@ -1,5 +1,7 @@
 import { ViewPassphraseScreen } from '@/screens';
+import { usePrepareDOMComponentProps } from '@/hooks/usePrepareDOMComponentProps';
 
 export default function Screen() {
-  return <ViewPassphraseScreen dom={{ overScrollMode: 'never' }} />;
+  const props = usePrepareDOMComponentProps();
+  return <ViewPassphraseScreen {...props} />;
 }

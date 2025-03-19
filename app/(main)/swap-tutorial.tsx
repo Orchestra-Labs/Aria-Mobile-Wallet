@@ -1,5 +1,7 @@
 import { SwapTutorialScreen } from '@/screens';
+import { usePrepareDOMComponentProps } from '@/hooks/usePrepareDOMComponentProps';
 
 export default function Screen() {
-  return <SwapTutorialScreen dom={{ overScrollMode: 'never' }} withWrappers />;
+  const props = usePrepareDOMComponentProps();
+  return <SwapTutorialScreen {...props} withWrappers />;
 }

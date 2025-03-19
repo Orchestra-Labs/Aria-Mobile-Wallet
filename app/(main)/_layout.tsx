@@ -12,6 +12,25 @@ export default function MainLayout() {
       <Stack.Screen name="index" />
       <Stack.Screen name="edit-coins-list" />
       <Stack.Screen
+        name="wallet-connect/init-session"
+        options={{
+          presentation: 'fullScreenModal',
+        }}
+      />
+      <Stack.Screen
+        name="wallet-connect/approve-session"
+        options={{
+          presentation: 'fullScreenModal',
+        }}
+      />
+      <Stack.Screen
+        name="wallet-connect/sign-transaction"
+        options={{
+          presentation: 'fullScreenModal',
+        }}
+      />
+      <Stack.Screen name="qr-scanner" />
+      <Stack.Screen
         name="menu-options"
         options={{
           presentation: 'containedTransparentModal',

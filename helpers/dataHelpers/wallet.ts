@@ -63,6 +63,14 @@ export async function createOfflineSignerFromMnemonic(
   return hdWallet;
 }
 
+export async function createAminoSignerFromMnemonic(mnemonic: string) {
+  const hdWallet = await Secp256k1HdWallet.fromMnemonic(mnemonic, {
+    prefix: WALLET_PREFIX,
+  });
+  console.log('Amino signer created successfully');
+  return hdWallet;
+}
+
 export const getAddress = async (mnemonic: string): Promise<string> => {
   console.log('Getting address from mnemonic:', mnemonic);
   const wallet = await getWallet(mnemonic);
