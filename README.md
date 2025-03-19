@@ -9,14 +9,17 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```bash
    yarn
    ```
+
 2. Add environment configuration
 
    Create `.env.development.local` file from `.env.development.example` and fill the settings with your own
-   You can pull environment variables from [expo.dev](https://expo.dev) using 
+   You can pull environment variables from [expo.dev](https://expo.dev) using
+
    ```bash
    eas env:pull
    ```
 
+   (install `npm install -g eas-cli` first)
 
 3. Start the app
 
