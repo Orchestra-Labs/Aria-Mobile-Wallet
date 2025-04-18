@@ -108,6 +108,9 @@ const Send = ({ address: initialAddress }: SendScreenProps) => {
         );
         setRecipientAddress(parsedResult.address);
         updateSendAsset(preferredAsset as Asset, true);
+        if (Number(parsedResult.amount)) {
+          setSendState({ ...sendState, amount: Number(parsedResult.amount) });
+        }
       } else {
         setRecipientAddress(initialAddress);
       }
