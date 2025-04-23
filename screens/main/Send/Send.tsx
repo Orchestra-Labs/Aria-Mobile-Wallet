@@ -108,6 +108,9 @@ const Send = ({ address: initialAddress }: SendScreenProps) => {
         );
         setRecipientAddress(parsedResult.address);
         updateSendAsset(preferredAsset as Asset, true);
+        if (Number(parsedResult.amount)) {
+          setSendState({ ...sendState, amount: Number(parsedResult.amount) });
+        }
       } else {
         setRecipientAddress(initialAddress);
       }
@@ -676,7 +679,7 @@ const Send = ({ address: initialAddress }: SendScreenProps) => {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-black text-white">
+    <div className="h-full flex flex-col bg-black text-white">
       <Header
         title={'Send'}
         onClose={handleBackClick}

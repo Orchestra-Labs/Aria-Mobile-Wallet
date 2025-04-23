@@ -1,6 +1,6 @@
 'use dom';
 
-import React, { startTransition, useEffect } from 'react';
+import React, { startTransition, useEffect, useMemo } from 'react';
 import {
   Header,
   Loader,
@@ -19,15 +19,21 @@ import {
   subscribedAssetsAtom,
   symphonyAssetsAtom,
 } from '@/atoms';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { Atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { DEFAULT_CHAIN_ID, DEFAULT_SUBSCRIPTION, ROUTES } from '@/constants';
 import { Button, Separator } from '@/ui-kit';
-import { Asset, DOMComponentProps, SubscriptionRecord } from '@/types';
+import {
+  AccountRecord,
+  Asset,
+  DOMComponentProps,
+  SubscriptionRecord,
+} from '@/types';
 import { saveAccountByID } from '@/helpers/dataHelpers/account';
 import { userAccountAtom } from '@/atoms/accountAtom';
 import { router } from 'expo-router';
 import { MainLayout } from '@/layouts';
 import { AuthenticatedScreenWrapper } from '@/wrappers';
+import { useToast } from '@/hooks';
 
 const PAGE_TITLE = 'Select Visible Coins';
 
@@ -46,66 +52,68 @@ type EditCoinListScreenProps = (
 // TODO: save registry info into localStorage, set default data expiration to one day
 // TODO: pull registry info whenever data is empty or data expires
 const EditCoinList: React.FC<EditCoinListScreenProps> = ({ isOnSendPage }) => {
+  const { toast } = useToast();
   const isInitialDataLoad = useAtomValue(isInitialDataLoadAtom);
-  const [selectedCoins, setSelectedCoins] = useAtom(selectedCoinListAtom);
+  const [selectedCoins, setSelectedCoins] = useAtom(
+    selectedCoinListAtom as Atom<Asset[]>,
+  );
   const filteredExchangeCoins = useAtomValue(filteredExchangeAssetsAtom);
   const subscribedAssets = useAtomValue(subscribedAssetsAtom);
-  const unfilteredAssets = useAtomValue(symphonyAssetsAtom);
+  const unfilteredAssets = useAtomValue(symphonyAssetsAtom as Atom<Asset[]>);
   const setSearchTerm = useSetAtom(dialogSearchTermAtom);
   const setSortOrder = useSetAtom(assetDialogSortOrderAtom);
   const setSortType = useSetAtom(assetDialogSortTypeAtom);
-  const [userAccount, setUserAccount] = useAtom(userAccountAtom);
+  const [userAccount, setUserAccount] = useAtom(
+    userAccountAtom as Atom<AccountRecord | null>,
+  );
 
   const allCoinsSelected = selectedCoins.length === unfilteredAssets.length;
   const noCoinsSelected = selectedCoins.length === 0;
 
   // Store initial settings to revert to them on cancel
-  const initialSettings = {
-    hasSetCoinList: true,
-    subscribedTo:
-      userAccount?.settings.subscribedTo &&
-      Object.keys(userAccount.settings.subscribedTo).length > 0
-        ? userAccount.settings.subscribedTo
-        : DEFAULT_SUBSCRIPTION,
-  };
+  const initialSettings = useMemo(
+    () => ({
+      hasSetCoinList: true,
+      subscribedTo:
+        userAccount?.settings.subscribedTo &&
+        Object.keys(userAccount.settings.subscribedTo).length > 0
+          ? userAccount.settings.subscribedTo
+          : DEFAULT_SUBSCRIPTION,
+    }),
+    [userAccount],
+  );
 
   const resetDefaults = () => {
-    setSearchTerm('');
-    setSortOrder('Desc');
-    setSortType('name');
+    setSearchTerm('').finally(() => {
+      setSortOrder('Desc');
+      setSortType('name');
+    });
   };
 
-  const handleSelectAll = () => {
-    setSelectedCoins(filteredExchangeCoins);
-  };
+  const handleSelectAll = () => setSelectedCoins(filteredExchangeCoins);
 
-  const handleSelectNone = () => {
-    setSelectedCoins([]);
-  };
+  const handleSelectNone = () => setSelectedCoins([]);
 
   const closeAndReturn = () => {
     resetDefaults();
     router.navigate(ROUTES.APP.ROOT);
   };
 
-  const handleSelectCoin = (coin: Asset) => {
+  const handleSelectCoin = (coin: Asset) =>
     setSelectedCoins((prevSelectedCoins) => {
       const isAlreadySelected = prevSelectedCoins.some(
         (selectedCoin) => selectedCoin.denom === coin.denom,
       );
 
-      const updatedCoins = isAlreadySelected
+      return isAlreadySelected
         ? prevSelectedCoins.filter(
             (selectedCoin) => selectedCoin.denom !== coin.denom,
           )
         : [...prevSelectedCoins, coin];
-
-      return updatedCoins;
     });
-  };
 
   // TODO: with multi-coin support, change to select specific coin and chain by sorted category and selection
-  const confirmSelection = () => {
+  const confirmSelection = async () => {
     if (userAccount) {
       const updatedSubscriptions: { [networkID: string]: SubscriptionRecord } =
         {};
@@ -136,8 +144,8 @@ const EditCoinList: React.FC<EditCoinListScreenProps> = ({ isOnSendPage }) => {
       console.log('updated user account', updatedUserAccount);
 
       // Update state and save to local storage
-      setUserAccount(updatedUserAccount);
-      saveAccountByID(updatedUserAccount);
+      await setUserAccount(updatedUserAccount);
+      await saveAccountByID(updatedUserAccount);
     } else {
       console.warn('userAccount is undefined');
     }
@@ -145,20 +153,33 @@ const EditCoinList: React.FC<EditCoinListScreenProps> = ({ isOnSendPage }) => {
     closeAndReturn();
   };
 
-  const cancel = () => {
+  const cancel = async () => {
     if (userAccount) {
+      // select all
+      await handleSelectAll();
       // Restore the initial settings
-      const updatedUserAccount = {
+      const updatedAccount = {
         ...userAccount,
         settings: {
           ...userAccount.settings,
           hasSetCoinList: initialSettings.hasSetCoinList,
+          hasViewedTutorial: true,
           subscribedTo: initialSettings.subscribedTo,
         },
       };
-      saveAccountByID(updatedUserAccount);
-    }
+      const status = await saveAccountByID(updatedAccount);
 
+      if (status) {
+        await setUserAccount(updatedAccount);
+      } else {
+        toast({
+          title: 'something went wrong',
+          description:
+            'Something went wrong during the closing. Please select coins and click confirm.',
+          duration: 4000,
+        });
+      }
+    }
     closeAndReturn();
   };
 
