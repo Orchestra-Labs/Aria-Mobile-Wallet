@@ -102,7 +102,7 @@ const WalletConnectApproveSession: React.FC<
   const disabled = approvingWCSession || rejectingWCSession;
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-black text-white">
+    <div className="min-h-dvh flex flex-col overflow-hidden bg-black text-white">
       <Header title={PAGE_TITLE} onClose={onCloseClick} />
 
       <div className="p-8 mt-4 h-full flex flex-grow flex-col justify-center">

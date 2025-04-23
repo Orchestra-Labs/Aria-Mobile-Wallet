@@ -679,7 +679,7 @@ const Send = ({ address: initialAddress }: SendScreenProps) => {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-black text-white">
+    <div className="h-full flex flex-col bg-black text-white">
       <Header
         title={'Send'}
         onClose={handleBackClick}

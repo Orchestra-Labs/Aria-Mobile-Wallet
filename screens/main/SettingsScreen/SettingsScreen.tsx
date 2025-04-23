@@ -67,7 +67,7 @@ const Settings: React.FC<SettingsScreenProps> = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-black text-white">
+    <div className="h-full flex flex-col overflow-hidden bg-black text-white">
       {/* Top bar */}
       <Header title={PAGE_TITLE} />
 

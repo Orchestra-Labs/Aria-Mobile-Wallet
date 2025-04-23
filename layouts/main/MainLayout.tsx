@@ -23,7 +23,7 @@ const MainLayout: React.FC<PropsWithChildren<MainLayoutProps>> = ({
   return (
     <div
       className={cn(
-        'max-w-full w-full h-screen bg-background-dark-grey flex flex-col',
+        'max-w-full w-full min-h-dvh bg-background-dark-grey flex flex-col',
         className,
       )}
     >

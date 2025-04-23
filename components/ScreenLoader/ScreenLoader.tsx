@@ -6,7 +6,7 @@ import { Loader } from '../Loader';
 
 const ScreenLoader = () => {
   return (
-    <div className="h-screen w-screen">
+    <div className="h-full w-screen">
       <Loader />
     </div>
   );

@@ -131,7 +131,7 @@ const ChangePassword: React.FC<ViewPassphraseProps> = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-black text-white">
+    <div className="h-full flex flex-col overflow-hidden bg-black text-white">
       <Header title="Change Password" />
 
       <div className="flex flex-grow flex-col px-4 pt-4">
