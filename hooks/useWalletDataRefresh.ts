@@ -1,7 +1,7 @@
 import {
-  walletAssetsAtom,
-  walletAddressAtom,
   isFetchingWalletDataAtom,
+  walletAddressAtom,
+  walletAssetsAtom,
 } from '@/atoms';
 import { userAccountAtom } from '@/atoms/accountAtom';
 import { DEFAULT_SUBSCRIPTION } from '@/constants';
