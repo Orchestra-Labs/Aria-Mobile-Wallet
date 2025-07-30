@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { EyeClose, EyeOpen } from '@/assets/icons';
 import { cn } from '@/helpers/utils';
 import { Button, CopyTextField, Input } from '@/ui-kit';
@@ -10,7 +10,7 @@ import {
   mnemonicVerifiedState,
   use24WordsState,
 } from '@/atoms';
-import { useDrag } from '@use-gesture/react';
+import { useGesture } from '@use-gesture/react';
 
 type RecoveryPhraseGridProps = {
   isVerifyMode?: boolean;
@@ -345,14 +345,19 @@ export const RecoveryPhraseGrid: React.FC<RecoveryPhraseGridProps> = ({
     }
   };
 
-  const bind = useDrag(
-    ({ movement: [, my], memo = phraseBoxRef.current?.scrollTop || 0 }) => {
-      if (isMouseDown && phraseBoxRef.current) {
-        phraseBoxRef.current.scrollTop = memo - my;
-      }
-      return memo;
+  const bind = useGesture(
+    {
+      onDrag: ({
+        movement: [, my],
+        memo = phraseBoxRef.current?.scrollTop || 0,
+      }) => {
+        if (isMouseDown && phraseBoxRef.current) {
+          phraseBoxRef.current.scrollTop = memo - my;
+        }
+        return memo;
+      },
     },
-    { filterTaps: true },
+    { drag: { filterTaps: true } },
   );
 
   const handleMouseDown = () => setIsMouseDown(true);
