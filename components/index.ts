@@ -22,6 +22,7 @@ export * from './ValidatorScrollTile';
 export * from './ValidatorSelectDialog';
 export * from './WalletSuccessScreen';
 export * from './Header';
+export * from './StablecoinStakeDialog';
 
 export * from './DialogContainer';
 export * from './ScreenLoader';

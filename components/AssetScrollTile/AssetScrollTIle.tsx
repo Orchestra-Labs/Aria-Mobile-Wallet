@@ -12,9 +12,11 @@ import {
   selectedCoinListAtom,
   receiveStateAtom,
 } from '@/atoms/';
-import { formatBalanceDisplay } from '@/helpers';
+import { cn, formatBalanceDisplay } from '@/helpers';
 import { router } from 'expo-router';
 import { Fragment } from 'react';
+import { useStablecoinStaking } from '@/hooks';
+import { StablecoinStakeDialog } from '@/components';
 
 interface AssetScrollTileProps {
   asset: Asset;
@@ -33,6 +35,14 @@ export const AssetScrollTile = ({
   onClick,
   isOnSendPage,
 }: AssetScrollTileProps) => {
+  const { params } = useStablecoinStaking();
+
+  const isStablecoinStakingEnabled = params?.supported_tokens?.includes(
+    asset.denom,
+  );
+
+  const isStakingEnabled = asset.denom === DEFAULT_ASSET.denom;
+
   const setActiveIndex = useSetAtom(swiperIndexState);
   const setSelectedAsset = useSetAtom(selectedAssetAtom);
   const currentState = useAtomValue(
@@ -142,22 +152,35 @@ export const AssetScrollTile = ({
               <strong className="text-white">Sub-unit: </strong>
               <span className="text-white">{asset.denom}</span>
             </p>
-            {/* 
+            <p className="text-white">
+              <strong>Staking: </strong>
+              {isStakingEnabled || isStablecoinStakingEnabled
+                ? 'Available'
+                : 'Unavailable'}
+            </p>
+            {/*
               TODO: include information such as...
               is stakeable,
-              is IBC, 
-              is Token or native, 
-              native chain, 
-              current chain, 
-              native to which application, 
-              price, 
-              website, 
-              etc 
+              is IBC,
+              is Token or native,
+              native chain,
+              current chain,
+              native to which application,
+              price,
+              website,
+              etc
             */}
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col items-center justify-center grid grid-cols-3 w-full gap-x-4 px-2">
+          <div
+            className={cn(
+              'items-center justify-center grid  w-full gap-x-4 px-2',
+              isStakingEnabled || isStablecoinStakingEnabled
+                ? 'grid-cols-3'
+                : 'grid-cols-2',
+            )}
+          >
             <Button
               size="medium"
               className={'w-full'}
@@ -166,13 +189,18 @@ export const AssetScrollTile = ({
               Send
             </Button>
             <ReceiveDialog buttonSize="medium" asset={asset} />
-            <Button
-              size="medium"
-              className={'w-full'}
-              onClick={() => setActiveIndex(1)}
-            >
-              Stake
-            </Button>
+            {isStablecoinStakingEnabled && (
+              <StablecoinStakeDialog asset={asset} />
+            )}
+            {isStakingEnabled && !isStablecoinStakingEnabled && (
+              <Button
+                size="medium"
+                className={'w-full'}
+                onClick={() => setActiveIndex(1)}
+              >
+                Stake
+              </Button>
+            )}
           </div>
         </SlideTray>
       )}

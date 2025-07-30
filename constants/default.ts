@@ -103,6 +103,11 @@ export const CHAIN_NODES = {
         : 'https://symphony-testnet-api.cogwheel.zone',
       provider: 'Cogwheel',
     },
+    {
+      rpc: `https://cors-anywhere.herokuapp.com/http://34.67.182.102:26657`,
+      rest: `https://cors-anywhere.herokuapp.com/http://34.67.182.102:1317`,
+      provider: 'localtest',
+    },
   ],
 };
 
@@ -123,6 +128,18 @@ export const CHAIN_ENDPOINTS = {
   getUptime: '/cosmos/slashing/v1beta1/signing_infos/',
   getIBCConnections: '/ibc/core/channel/v1/channels',
   sendIbcMessage: '/cosmos/tx/v1beta1/txs',
+  stablecoinStakingParams: '/symphony/stablestaking/v1beta1/params',
+  stablecoinStakingStablePool: '/symphony/stablestaking/v1beta1/stable_pool',
+  stablecoinStakingStablePools: '/symphony/stablestaking/v1beta1/stable_pools',
+  stablecoinStakingUserStake: '/symphony/stablestaking/v1beta1/user_stake',
+  stablecoinStakingUserTotalStake:
+    '/symphony/stablestaking/v1beta1/user_total_stake',
+  stablecoinStakingUserTotalUnbounding:
+    '/symphony/stablestaking/v1beta1/user_total_unbonding',
+  stablecoinStakingUserUnbounding:
+    '/symphony/stablestaking/v1beta1/user_unbonding',
+  stablecoinStake: '/symphony.stablestaking.v1beta1.MsgStakeTokens',
+  stablecoinUnstake: '/symphony.stablestaking.v1beta1.MsgUnstakeTokens',
 };
 
 type LocalChainRegistryType = {

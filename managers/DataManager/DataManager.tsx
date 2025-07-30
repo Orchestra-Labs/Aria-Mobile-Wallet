@@ -1,8 +1,8 @@
 import {
-  symphonyAssetsAtom,
   isFetchingWalletDataAtom,
   isInitialDataLoadAtom,
   sendStateAtom,
+  symphonyAssetsAtom,
   userWalletAtom,
   validatorDataAtom,
   walletAssetsAtom,
@@ -12,6 +12,7 @@ import { getWalletByID } from '@/helpers/dataHelpers/account';
 import { useExchangeAssetsQuery } from '@/hooks';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
+import { useGetStableStakeParamsQuery } from '@/queries';
 
 export const DataManager: React.FC = () => {
   const [walletAssets] = useAtom(walletAssetsAtom);
@@ -33,6 +34,8 @@ export const DataManager: React.FC = () => {
 
   const sendState = useAtomValue(sendStateAtom);
   const setExchangeAssets = useSetAtom(symphonyAssetsAtom);
+
+  useGetStableStakeParamsQuery();
 
   useEffect(() => {
     if (isInitialDataLoad) {

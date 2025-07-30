@@ -1,9 +1,9 @@
-import { Asset } from '@/types';
+import { Asset, RESTResponse } from '@/types';
 import {
-  LOCAL_ASSET_REGISTRY,
-  DEFAULT_ASSET,
   CHAIN_ENDPOINTS,
+  DEFAULT_ASSET,
   GREATER_EXPONENT_DEFAULT,
+  LOCAL_ASSET_REGISTRY,
 } from '@/constants';
 import { queryRestNode } from '@/helpers';
 import { useAtomValue } from 'jotai';
@@ -35,7 +35,7 @@ const fetchExchangeAssets = async ({
   const defaultAsset = DEFAULT_ASSET;
   console.log('send asset', sendAsset);
 
-  const response = (await queryRestNode({
+  const response = (await queryRestNode<RESTResponse>({
     endpoint: `${CHAIN_ENDPOINTS.exchangeRequirements}`,
     queryType: 'GET',
   })) as unknown as ExchangeRequirementResponse;
@@ -66,7 +66,7 @@ const fetchExchangeAssets = async ({
   let adjustmentRate = 1;
   // If sendAsset is different from DEFAULT_ASSET, get the exchange rate from sendAsset to DEFAULT_ASSET
   if (sendAsset.denom !== defaultAsset.denom) {
-    const exchangeRateResponse = await queryRestNode({
+    const exchangeRateResponse = await queryRestNode<RESTResponse>({
       endpoint: `${CHAIN_ENDPOINTS.swap}offerCoin=1000000${sendAsset.denom}&askDenom=${defaultAsset.denom}`,
       queryType: 'GET',
     });

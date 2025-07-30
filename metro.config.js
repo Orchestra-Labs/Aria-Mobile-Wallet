@@ -6,4 +6,15 @@ const config = getDefaultConfig(__dirname, {
   isCSSEnabled: true,
 });
 
+config.resolver.extraNodeModules = {
+  ...config.resolver.extraNodeModules,
+  url: require.resolve('url/'),
+};
+
+config.resolver.unstable_conditionNames = [
+  'browser',
+  'require',
+  'react-native',
+];
+
 module.exports = config;

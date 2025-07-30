@@ -65,6 +65,7 @@ export interface SendObject {
   amount: string;
   denom: string;
 }
+
 export interface SwapObject {
   sendObject: SendObject;
   resultDenom: string;
@@ -171,6 +172,12 @@ export interface TransactionResult {
 export interface TransactionSuccess {
   isSuccess: boolean;
   txHash?: string;
+}
+
+//TODO: Temporary REST interface for testing purpose, should be removed
+export interface RESTResponse {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 }
 
 export interface RPCResponse {

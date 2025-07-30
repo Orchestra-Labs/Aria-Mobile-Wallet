@@ -16,3 +16,4 @@ export * from './useInitializeWalletConnect';
 export * from './useSupportedWCNamespaces';
 export * from './useWCAddress';
 export * from './usePrepareDOMComponentProps';
+export * from './useStablecoinStaking';

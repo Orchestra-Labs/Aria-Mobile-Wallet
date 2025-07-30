@@ -17,6 +17,16 @@ interface AssetInputProps {
   labelWidth?: string;
   updateAsset?: (newAsset: Asset, propagateChanges?: boolean) => void;
   updateAmount: (newAmount: number, propagateChanges?: boolean) => void;
+  showClearAndMax?: boolean;
+  showEndButton?: boolean;
+  disableButtons?: boolean;
+  onClear?: () => void;
+  onMax?: () => void;
+  onEndButtonClick?: () => void;
+  endButtonTitle?: string;
+  className?: string;
+  addClearMaxMargin?: boolean;
+  endButtonClassName?: string;
 }
 
 export const AssetInput: React.FC<AssetInputProps> = ({
@@ -30,6 +40,17 @@ export const AssetInput: React.FC<AssetInputProps> = ({
   labelWidth,
   updateAsset,
   updateAmount,
+  showClearAndMax = false,
+  showEndButton = false,
+  disableButtons = true,
+  onClear,
+  onMax,
+  onEndButtonClick,
+  endButtonTitle = '',
+  className,
+  addClearMaxMargin = false,
+  endButtonClassName,
+  ...props
 }) => {
   const [localInputValue, setLocalInputValue] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -143,7 +164,7 @@ export const AssetInput: React.FC<AssetInputProps> = ({
     <div
       className={cn(
         variant === 'stake'
-          ? ''
+          ? 'w-[95%]'
           : `flex items-center ${includeBottomMargin ? 'mb-4' : ''} space-x-2`,
       )}
     >
@@ -176,11 +197,27 @@ export const AssetInput: React.FC<AssetInputProps> = ({
             ) : null
           }
           reducedHeight={reducedHeight}
+          showClearAndMax={showClearAndMax}
+          showEndButton={showEndButton}
+          disableButtons={disableButtons}
+          onClear={() => {
+            inputRef.current?.focus();
+            !!onClear && onClear();
+          }}
+          onMax={() => {
+            inputRef.current?.focus();
+            !!onMax && onMax();
+          }}
+          onEndButtonClick={onEndButtonClick}
+          endButtonTitle={endButtonTitle}
+          addClearMaxMargin={addClearMaxMargin}
           className={cn(
             variant === 'stake'
               ? 'text-white mx-2'
               : 'text-white border border-neutral-2 rounded-md w-full h-10',
           )}
+          endButtonClassName={endButtonClassName}
+          {...props}
         />
       </div>
     </div>

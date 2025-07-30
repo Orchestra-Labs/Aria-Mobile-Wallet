@@ -5,7 +5,7 @@ import {
   LOCAL_ASSET_REGISTRY,
 } from '@/constants';
 import { queryRpcNode } from './queryNodes';
-import { DelegationResponse, TransactionResult } from '@/types';
+import { DelegationResponse, RPCResponse, TransactionResult } from '@/types';
 import { fetchRewards } from './fetchStakingInfo';
 
 // TODO: verify multiple messages add fees from queryNodes properly.  shouldn't need magic number below
@@ -73,7 +73,7 @@ export const claimRewards = async (
   });
 
   try {
-    const response = await queryRpcNode({
+    const response = await queryRpcNode<RPCResponse>({
       endpoint,
       messages,
       simulateOnly,
@@ -175,7 +175,7 @@ export const claimAndRestake = async (
     const batchedMessages = [...claimMessages, ...delegateMessages];
 
     // First simulate to get the gas estimation
-    const simulationResult = await queryRpcNode({
+    const simulationResult = await queryRpcNode<RPCResponse>({
       endpoint: delegateEndpoint,
       messages: batchedMessages,
       simulateOnly: true,
@@ -201,7 +201,7 @@ export const claimAndRestake = async (
     }
 
     // Execute the transaction with estimated gas and fee from simulation
-    const executionResult = await queryRpcNode({
+    const executionResult = await queryRpcNode<RPCResponse>({
       endpoint: delegateEndpoint,
       messages: batchedMessages,
       simulateOnly: false,
@@ -260,7 +260,7 @@ export const stakeToValidator = async (
   });
 
   try {
-    const response = await queryRpcNode({
+    const response = await queryRpcNode<RPCResponse>({
       endpoint,
       messages,
       simulateOnly,
@@ -330,7 +330,7 @@ export const unstakeFromValidator = async ({
       });
 
   try {
-    const response = await queryRpcNode({
+    const response = await queryRpcNode<RPCResponse>({
       endpoint,
       messages,
       simulateOnly,

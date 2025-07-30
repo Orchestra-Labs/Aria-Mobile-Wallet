@@ -5,6 +5,7 @@ import {
   IBCChannel,
   IBCConnectionFile,
   IBCObject,
+  RESTResponse,
   RPCResponse,
   SendObject,
   TransactionResult,
@@ -12,12 +13,14 @@ import {
 import { CHAIN_ENDPOINTS, NetworkLevel, ONE_MINUTE } from '@/constants';
 import {
   getIBCConnections,
+  getIBCFile,
   ibcConnectionsNeedRefresh,
+  ibcFileNeedsRefresh,
   saveIBCConnections,
+  saveIBCFile,
 } from './dataHelpers';
 import { queryRestNode, queryRpcNode } from './queryNodes';
 import { getValidFeeDenom } from './feeDenom';
-import { getIBCFile, ibcFileNeedsRefresh, saveIBCFile } from './dataHelpers';
 import { bech32 } from 'bech32';
 import { fetchBech32Prefixes } from './fetchBech32Prefixes';
 
@@ -184,7 +187,7 @@ export const isIBC = async ({
 export const fetchActiveIBCChannels = async (): Promise<IBCChannel[]> => {
   console.log('Fetching active IBC channels...');
   try {
-    const response = await queryRestNode({
+    const response = await queryRestNode<RESTResponse>({
       endpoint: CHAIN_ENDPOINTS.getIBCConnections,
     });
     console.log('Fetched IBC channels response:', response);
@@ -301,7 +304,7 @@ const sendIBCTransaction = async (
     const feeDenom = getValidFeeDenom(sendObject.denom);
     console.log('Determined fee denom:', feeDenom);
 
-    const response = await queryRpcNode({
+    const response = await queryRpcNode<RPCResponse>({
       endpoint,
       messages,
       feeDenom,
