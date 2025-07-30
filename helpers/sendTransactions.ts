@@ -1,6 +1,6 @@
 import { CHAIN_ENDPOINTS } from '@/constants';
 import { queryRpcNode } from './queryNodes';
-import { SendObject, TransactionResult, RPCResponse, Asset } from '@/types';
+import { Asset, RPCResponse, SendObject, TransactionResult } from '@/types';
 import { getValidFeeDenom } from './feeDenom';
 
 export const isValidSend = ({
@@ -34,7 +34,7 @@ export const sendTransaction = async (
 
   try {
     const feeDenom = getValidFeeDenom(sendObject.denom);
-    const response = await queryRpcNode({
+    const response = await queryRpcNode<RPCResponse>({
       endpoint,
       messages,
       feeDenom,
@@ -92,7 +92,7 @@ export const multiSendTransaction = async (
   const feeDenom = getValidFeeDenom(sendObjects[0].denom);
 
   try {
-    const response = await queryRpcNode({
+    const response = await queryRpcNode<RPCResponse>({
       endpoint,
       messages,
       feeDenom,

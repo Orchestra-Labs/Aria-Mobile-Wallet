@@ -10,6 +10,7 @@ import {
 } from '@/constants';
 import { receiveStateAtom, sendStateAtom } from '@/atoms';
 import { isValidSwap, queryRestNode } from '@/helpers';
+import { RESTResponse } from '@/types';
 
 export function useExchangeRate() {
   const sendState = useAtomValue(sendStateAtom);
@@ -39,7 +40,7 @@ export function useExchangeRate() {
       const formattedOfferAmount = (1 * Math.pow(10, exponent)).toFixed(0);
 
       // Use queryRestNode to query exchange rates
-      const response = await queryRestNode({
+      const response = await queryRestNode<RESTResponse>({
         endpoint: `${CHAIN_ENDPOINTS.swap}offerCoin=${formattedOfferAmount}${sendAsset}&askDenom=${receiveAsset}`,
         queryType: 'GET',
       });

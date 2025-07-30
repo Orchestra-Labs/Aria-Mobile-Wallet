@@ -1,6 +1,7 @@
 import {
   CombinedStakingInfo,
   DelegationResponse,
+  RESTResponse,
   StakingParams,
   UnbondingDelegationResponse,
   ValidatorInfo,
@@ -24,7 +25,7 @@ export const fetchUnbondingDelegations = async (
       endpoint += `?pagination.key=${encodeURIComponent(paginationKey)}`;
     }
 
-    const response = await queryRestNode({ endpoint });
+    const response = await queryRestNode<RESTResponse>({ endpoint });
 
     return {
       delegations: (response.unbonding_responses ?? []).map((item: any) => {
@@ -71,7 +72,7 @@ export const fetchDelegations = async (
       endpoint = `${CHAIN_ENDPOINTS.getSpecificDelegations}${delegatorAddress}/delegations/${validatorAddress}`;
     }
 
-    const response = await queryRestNode({ endpoint });
+    const response = await queryRestNode<RESTResponse>({ endpoint });
 
     return {
       delegations: (response.delegation_responses ?? []).map((item: any) => {
@@ -122,7 +123,7 @@ export const fetchAllValidators = async (
         endpoint += `&status=${bondStatus}`;
       }
 
-      const response = await queryRestNode({ endpoint });
+      const response = await queryRestNode<RESTResponse>({ endpoint });
 
       allValidators = allValidators.concat(response.validators ?? []);
 
@@ -143,7 +144,7 @@ export const fetchValidators = async (
   try {
     if (validatorAddress) {
       let endpoint = `${CHAIN_ENDPOINTS.getValidators}${validatorAddress}`;
-      const response = await queryRestNode({ endpoint });
+      const response = await queryRestNode<RESTResponse>({ endpoint });
 
       // Filter single validator by bond status if provided
       if (bondStatus && response?.validator?.status !== bondStatus) {
@@ -181,7 +182,9 @@ export const fetchRewards = async (
     if (delegations && delegations.length > 0) {
       const rewardsPromises = delegations.map(async (delegation) => {
         const specificEndpoint = `${CHAIN_ENDPOINTS.getRewards}/${delegatorAddress}/rewards/${delegation.validator_address}`;
-        const response = await queryRestNode({ endpoint: specificEndpoint });
+        const response = await queryRestNode<RESTResponse>({
+          endpoint: specificEndpoint,
+        });
         return {
           validator: delegation.validator_address,
           rewards: response.rewards || [],
@@ -193,7 +196,7 @@ export const fetchRewards = async (
     }
 
     // Fetch all rewards for the delegator
-    const response = await queryRestNode({ endpoint });
+    const response = await queryRestNode<RESTResponse>({ endpoint });
 
     // Process the response and map rewards for each validator
     return (response.rewards ?? []).map((reward: any) => ({
@@ -209,7 +212,7 @@ export const fetchRewards = async (
 export const fetchStakingParams = async (): Promise<StakingParams | null> => {
   try {
     const endpoint = `${CHAIN_ENDPOINTS.getStakingParams}`;
-    const response = await queryRestNode({ endpoint });
+    const response = await queryRestNode<RESTResponse>({ endpoint });
 
     if (response && 'params' in response) {
       // Convert unbonding_time to days

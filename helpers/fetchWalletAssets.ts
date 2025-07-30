@@ -1,11 +1,11 @@
 import {
+  CHAIN_ENDPOINTS,
+  GREATER_EXPONENT_DEFAULT,
   IBC_PREFIX,
   LOCAL_ASSET_REGISTRY,
-  GREATER_EXPONENT_DEFAULT,
-  CHAIN_ENDPOINTS,
   LOCAL_CHAIN_REGISTRY,
 } from '@/constants';
-import { Asset, SubscriptionRecord } from '@/types';
+import { Asset, RESTResponse, SubscriptionRecord } from '@/types';
 import { queryRestNode } from './queryNodes';
 
 const adjustAmountByExponent = (amount: string, exponent: number): string => {
@@ -27,7 +27,7 @@ const resolveIbcDenom = async (
     const getIBCInfoEndpoint = CHAIN_ENDPOINTS.getIBCInfo;
 
     // Use queryNode to try multiple nodes
-    const response = await queryRestNode({
+    const response = await queryRestNode<RESTResponse>({
       endpoint: `${getIBCInfoEndpoint}${denomHash}`,
     });
     const baseDenom = response.denom_trace?.base_denom;
@@ -64,7 +64,7 @@ const getBalances = async (walletAddress: string): Promise<Asset[]> => {
   const getBalanceEndpoint = CHAIN_ENDPOINTS.getBalance;
 
   // Use queryNode to try querying balances across nodes
-  const response = await queryRestNode({
+  const response = await queryRestNode<RESTResponse>({
     endpoint: `${getBalanceEndpoint}${walletAddress}`,
   });
 
