@@ -1,17 +1,25 @@
 import { COLORS } from '@/constants';
 import { Stack } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function AuthLayout() {
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        contentStyle: { backgroundColor: COLORS.background.app },
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.background.black,
       }}
     >
-      <Stack.Screen name="new-wallet/index" />
-      <Stack.Screen name="import-wallet" />
-      <Stack.Screen name="index" />
-    </Stack>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: COLORS.background.app },
+        }}
+      >
+        <Stack.Screen name="new-wallet/index" />
+        <Stack.Screen name="import-wallet" />
+        <Stack.Screen name="index" />
+      </Stack>
+    </SafeAreaView>
   );
 }
