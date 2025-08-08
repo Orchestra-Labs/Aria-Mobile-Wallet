@@ -258,8 +258,8 @@ export const ValidatorSelectDialog: React.FC<ValidatorSelectDialogProps> = ({
 
       if (simulateOnly) return result;
 
-      if (result.success && result.data?.code === 0) {
-        handleTransactionSuccess(result.data.txHash as string);
+      if (result.success && result?.data?.code === 0) {
+        handleTransactionSuccess(result?.data.txHash as string);
       } else {
         const errorMessage = `Unstake failed: ${result.message || 'No error message provided'}`;
         handleTransactionError(errorMessage);

@@ -10,7 +10,7 @@ import {
   mnemonicVerifiedState,
   use24WordsState,
 } from '@/atoms';
-import { useGesture } from '@use-gesture/react';
+import { createUseGesture, dragAction } from '@use-gesture/react';
 
 type RecoveryPhraseGridProps = {
   isVerifyMode?: boolean;
@@ -18,6 +18,8 @@ type RecoveryPhraseGridProps = {
   isEditable?: boolean;
   singleWordCount?: boolean;
 };
+
+const useGesture = createUseGesture([dragAction]);
 
 export const RecoveryPhraseGrid: React.FC<RecoveryPhraseGridProps> = ({
   isVerifyMode = false,
