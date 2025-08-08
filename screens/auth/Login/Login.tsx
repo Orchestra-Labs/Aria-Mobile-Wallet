@@ -76,7 +76,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="mt-6 h-full">
+    <div className="mt-6 h-full w-full">
       <div className="w-full h-full pt-7 px-8 flex flex-col">
         <div className="flex flex-col items-center justify-center flex-grow">
           <h1 className="text-white text-h2 font-bold">Welcome back!</h1>
@@ -84,7 +84,7 @@ const Login: React.FC = () => {
             Sign in to securely access your wallet
           </p>
 
-          <form className="mt-9">
+          <form className="mt-9 w-full">
             <Input
               variant="primary"
               showMessageText={true}
