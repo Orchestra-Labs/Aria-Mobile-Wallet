@@ -1,18 +1,18 @@
 'use dom';
 
+import React, { Fragment, startTransition, useEffect, useRef } from 'react';
 import '@tailwind';
 
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/swiper-react';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { BalanceCard, SearchBar, SortDialog, TileScroller } from '@/components';
 import {
-  swiperIndexState,
-  showCurrentValidatorsAtom,
-  showAllAssetsAtom,
   searchTermAtom,
+  showAllAssetsAtom,
+  showCurrentValidatorsAtom,
+  swiperIndexState,
   userAccountAtom,
 } from '@/atoms';
-import { Fragment, startTransition, useEffect, useRef } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { Button } from '@/ui-kit';
 import { EditCoinListScreen } from '../EditCoinListScreen';
@@ -108,7 +108,7 @@ const Main = (_: MainProps) => {
   }
 
   return (
-    <div className="h-full flex flex-col overflow-hidden">
+    <div className="h-full max-h-screen flex flex-col overflow-hidden">
       {/* Swiper Component for Balance Cards */}
       <div className="relative h-48 flex-none overflow-hidden">
         <Swiper
@@ -196,7 +196,7 @@ const Main = (_: MainProps) => {
         )}
 
         {/* Display the filtered and sorted assets */}
-        <div className="flex justify-between px-3 text-neutral-1 text-xs font-bold mb-1">
+        <div className="flex mb-2 justify-between px-3 text-neutral-1 text-xs font-bold mb-1">
           {activeIndex === 0 ? (
             <Fragment>
               <span className="w-[3.5rem]">Logo</span>
