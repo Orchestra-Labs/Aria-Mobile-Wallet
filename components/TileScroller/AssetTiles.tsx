@@ -1,5 +1,5 @@
 import React from 'react';
-import { AssetScrollTile } from '../AssetScrollTile';
+import { AssetScrollTile } from '@/components';
 import { useAtomValue } from 'jotai';
 import {
   coinListAssetsAtom,

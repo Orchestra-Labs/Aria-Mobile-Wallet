@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SlideTray } from '@/ui-kit';
-import { TileScroller } from '../TileScroller';
+import { TileScroller } from '@/components';
 import { LogoIcon } from '@/assets/icons';
 import { Asset } from '@/types';
 import { SortDialog } from '../SortDialog';

@@ -1,6 +1,5 @@
 export * from './useGetStableStakeParams.query';
 export * from './useGetStableStakeStablePool.query';
-export * from './useGetStableStakeStablePools.query';
 export * from './useGetStableStakeTotalUnbounding.query';
 export * from './useGetStableStakeUnbounding.query';
 export * from './useGetStableStakeUserStake.query';

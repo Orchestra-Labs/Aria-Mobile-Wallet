@@ -4,7 +4,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { GREATER_EXPONENT_DEFAULT } from '@/constants';
 import { formatNumberWithCommas, stripNonNumerics } from '@/helpers';
 import { Input } from '@/ui-kit';
-import { AssetSelectDialog } from '../AssetSelectDialog';
+import { AssetSelectDialog } from '@/components';
 
 interface AssetInputProps {
   isDisabled?: boolean;
